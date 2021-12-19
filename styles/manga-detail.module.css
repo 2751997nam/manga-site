@@ -1,0 +1,15 @@
+.chapter-container {
+    max-height: 500px;
+    overflow: scroll;
+}
+
+.chapter-item {
+    padding: 5px;
+    color: green;
+}
+
+.chapter-item-link {
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+}

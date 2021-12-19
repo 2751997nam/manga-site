@@ -1,0 +1,55 @@
+import MangaItem from "../common/MangaItem";
+import Card from "../common/Card";
+
+const CardList = (props) => {
+    const title = props.title;
+    const mangas = props.mangas;
+    const seeMoreUrl = props.seeMoreUrl;
+
+    const renderListManga = (mangas) => {
+        return mangas.map(item => {
+            return (
+                <MangaItem manga={item} key={item.id}></MangaItem>
+            )
+        })
+    }
+
+    const renderSeeMore = () => {
+        if (seeMoreUrl) {
+            return (
+                <div className="thumb-item-flow col-6 col-md-3 see-more">
+                    <div className="thumb-wrapper">
+                        <div className="a6-ratio">
+                            <div className="content img-in-ratio">
+                                <a
+                                    href={seeMoreUrl}>
+                                    <div className="thumb-see-more">
+                                        <div className="see-more-inside">
+                                            <div className="see-more-content">
+                                                <div className="see-more-icon">
+                                                    <i className="fa fa-arrow-right" aria-hidden="true"></i>
+                                                </div>
+                                                <div className="see-more-text">See more</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )
+        }
+    }
+
+    return (
+        <Card title={title}>
+            <div className="row">
+                {renderListManga(mangas)}
+                {renderSeeMore()}
+            </div>
+        </Card>
+    )
+}
+
+export default CardList;
