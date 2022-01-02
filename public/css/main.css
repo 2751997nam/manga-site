@@ -6897,7 +6897,8 @@ a.badge-dark:focus {
 .media-body {
     -webkit-flex: 1;
     -ms-flex: 1;
-    flex: 1
+    flex: 1;
+    padding: 0 10px;
 }
 
 .list-group {
@@ -54753,7 +54754,7 @@ body {
 }
 
 #sticky-navbar {
-    position: fixed;
+    /* position: fixed; */
     transition: top 0.3s;
     top: 0;
     width: 100%;
@@ -54761,6 +54762,10 @@ body {
 
 .mt-5rem {
     margin-top: 5rem;
+}
+
+.mt-2rem {
+    margin-top: 2rem;
 }
 
 @font-face {
@@ -55800,6 +55805,7 @@ h3#tables a {
 
 .sidebar-content {
     width: 100%;
+    height: 100px;
 }
 
 .sidebar-content>a {
@@ -56156,10 +56162,15 @@ ul.list-chapters a li .chapter-name small.unfinished-status {
     min-width: 100% !important;
     width: 100% !important;
 }
-#pop_manga {
+.pop_manga {
     position: fixed;
     background: #e5e5e5;
     z-index: 9999;
+    display: none;
+}
+
+.thumb-item-flow:hover .pop_manga {
+    display: block;
 }
 .pop_title {
     background: #343a40;
@@ -56179,7 +56190,7 @@ ul.list-chapters a li .chapter-name small.unfinished-status {
     clear: both;
     float: none;
 }
-.pop_info img {
+.pop_info_img {
     float: left;
     margin-right: 10px;
 }

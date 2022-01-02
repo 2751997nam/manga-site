@@ -8,6 +8,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import BreadCrumb from '../../components/common/BreadCrumb';
 import { useRouter } from 'next/router';
 import CustomLink from '../../components/common/CustomLink';
+import Head from 'next/head';
 
 function ChapterDetail(props) {
     const router = useRouter();
@@ -99,6 +100,12 @@ function ChapterDetail(props) {
         setLastScroll(window.scrollY);
     }, [lastScroll, setLastScroll, setShowControl]);
 
+    const increaseView = (chapter) => {
+        fetch('/api/manga-view/' + chapter.manga_id, {
+            method: 'POST'
+        })
+    }
+
     useEffect(() => {
         window.addEventListener('scroll', handleOnScroll);
         return () => {
@@ -106,15 +113,19 @@ function ChapterDetail(props) {
         }
     }, [handleOnScroll])
 
+    useEffect(() => {
+        increaseView(chapter);
+    }, [router.asPath, chapter])
+
     return (
         <div className='row'>
+            <Head>
+                <title>{chapter.name}</title>
+                <meta name="description" content={manga.description}></meta>
+            </Head>
             <BreadCrumb links={links}></BreadCrumb>
             <div className='col-md-12 text-center'>
-                <div className={chapterDetailStyles['container']}>
-                    <div className={chapterDetailStyles['chapter-container']}>
-                        {renderChapterImages()}
-                    </div>
-                </div>
+                {renderChapterImages()}
             </div>
             <div className="col-md-12">
                 <div className="input-group justify-content-center">
@@ -144,7 +155,7 @@ function ChapterDetail(props) {
                 <a id="rd-info_icon" onClick={toggleSideBar} className="rd_sd-button_item">
                     <i className="fa fa-bars" aria-hidden="true"></i>
                 </a>
-                <CustomLink className={'rd_sd-button_item rd_top-left next ' + (!prevChapter ? 'disabled' : '')} href={prevChapter ? `/chapter/${prevChapter.id}` : ''}>
+                <CustomLink className={'rd_sd-button_item rd_top-left next ' + (!nextChapter ? 'disabled' : '')} href={nextChapter ? `/chapter/${nextChapter.id}` : ''}>
                     <i className="fa fa-fast-forward" aria-hidden="true"></i>
                 </CustomLink>
             </section>

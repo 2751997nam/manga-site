@@ -1,5 +1,6 @@
 import MangaItem from "../common/MangaItem";
 import Card from "../common/Card";
+import CustomLink from "./CustomLink";
 
 const CardList = (props) => {
     const title = props.title;
@@ -21,8 +22,10 @@ const CardList = (props) => {
                     <div className="thumb-wrapper">
                         <div className="a6-ratio">
                             <div className="content img-in-ratio">
-                                <a
-                                    href={seeMoreUrl}>
+                                <CustomLink
+                                    href={seeMoreUrl}
+                                    title="See More"
+                                >
                                     <div className="thumb-see-more">
                                         <div className="see-more-inside">
                                             <div className="see-more-content">
@@ -33,7 +36,7 @@ const CardList = (props) => {
                                             </div>
                                         </div>
                                     </div>
-                                </a>
+                                </CustomLink>
                             </div>
                         </div>
                     </div>

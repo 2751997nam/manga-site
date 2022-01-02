@@ -1,10 +1,10 @@
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
 import CustomLink from "./CustomLink";
 
 const Pagination = (props) => {
     let {pageCount, pageId, pageSize} = props.meta;
     const query = props.query;
-    const url = props.url;
+    const [url, setUrl] = useState('');
 
     const current = pageId + 1;
 
@@ -21,10 +21,19 @@ const Pagination = (props) => {
     const renderDot = () => {
         return (
             <li>
-                <CustomLink className="disabled">...</CustomLink>
+                <CustomLink href={void(0)} className="disabled">...</CustomLink>
             </li>
         )
     }
+
+    useEffect(() => {
+        let url = window.location.href;
+        let index = url.indexOf('?');
+        if (index > 0) {
+            url = url.substr(0, index);
+        }
+        setUrl(url);
+    }, [setUrl]);
 
     const renderPages = (from, to) => {
         const pages = range(from, to);
@@ -60,12 +69,12 @@ const Pagination = (props) => {
         } else if (pageCount > 6 && pageId <= 3) {
             return (
                 <>
-                    {renderPages(1, 4)}
+                    {renderPages(1, 5)}
                     {renderDot()}
                     {renderPage(pageCount)}
                 </>
             )
-        } else if (pageCount > 6 && pageId > 3 && (pageCount - pageId > 3)) {
+        } else if (pageCount > 6 && pageId > 3 && (pageCount - pageId > 5)) {
             return (
                 <>
                     {renderPage(1)}
@@ -75,7 +84,7 @@ const Pagination = (props) => {
                     {renderPage(pageCount)}
                 </>
             )
-        } else if (pageCount > 6 && (pageCount - pageId <= 3)) {
+        } else if (pageCount > 6 && (pageCount - pageId <= 5)) {
             return (
                 <>
                     {renderPage(1)}

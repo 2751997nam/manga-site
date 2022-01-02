@@ -1,26 +1,41 @@
-import { useState } from "react";
+import {useState, useEffect} from "react";
 import CustomLink from "../common/CustomLink";
+import Search from "../Search/Search";
+import Image from "next/image";
 
-const Header = (props) => {
+function Header(props) {
     const categories = props.categories;
-    const [showDropdown, setShowDropDown] = useState(false);
+    const [expand, setExpand] = useState(false);
 
-    const toggleDropdown = () => {
-        setShowDropDown(!showDropdown);
+    const showDropdown = () => {
+        setExpand(true);
     }
+
+    const hideDropdown = () => {
+        setTimeout(() => {
+            setExpand(false);
+        }, 100);
+    }
+
+    useEffect(() => {
+        return () => {
+            setExpand(false);
+        }
+    }, []);
 
     return (
         <nav id="sticky-navbar" className="main-header navbar navbar-expand navbar-dark navbar-primary">
             <div className="container">
                 <CustomLink href="/" className="navbar-brand">
-                    <img src="/uploads/logos/logo-mini.png" alt="Logo" className="brand-image elevation-3"  />
-                    <span className="brand-text font-weight-light d-none d-lg-inline text-light">Manhwa</span>
+                    <Image src="/images/logo.png" alt="Logo" className="brand-image" width={160} height="35"  />
                 </CustomLink>
                 <div className="navbar-collapse collapse">
                     <ul className="navbar-nav mr-auto">
-                        <li className={'nav-item ' + (showDropdown ? 'show' : '')}>
-                            <a data-toggle="dropdown" onClick={toggleDropdown} aria-expanded="true" className="nav-link dropdown-toggle"><i className="fas fa-book-open"></i><span className="d-none d-lg-inline ml-1">Genre(s)</span></a>
-                            <div className={'dropdown-menu manga-mega-menu genres-menu w-100 justify-content-center ' + (showDropdown ? 'show' : '')}>
+                        <li className={'nav-item ' + (expand ? 'show' : '')}>
+                            <a href="#" data-toggle="dropdown" tabIndex={0} onFocus={showDropdown} onBlur={hideDropdown} aria-expanded="true" className="nav-link dropdown-toggle">
+                                <i className="fas fa-book-open"></i><span className="d-none d-lg-inline ml-1">Genre(s)</span>
+                            </a>
+                            <div className={'dropdown-menu manga-mega-menu genres-menu w-100 justify-content-center ' + (expand ? 'show' : '')}>
                                 <div className="row no-gutters">
                                     {categories.map(item => {
                                         return (
@@ -38,56 +53,10 @@ const Header = (props) => {
                         <li className="nav-item ml-1">
                             <CustomLink href="/manga-list.html?history=1" className="nav-link"><i className="fa fa-history" aria-hidden="true"></i> <span className="d-none d-lg-inline">History</span></CustomLink>
                         </li>
-                        <li className="nav-item ml-1">
-                            <CustomLink href="https://manhwa18.tv/" className="nav-link"><i className="fa fa-history" aria-hidden="true"></i> <span className="d-none d-lg-inline">Hentai</span></CustomLink>
-                        </li>
                     </ul>
                 </div>
                 <ul className="navbar-nav ml-auto flex-row right-nav-wrapper">
-                    <form className="form-inline ml-3 d-none d-md-inline align-self-center position-relative" action="/manga-list.html">
-                        <div className="input-group input-group-sm">
-                            <input className="form-control form-control-navbar search-web inputSearch" type="search" name="name" placeholder="Search" aria-label="Search" />
-                            <div className="input-group-append">
-                                <button className="btn btn-navbar" type="submit">
-                                <i className="fas fa-search"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div className="ssSearch d-none card">
-                            <div className="card-header pl-3 py-2 header-search">
-                                <h5 className="card-title">Result</h5>
-                            </div>
-                            <div className="card-body search-result px-1 py-2">
-                            </div>
-                        </div>
-                    </form>
-                    <li className="nav-item">
-                        <a className="nav-link search-mobile" data-widget="navbar-search" href="#" role="button">
-                        <i className="fas fa-search"></i>
-                        </a>
-                        <div className="navbar-search-block">
-                            <form className="form-inline position-relative" action="/manga-list.html">
-                                <div className="input-group input-group-sm">
-                                    <input className="form-control form-control-navbar inputSearch" type="search" placeholder="Search" name="name" aria-label="Search" />
-                                    <div className="input-group-append">
-                                        <button className="btn btn-navbar" type="submit">
-                                        <i className="fas fa-search"></i>
-                                        </button>
-                                        <button className="btn btn-navbar" type="button" data-widget="navbar-search">
-                                        <i className="fas fa-times"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div className="ssSearch d-none card">
-                                    <div className="card-header pl-3 py-2 header-search">
-                                        <h5 className="card-title">Result</h5>
-                                    </div>
-                                    <div className="card-body search-result px-1 py-2">
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </li>
+                    <Search></Search>
                     <li className="nav-item">
                         <a className="nav-link" href="/account/login"><i className="fas fa-sign-in-alt"></i> <span className="d-none d-sm-inline">Sign in</span></a>
                     </li>

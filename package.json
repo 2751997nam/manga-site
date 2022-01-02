@@ -15,8 +15,11 @@
     "next": "11.1.0",
     "react": "17.0.2",
     "react-bootstrap": "^2.0.3",
+    "react-debounce-input": "^3.2.5",
     "react-dom": "17.0.2",
-    "serverless-mysql": "^1.5.4"
+    "react-owl-carousel": "^2.3.3",
+    "serverless-mysql": "^1.5.4",
+    "webpack": "^5.65.0"
   },
   "devDependencies": {
     "eslint": "7.32.0",

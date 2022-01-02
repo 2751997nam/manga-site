@@ -7,7 +7,6 @@ const CardListPagination = (props) => {
     const mangas = props.mangas;
     const meta = props.meta;
     const seeMoreUrl = props.seeMoreUrl;
-    const url = props.url;
     const query = props.query;
 
     const renderListManga = (mangas) => {
@@ -23,7 +22,7 @@ const CardListPagination = (props) => {
             <div className="row">
                 {renderListManga(mangas)}
             </div>
-            <Pagination meta={meta} url={url} query={query}></Pagination>
+            <Pagination meta={meta} query={query}></Pagination>
         </Card>
     )
 }

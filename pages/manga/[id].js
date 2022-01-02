@@ -6,6 +6,8 @@ import Image from 'next/image';
 import React from 'react';
 import BreadCrumb from '../../components/common/BreadCrumb';
 import ChapterList from '../../components/manga-detail/ChapterList';
+import SuggestManga from '../../components/manga-detail/SuggestManga';
+import Head from 'next/head';
 
 function MangaDetail(props) {
     const manga = props.manga;
@@ -13,6 +15,8 @@ function MangaDetail(props) {
     const categories = props.categories;
     const translators = props.translators;
     const authors = props.authors;
+    const sameGroupMangas = props.sameGroupMangas;
+    const sameCategoryMangas = props.sameCategoryMangas;
 
     const links = [
         {url: '/manga', text: 'List Manga'},
@@ -20,6 +24,9 @@ function MangaDetail(props) {
     ];
 
     const renderInfo = (items, baseUrl, className) => {
+        if (!items.length) {
+            return (<span> Updating</span>)
+        }
         return items.map(item => {
             return (
                 <CustomLink className={'btn btn-xs ' + className} href={baseUrl + item.slug} key={item.id}>{item.name}</CustomLink> 
@@ -29,6 +36,11 @@ function MangaDetail(props) {
 
     return (
         <div className="row">
+            <Head>
+                <title>{manga.name}</title>
+                <meta name="description" content={manga.description}></meta>
+                <meta name="keywords" content="Read manhwa pornwa online free at Mahwa18, update fastest, most full, synthesized 24h free with high-quality images. We hope to bring you happy moments. "></meta>
+            </Head>
             <BreadCrumb links={links}></BreadCrumb>
 
             <div className="col-md-8 mt-2">
@@ -69,7 +81,7 @@ function MangaDetail(props) {
                                         {renderInfo(translators, '/manga-trans-group-', 'btn-success m-1')}
                                     </li>
                                     <li>
-                                        <b><i className="fa fa-eye fa-md text-white" aria-hidden="true"></i> Views</b>: 105357
+                                        <b><i className="fa fa-eye fa-md text-white" aria-hidden="true"></i> Views</b>: {manga.view}
                                     </li>
                                     <li></li>
                                 </ul>
@@ -97,6 +109,10 @@ function MangaDetail(props) {
                 </div>
                 <ChapterList chapters={chapters}></ChapterList>
             </div>
+            <div className='col-md-4 mt-2'>
+                {sameGroupMangas.length ? <SuggestManga mangas={sameGroupMangas} title="Same Translation Group"></SuggestManga> : ''}
+                {sameCategoryMangas.length ? <SuggestManga mangas={sameCategoryMangas} title="Suggested Manhwa"></SuggestManga> : ''}
+            </div>
         </div>
     )
 }
@@ -117,9 +133,9 @@ export async function getServerSideProps(context) {
         .where('id', id).
         select(['*'])
         .first();
-    const authors = await getRelations(id, 'author', 'author_n_manga');
+    const authors = await getRelations(id, 'author', 'manga_n_author');
 
-    const categories = await getRelations(id, 'category', 'category_n_manga');
+    const categories = await getRelations(id, 'category', 'manga_n_category');
 
     const translators = await getRelations(id, 'translator', 'manga_n_translator');
 
@@ -129,13 +145,34 @@ export async function getServerSideProps(context) {
         .orderBy('sorder', 'desc')
         .select(['id', 'name', 'slug', 'updated_at']);
 
+    const translatorIds = translators.map(item => item.id);
+    const categoryIds = categories.map(item => item.id);
+
+    const sameGroupMangas = await db.from('manga')
+        .join('manga_n_translator', 'manga.id', 'manga_n_translator.manga_id')
+        .whereIn('manga_n_translator.translator_id', translatorIds)
+        .where('manga_id', '!=', id)
+        .limit(5)
+        .distinct()
+        .select(['manga.id', 'manga.name', 'manga.image', 'manga.slug', 'manga.description', 'manga.view']);
+    const sameGroupIds = sameGroupMangas.map(item => item.id);
+    const sameCategoryMangas = await db.from('manga')
+        .join('manga_n_category', 'manga.id', 'manga_n_category.manga_id')
+        .whereIn('manga_n_category.category_id', categoryIds)
+        .whereNotIn('manga_id', sameGroupIds)
+        .where('manga_id', '!=', id)
+        .limit(5)
+        .distinct()
+        .select(['manga.id', 'manga.name', 'manga.image', 'manga.slug', 'manga.description', 'manga.view']);
     return {
         props: {
             manga: JSON.parse(JSON.stringify(manga)),
             chapters: JSON.parse(JSON.stringify(chapters)),
             categories: JSON.parse(JSON.stringify(categories)),
             translators: JSON.parse(JSON.stringify(translators)),
-            authors: JSON.parse(JSON.stringify(authors))
+            authors: JSON.parse(JSON.stringify(authors)),
+            sameGroupMangas: JSON.parse(JSON.stringify(sameGroupMangas)),
+            sameCategoryMangas: JSON.parse(JSON.stringify(sameCategoryMangas))
         }
     };
 }
