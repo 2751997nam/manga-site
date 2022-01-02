@@ -79,12 +79,22 @@ function ChapterDetail(props) {
 
     const toggleSideBar = () => {
         setShowSideBar(!showSideBar);
+        setTimeout(() => {
+            if (showSideBar) {
+                let sideBar = document.querySelector('#chapters .rdtoggle_body');
+                let element = document.getElementById('chapter-item-' + chapter.id);
+                if (element) {
+                    element.scrollIntoView();
+                    sideBar.scrollTop = sideBar.scrollTop - 100;
+                }
+            }
+        }, 300);
     }
 
     const renderSideBarChapters = () => {
         return chapters.map(item => {
             return (
-                <li key={item.id} className={item.id == chapter.id ? 'current' : ''} onClick={toggleSideBar}>
+                <li key={item.id} id={'chapter-item-' + item.id } className={item.id == chapter.id ? 'current' : ''} onClick={toggleSideBar}>
                     <CustomLink href={`/chapter/${item.id}`} title={chapter.name}>{getChapterName(item.name)}</CustomLink>
                 </li>
             )

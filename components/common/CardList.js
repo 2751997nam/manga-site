@@ -1,4 +1,6 @@
+import { isMobile } from "mobile-device-detect";
 import MangaItem from "../common/MangaItem";
+import MangaItemMobile from "../common/MangaItemMobile";
 import Card from "../common/Card";
 import CustomLink from "./CustomLink";
 
@@ -9,6 +11,9 @@ const CardList = (props) => {
 
     const renderListManga = (mangas) => {
         return mangas.map(item => {
+            if (isMobile) {
+                return (<MangaItemMobile manga={item} key={item.id}></MangaItemMobile>)
+            }
             return (
                 <MangaItem manga={item} key={item.id}></MangaItem>
             )

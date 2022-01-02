@@ -17,6 +17,7 @@ function MangaDetail(props) {
     const authors = props.authors;
     const sameGroupMangas = props.sameGroupMangas;
     const sameCategoryMangas = props.sameCategoryMangas;
+    const lastChapter = chapters[0];
 
     const links = [
         {url: '/manga', text: 'List Manga'},
@@ -91,7 +92,10 @@ function MangaDetail(props) {
                                 </div>
 
                                 <div id="bt-reading" className="read-action">
-                                    <a className="btn btn-danger btn-md" href="/read-theater-cociety-engsub-chapter-39.html"><i className="fa fa-paper-plane" aria-hidden="true"></i> Read the last chapter</a>
+                                    <CustomLink className="btn btn-danger btn-md" href={'/chapter/' + lastChapter.id}>
+                                        <i className="fa fa-paper-plane" aria-hidden="true"></i> 
+                                        Read the last chapter
+                                        </CustomLink>
                                 </div>
                             </div>
                         </div>
