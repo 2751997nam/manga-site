@@ -1,3 +1,12 @@
 .page-item img {
-    max-width: 100%;
+    max-height: unset !important;
+    min-height: unset !important;
+    height: unset !important;
+    position: unset !important;
+}
+
+.page-item div {
+    height: fit-content;
+    overflow: unset !important;
+    position: unset !important;
 }

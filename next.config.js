@@ -2,7 +2,7 @@ const webpack = require('webpack');
 module.exports = {
     reactStrictMode: true,
     images: {
-        domains: ["manhwa18.net", 'cdn.manhwa18.com', 'manhwa18.cc', 'manytoon.com'],
+        domains: ["manhwa18.net", 'cdn.manhwa18.com', 'manhwa18.cc', 'manytoon.com', 'cdn4.manhwa18.com'],
     },
     async rewrites() {
         return [

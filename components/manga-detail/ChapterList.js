@@ -18,7 +18,7 @@ const ChapterList = (props) => {
                 <CustomLink href={'/chapter/' + chapter.id} title={chapter.name} key={chapter.id}>
                     <li>
                         <div className="chapter-name text-truncate">{getChapterName(chapter.name)}</div>
-                        <div className="chapter-time">{formatDate(chapter.updated_at)}</div>
+                        <div className="chapter-time">{formatDate(chapter.created_at)}</div>
                     </li>
                 </CustomLink>
             )

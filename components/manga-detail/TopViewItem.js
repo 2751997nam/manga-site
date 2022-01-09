@@ -1,6 +1,6 @@
 import CustomLink from '../common/CustomLink';
 import Image from 'next/image';
-import { formatDate, getChapterName } from '../../lib/hepler';
+import { formatDate, getChapterName, getImageSrc } from '../../lib/hepler';
 
 const TopViewItem = (props) => {
     const manga = props.manga;
@@ -8,7 +8,7 @@ const TopViewItem = (props) => {
     return (
         <div className="sidebar-content">
             <CustomLink href={'/manga/' + manga.id}> 
-                <Image src={manga.image} alt={manga.name} width="50" height="66" />
+                <Image src={getImageSrc(manga.image)} alt={manga.name} width="50" height="66" />
             </CustomLink>
 
             <h2 className="m-1">
@@ -17,7 +17,7 @@ const TopViewItem = (props) => {
             <div>
                 <CustomLink href={'/chapter/' + manga.chapter.id}>{chapterName}</CustomLink>
             </div>
-            <i>{formatDate(manga.chapter.updated_at)}</i>
+            <i>{formatDate(manga.chapter.created_at)}</i>
         </div>
     )
 }

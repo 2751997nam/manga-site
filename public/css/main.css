@@ -55269,7 +55269,12 @@ ul.others-list li .others-img {
     width: 25%;
     float: left;
     text-align: center;
-    padding: 10px 0
+    padding: 10px 0;
+    color: #fff;
+}
+
+.rd_sd-button_item:focus, .rd_sd-button_item:active, .rd_sd-button_item:hover {
+    color: #57fd6f !important;
 }
 
 #rd-side_icon.colorWhite a {
@@ -55297,10 +55302,6 @@ ul.others-list li .others-img {
 
 .rd_sd-button_item span {
     margin-left: 5px
-}
-
-#rd-side_icon a {
-    color: #fff!important
 }
 
 .disabled,
@@ -56255,4 +56256,16 @@ a.dropdown-item.genres-item:hover {
 
 .mw-300 {
     max-width: 300px;
+}
+
+.loading-box {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background: #b1b0b087;
+    z-index: 99;
+    display: flex;
+    justify-content: center;
 }

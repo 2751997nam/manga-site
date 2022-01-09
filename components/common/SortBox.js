@@ -3,7 +3,7 @@ import CustomLink from "./CustomLink";
 import { useRouter } from "next/router";
 
 const SortBox = (props) => {
-    const [sort, setSort] = useState('updated_at');
+    const [sort, setSort] = useState('created_at');
     const [type, setType] = useState('DESC');
     const [url, setUrl] = useState('');
     const [baseUrl, setBaseUrl] = useState('');
@@ -69,7 +69,7 @@ const SortBox = (props) => {
                 <CustomLink onClick={() => onNavigate('view', '')} href={buildUrl('view')} className={'btn btn-sm btn-info ' + (sort == 'view' ? 'active' : '')}>
                     <i className="fas fa-eye"></i> Most view
                 </CustomLink>
-                <CustomLink onClick={() => onNavigate('updated_at', '')} href={buildUrl('updated_at')} className={'btn btn-sm btn-info ' + (sort == 'updated_at' ? 'active' : '')}>
+                <CustomLink onClick={() => onNavigate('created_at', '')} href={buildUrl('created_at')} className={'btn btn-sm btn-info ' + (sort == 'created_at' ? 'active' : '')}>
                     <i className="fas fa-calendar-times"></i> Last updated
                 </CustomLink>
             </div>

@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import CustomLink from '../common/CustomLink';
+import { getImageSrc } from '../../lib/hepler';
 
 function SuggestManga(props) {
     const mangas = props.mangas;
@@ -15,7 +16,7 @@ function SuggestManga(props) {
                 <li key={item.id}>
                     <div className="others-img no-padding">
                         <div className="a6-ratio">
-                            <Image className="content img-in-ratio" src={item.image} alt={item.name} width={50} height={66}></Image>
+                            <Image className="content img-in-ratio" src={getImageSrc(item.image)} alt={item.name} width={50} height={66}></Image>
                         </div>
                     </div>
                     <div className="others-info">

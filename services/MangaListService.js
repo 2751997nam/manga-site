@@ -2,7 +2,7 @@ const buildFilters = async (db, params) => {
     let result = {};
     for (let key in params) {
         if (key == 'sort_by' && params.sort_type) {
-            if (params[key] == 'updated_at') {
+            if (params[key] == 'created_at') {
                 result.orderBy = {
                     field: params[key],
                     sort: params.sort_type
@@ -47,7 +47,7 @@ const buildFilters = async (db, params) => {
 
 const getLastUpdateChapters = async (db, mangaIds) => {
     const query = db.from('chapter');
-    const lastUpdateMangas = await query.select(db.raw('distinct chapter.manga_id, max(`chapter`.`updated_at`) as updated_at'))
+    const lastUpdateMangas = await query.select(db.raw('distinct chapter.manga_id, max(`chapter`.`created_at`) as created_at'))
         .where('chapter.status', '=', 'ACTIVE')
         .whereIn('manga_id', mangaIds)
         .groupBy('chapter.manga_id');
@@ -56,10 +56,10 @@ const getLastUpdateChapters = async (db, mangaIds) => {
         let chapter = await db.from('chapter')
             .join('manga', 'manga.id', 'chapter.manga_id')
             .where('manga_id', item.manga_id)
-            .where('chapter.updated_at', item.updated_at)
-            .orderBy('chapter.updated_at', 'desc')
+            .where('chapter.created_at', item.created_at)
+            .orderBy('chapter.created_at', 'desc')
             .orderBy('sorder', 'desc')
-            .select(['chapter.id as chapter_id', 'chapter.name', 'chapter.slug', 'chapter.manga_id', 'chapter.updated_at', 'manga.name as manga_name', 'manga.slug as manga_slug', 'manga.image as manga_image'])
+            .select(['chapter.id as chapter_id', 'chapter.name', 'chapter.slug', 'chapter.manga_id', 'chapter.created_at', 'manga.name as manga_name', 'manga.slug as manga_slug', 'manga.image as manga_image'])
             .first();
         chapters.push(chapter);
     }
@@ -76,7 +76,7 @@ const getLastUpdateChapters = async (db, mangaIds) => {
                 manga_id: item.manga_id,
                 name: item.name,
                 slug: item.slug,
-                updated_at: item.updated_at
+                created_at: item.created_at
             }
         }
 
@@ -143,7 +143,7 @@ const getLastUpdateMangas = async (db, filter = {}) => {
             pageId: pageId
         }
     }
-    query.select(db.raw('distinct chapter.manga_id, max(`chapter`.`updated_at`) as updated_at'))
+    query.select(db.raw('distinct chapter.manga_id, max(`chapter`.`created_at`) as created_at'))
         .where('chapter.status', '=', 'ACTIVE')
         .groupBy('chapter.manga_id');
     if (filter.orderBy) {
@@ -151,7 +151,7 @@ const getLastUpdateMangas = async (db, filter = {}) => {
     } else if (filter.mangaOrderBy) {
         query.orderBy('manga.' + filter.mangaOrderBy.field, filter.mangaOrderBy.sort);
     } else {
-        query.orderBy('updated_at', 'desc');
+        query.orderBy('created_at', 'desc');
     }
     const lastUpdateMangas = await query.limit(pageSize).offset(pageId * pageSize);
     let chapters = [];
@@ -159,10 +159,10 @@ const getLastUpdateMangas = async (db, filter = {}) => {
         let chapter = await db.from('chapter')
             .join('manga', 'manga.id', 'chapter.manga_id')
             .where('manga_id', item.manga_id)
-            .where('chapter.updated_at', item.updated_at)
-            .orderBy('chapter.updated_at', 'desc')
+            .where('chapter.created_at', item.created_at)
+            .orderBy('chapter.created_at', 'desc')
             .orderBy('sorder', 'desc')
-            .select(['chapter.id as chapter_id', 'chapter.name', 'chapter.slug', 'chapter.manga_id', 'chapter.updated_at', 'manga.name as manga_name', 'manga.slug as manga_slug', 'manga.image as manga_image'])
+            .select(['chapter.id as chapter_id', 'chapter.name', 'chapter.slug', 'chapter.manga_id', 'chapter.created_at', 'manga.name as manga_name', 'manga.slug as manga_slug', 'manga.image as manga_image'])
             .first();
         chapters.push(chapter);
     }
@@ -179,7 +179,7 @@ const getLastUpdateMangas = async (db, filter = {}) => {
                 manga_id: item.manga_id,
                 name: item.name,
                 slug: item.slug,
-                updated_at: item.updated_at
+                created_at: item.created_at
             }
         }
 

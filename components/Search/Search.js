@@ -2,6 +2,7 @@ import { Fragment, useState, useCallback, useEffect } from "react";
 import {DebounceInput} from 'react-debounce-input';
 import Image from 'next/image';
 import CustomLink from "../common/CustomLink";
+import { getImageSrc } from '../../lib/hepler';
 
 const Search = (props) => {
     const [mangas, setMangas] = useState([]);
@@ -50,7 +51,7 @@ const Search = (props) => {
             return (<div key={item.id}>
                 <CustomLink className="item" href={'/manga/' + item.id}>
                     <div className="media">
-                        <Image className="img-size-50 mx-2" src={item.image} alt={item.name} width={50} height={60}></Image>
+                        <Image className="img-size-50 mx-2" src={getImageSrc(item.image)} alt={item.name} width={50} height={60}></Image>
                         <div className="media-body">
                             <h6 className="my-0">{item.name}</h6>
                         </div>

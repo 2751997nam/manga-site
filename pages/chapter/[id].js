@@ -1,14 +1,19 @@
 /* eslint-disable react/display-name */
 import DB from '../../lib/db';
-import { getChapterName } from '../../lib/hepler';
+import { getChapterName, getImageSrc } from '../../lib/hepler';
 import chapterDetailStyles from '../../styles/chapter-detail.module.css';
 import Link from 'next/link';
 import Image from 'next/image';
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, useMemo } from 'react';
 import BreadCrumb from '../../components/common/BreadCrumb';
 import { useRouter } from 'next/router';
 import CustomLink from '../../components/common/CustomLink';
+import CustomImage from '../../components/common/CustomImage';
 import Head from 'next/head';
+
+function ImageList (props) {
+
+}
 
 function ChapterDetail(props) {
     const router = useRouter();
@@ -26,15 +31,35 @@ function ChapterDetail(props) {
         {url: '/chapter/' + chapter.id, text: getChapterName(chapter.name) }
     ];
 
-    const renderChapterImages = () => {
-        return chapter.images.map((image, index) => {
+    const renderChapterImages = useCallback(() => {
+        console.log('rendering chapter image');
+        let images = chapter.images;
+        if (
+            // chapter.parse_status == 'ACTIVE' && 
+            chapter.parse_images && 
+            chapter.parse_images.length
+        ) {
+            images = chapter.parse_images;
+        }
+        return images.map((image, index) => {
             return (
                 <div className={chapterDetailStyles['page-item']} key={index}>
-                    <img src={image.image_url} alt={chapter.name} />
+                    <CustomImage 
+                        src={image.image_url} 
+                        error_src={getImageSrc(image.error_url, chapter.name)}
+                        alt={chapter.name} 
+                        layout='fill' 
+                        quality={100} 
+                        priority={index == 0} 
+                        loading="eager" 
+                        objectFit='contain' 
+                        placeholder='blur' 
+                        blurDataURL='/images/loading.gif' 
+                    />
                 </div>
             )
         })
-    }
+    }, [chapter])
 
     const changeChapter = (event) => {
         router.push('/chapter/' + event.target.value);
@@ -80,15 +105,13 @@ function ChapterDetail(props) {
     const toggleSideBar = () => {
         setShowSideBar(!showSideBar);
         setTimeout(() => {
-            if (showSideBar) {
-                let sideBar = document.querySelector('#chapters .rdtoggle_body');
-                let element = document.getElementById('chapter-item-' + chapter.id);
-                if (element) {
-                    element.scrollIntoView();
-                    sideBar.scrollTop = sideBar.scrollTop - 100;
-                }
+            let sideBar = document.querySelector('#chapters .rdtoggle_body');
+            let element = document.getElementById('chapter-item-' + chapter.id);
+            if (element) {
+                element.scrollIntoView();
+                sideBar.scrollTop = sideBar.scrollTop - 100;
             }
-        }, 300);
+        }, 100);
     }
 
     const renderSideBarChapters = () => {
@@ -125,7 +148,9 @@ function ChapterDetail(props) {
 
     useEffect(() => {
         increaseView(chapter);
-    }, [router.asPath, chapter])
+        renderChapterImages();
+        console.log(chapter);
+    }, [router.asPath, chapter, renderChapterImages])
 
     return (
         <div className='row'>
@@ -135,7 +160,9 @@ function ChapterDetail(props) {
             </Head>
             <BreadCrumb links={links}></BreadCrumb>
             <div className='col-md-12 text-center'>
-                {renderChapterImages()}
+                <div className='chapter-images'>
+                    {renderChapterImages()}
+                </div>
             </div>
             <div className="col-md-12">
                 <div className="input-group justify-content-center">
@@ -173,7 +200,7 @@ function ChapterDetail(props) {
                 <main className="rdtoggle_body">
                     <header className="rd_sidebar-header clear">
                         <a className='img'>
-                            <Image src={manga.image} alt={manga.name} width="60" height="85"></Image>
+                            <Image src={getImageSrc(manga.image)} alt={manga.name} width="60" height="85"></Image>
                         </a>
                         <div className="rd_sidebar-name">
                             <h5>
@@ -197,7 +224,9 @@ export async function getServerSideProps(context) {
     const chapter = await db.from('chapter').where('id', id).select(['*']).first();
     const manga = await db.from('manga').where('id', chapter.manga_id).select(['id', 'name', 'slug', 'image']).first();
     chapter.images = JSON.parse(chapter.images);
-
+    if (chapter.parse_images) {
+        chapter.parse_images = JSON.parse(chapter.parse_images);
+    }
     const chapters = await db.from('chapter')
         .where('manga_id', chapter.manga_id)
         .where('status', 'ACTIVE')

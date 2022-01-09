@@ -1,18 +1,18 @@
 import { useCallback, useEffect, useState, useMemo } from 'react';
 import Image from 'next/image';
 import CustomLink from './CustomLink';
-import { formatDate, getChapterName } from '../../lib/hepler';
+import { formatDate, getChapterName, getImageSrc } from '../../lib/hepler';
 
 const MangaItemMobile = (props) => {
     const manga = props.manga;
-    const updateTime = formatDate(manga.chapter.updated_at);
+    const updateTime = formatDate(manga.chapter.created_at);
 
     return (
         <div className="thumb-item-flow col-6 col-md-3">
             <div className="thumb-wrapper">
                 <CustomLink href={'/manga/' + manga.id} title={manga.name}>
                     <div className="a6-ratio">
-                        <Image src={manga.image} alt={manga.name} width={165} height={240} />
+                        <Image src={getImageSrc(manga.image)} alt={manga.name} width={165} height={240} />
                     </div>
                 </CustomLink>
                 <div className="thumb-detail">

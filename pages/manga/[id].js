@@ -8,6 +8,7 @@ import BreadCrumb from '../../components/common/BreadCrumb';
 import ChapterList from '../../components/manga-detail/ChapterList';
 import SuggestManga from '../../components/manga-detail/SuggestManga';
 import Head from 'next/head';
+import { getImageSrc } from '../../lib/hepler';
 
 function MangaDetail(props) {
     const manga = props.manga;
@@ -50,7 +51,7 @@ function MangaDetail(props) {
                         <div className="row">
                             <div className="col-md-4">
                                 <div className="info-cover">
-                                    <Image className='thumbnail img-fluid' width="180" height="260" src={manga.image} alt={manga.name}></Image>
+                                    <Image className='thumbnail img-fluid' width="180" height="260" src={getImageSrc(manga.image)} alt={manga.name}></Image>
                                     <div className="pt-2 pl-lg-2">
                                         <h4><i className="fas fa-star-half-alt"></i> Rate.</h4>
                                         <div className="h0rating" slug="theater-cociety-engsub">
@@ -147,7 +148,7 @@ export async function getServerSideProps(context) {
         .where('manga_id', id)
         .where('status', 'ACTIVE')
         .orderBy('sorder', 'desc')
-        .select(['id', 'name', 'slug', 'updated_at']);
+        .select(['id', 'name', 'slug', 'created_at']);
 
     const translatorIds = translators.map(item => item.id);
     const categoryIds = categories.map(item => item.id);

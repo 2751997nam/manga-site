@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { getImageSrc } from '../../lib/hepler';
 
 const PopUpManga = (props) => {
     const manga = props.manga;
@@ -20,7 +21,7 @@ const PopUpManga = (props) => {
             <div className="pop_title">{manga.name}</div>
             <div className="pop_info clearfix">
                 <div className='pop_info_img'>
-                    <Image src={manga.image} alt={manga.name} width="100" height="140" />
+                    <Image src={getImageSrc(manga.image)} alt={manga.name} width="100" height="140" />
                 </div>
                 <div className="group">
                     <small>
