@@ -8,14 +8,13 @@ import Image from 'next/image';
 function Layout(props) {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
-
     const scrollToTop = () => {
         window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
     useEffect(() => {
-        const handleStart = (url) => (url !== router.asPath) && setLoading(true);
-        const handleComplete = (url) => (url === router.asPath) && setLoading(false);
+        const handleStart = (url) => setLoading(true);
+        const handleComplete = (url) => setLoading(false);
 
         router.events.on('routeChangeStart', handleStart)
         router.events.on('routeChangeComplete', handleComplete)
@@ -28,16 +27,16 @@ function Layout(props) {
         }
     }, [router.events, router.asPath]);
 
-    const renderLoading = useCallback((loading) => {
+    const renderLoading = useCallback(() => {
         return loading && (
             <div className='loading-box'>
                 <Image src="/images/spiner.svg" width={100} height={100} alt="loading"></Image>
             </div>
         )
-    }, [])
+    }, [loading])
 
     useEffect(() => {
-        renderLoading(loading);
+        renderLoading();
     }, [loading, renderLoading])
 
     return (

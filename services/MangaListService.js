@@ -119,11 +119,14 @@ const getLastUpdateMangas = async (db, filter = {}) => {
     if (filter.mangaIds) {
         query.whereIn('chapter.manga_id', filter.mangaIds);
     }
-    if (filter.status || filter.mangaOrderBy) {
+    if (filter.status || filter.mangaOrderBy || filter.q) {
         query.join('manga', 'manga.id', 'chapter.manga_id');
     }
     if (filter.status) {
         query.where('manga.status', '=', filter.status);
+    }
+    if (filter.q) {
+        query.where('manga.name', 'like', '%' + filter.q + '%');
     }
 
     const pageId = filter.page ? (filter.page - 1) : 0;
@@ -133,7 +136,11 @@ const getLastUpdateMangas = async (db, filter = {}) => {
     if (typeof filter.getOnlyResult == 'undefined' || !filter.getOnlyResult) {
         const totalQuery = query.clone();
         let total = await totalQuery.select(db.raw('count(distinct chapter.manga_id) as count')).first();
-        total = total.count;
+        if (total) {
+            total = total.count;
+        } else {
+            total = 0;
+        }
         const pageCount = total > 0 ? Math.ceil(total / pageSize) : 0;
         meta = {
             total: total,
@@ -196,9 +203,34 @@ const getLastUpdateMangas = async (db, filter = {}) => {
     };
 }
 
+const getTopViews = async (db, Redis) => {
+    let topViews = await Redis.getJson('topViews', []);
+    if (!topViews || !topViews.length) {
+        topViews = await getLastUpdateMangas(db, {mangaOrderBy: {field: 'view_day', sort: 'desc'}, pageSize: 5, getOnlyResult: true});
+        Redis.setJson('topViews', topViews, 'EX', 3 * 3600);
+    }
+    let topViewsMonth = await Redis.getJson('topViewsMonth', []);
+    if (!topViewsMonth || !topViewsMonth.length) {
+        topViewsMonth = await getLastUpdateMangas(db, {mangaOrderBy: {field: 'view_month', sort: 'desc'}, pageSize: 5, getOnlyResult: true});
+        Redis.setJson('topViewsMonth', topViewsMonth, 'EX', 86400);
+    }
+    let topViewsAll = await Redis.getJson('topViewsAll', []);
+    if (!topViewsAll || !topViewsAll.length) {
+        topViewsAll = await getLastUpdateMangas(db, {mangaOrderBy: {field: 'view', sort: 'desc'}, pageSize: 5, getOnlyResult: true});
+        Redis.setJson('topViewsAll', topViewsAll, 'EX', 7 * 86400);
+    }
+
+    return {
+        topViews: topViews,
+        topViewsMonth: topViewsMonth,
+        topViewsAll: topViewsAll,
+    }
+}
+
 module.exports = {
     buildFilters: buildFilters,
     getPopularMangas: getPopularMangas,
     getLastUpdateChapters: getLastUpdateChapters,
-    getLastUpdateMangas: getLastUpdateMangas
+    getLastUpdateMangas: getLastUpdateMangas,
+    getTopViews: getTopViews
 }

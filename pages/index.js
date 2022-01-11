@@ -1,6 +1,7 @@
 import DB from '../lib/db';
+import Redis from '../lib/redis';
 import CardList from '../components/common/CardList';
-import {buildFilters, getLastUpdateMangas, getPopularMangas} from '../services/MangaListService';
+import {buildFilters, getLastUpdateMangas, getPopularMangas, getTopViews} from '../services/MangaListService';
 import dynamic from 'next/dynamic'
 import TopView from '../components/manga-detail/TopView';
 import Head from 'next/head';
@@ -10,7 +11,7 @@ const Slider = dynamic(
     // No need for SSR, when the module includes a library that only works in the
     // browser.
     { ssr: false }
-  );
+);
 
 function HomePage(props) {
     const populars = props.populars;
@@ -44,14 +45,30 @@ function HomePage(props) {
 
 export async function getServerSideProps(contex) {
     const db = DB();
-    let populars = await getPopularMangas(db);
-    let lastUpdates = await getLastUpdateMangas(db, {notCategoryId: 8, getOnlyResult: true, pageSize: 19});
-    let lastUpdateRaws = await getLastUpdateMangas(db, {categoryId: 8, getOnlyResult: true, pageSize: 11});
-    let lastUpdateCompleteds = await getLastUpdateMangas(db, {status: 'COMPLETED', getOnlyResult: true, pageSize: 7});
+    let populars = await Redis.getJson('populars', []);
+    if (!populars || !populars.length) {
+        populars = await getPopularMangas(db);
+        Redis.setJson('populars', populars);
+    }
+    let lastUpdates = await Redis.getJson('lastUpdates', []);
+    if (!lastUpdates || !lastUpdates.length) {
+        lastUpdates = await getLastUpdateMangas(db, {notCategoryId: 8, getOnlyResult: true, pageSize: 19});
+        Redis.setJson('lastUpdates', lastUpdates);
+    }
 
-    const topViews = await getLastUpdateMangas(db, {mangaOrderBy: {field: 'view_day', sort: 'desc'}, pageSize: 5, getOnlyResult: true});
-    const topViewsMonth = await getLastUpdateMangas(db, {mangaOrderBy: {field: 'view_month', sort: 'desc'}, pageSize: 5, getOnlyResult: true});
-    const topViewsAll = await getLastUpdateMangas(db, {mangaOrderBy: {field: 'view', sort: 'desc'}, pageSize: 5, getOnlyResult: true});
+    let lastUpdateRaws = await Redis.getJson('lastUpdateRaws', []);
+    if (!lastUpdateRaws || !lastUpdateRaws.length) {
+        lastUpdateRaws = await getLastUpdateMangas(db, {categoryId: 8, getOnlyResult: true, pageSize: 11});
+        Redis.setJson('lastUpdateRaws', lastUpdateRaws, 'EX', 86400);
+    }
+
+    let lastUpdateCompleteds = await Redis.getJson('lastUpdateCompleteds', []);
+    if (!lastUpdateCompleteds || !lastUpdateCompleteds.length) {
+        lastUpdateCompleteds = await getLastUpdateMangas(db, {status: 'COMPLETED', getOnlyResult: true, pageSize: 7});
+        Redis.setJson('lastUpdateCompleteds', lastUpdateCompleteds, 'EX', 86400);
+    }
+
+    const { topViews, topViewsMonth, topViewsAll } = await getTopViews(db, Redis);
 
     return {
         props: {

@@ -3,6 +3,12 @@ import Link from 'next/link';
 import React from 'react';
 
 function CustomLink (props) {
+    const onClick = () => {
+        if (props.onClick) {
+            props.onClick();
+        }
+    }
+
     const CustomLink = React.forwardRef(({ onClick, href, className, title }, ref) => {
         return (
             <a href={href ? href : '/'} onClick={onClick} ref={ref} className={className} title={title}>
@@ -11,8 +17,8 @@ function CustomLink (props) {
         )
     });
     return (
-        <Link href={props.href ? props.href : '/'} alt={props.alt} title={props.title} onClick={props.onClick} passHref>
-            <CustomLink className={props.className} alt={props.alt} title={props.title} onClick={props.onClick} />
+        <Link href={props.href ? props.href : '/'} alt={props.alt} title={props.title} onClick={onClick} passHref>
+            <CustomLink className={props.className} alt={props.alt} title={props.title} onClick={onClick} />
         </Link>
     )
 }

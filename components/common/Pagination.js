@@ -1,8 +1,14 @@
 import { Fragment, useEffect, useState } from "react";
 import CustomLink from "./CustomLink";
+import { useRouter } from "next/router";
 
 const Pagination = (props) => {
-    let {pageCount, pageId, pageSize} = props.meta;
+    const router = useRouter();
+
+    let [pageCount, setPageCount] = useState(props.meta.pageCount);
+    let [pageId, setPageId] = useState(props.meta.pageId);
+    let [pageSize, setPageSize] = useState(props.meta.pageSize);
+    
     const query = props.query;
     const [url, setUrl] = useState('');
 
@@ -34,6 +40,12 @@ const Pagination = (props) => {
         }
         setUrl(url);
     }, [setUrl]);
+
+    useEffect(() => {
+        setPageCount(props.meta.pageCount);
+        setPageId(props.meta.pageId);
+        setPageSize(props.meta.pageSize);
+    }, [router.asPath, props])
 
     const renderPages = (from, to) => {
         const pages = range(from, to);
@@ -95,7 +107,7 @@ const Pagination = (props) => {
         }
     }
 
-    if (pageCount > 0) {
+    if (pageCount > 1) {
         return (
             <div className="pagination-wrap float-right">
                 <ul className="pagination pagination-v4">
@@ -109,6 +121,8 @@ const Pagination = (props) => {
                 </ul>
             </div>
         )
+    } else {
+        return <></>;
     }
 }
 

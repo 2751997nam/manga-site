@@ -3,6 +3,7 @@ import {DebounceInput} from 'react-debounce-input';
 import Image from 'next/image';
 import CustomLink from "../common/CustomLink";
 import { getImageSrc } from '../../lib/hepler';
+import { useRouter } from 'next/router';
 
 const Search = (props) => {
     const [mangas, setMangas] = useState([]);
@@ -10,6 +11,8 @@ const Search = (props) => {
     const [showForm, setShowForm] = useState(false);
     const [ref, setRef] = useState(null);
     const [refMobile, setRefMobile] = useState(null);
+    const router = useRouter();
+    const [query, setQuery] = useState({});
 
     const hideResult = () => {
         setTimeout(() => {
@@ -21,6 +24,7 @@ const Search = (props) => {
 
     const onSearching = (event) => {
         const value = event.target.value;
+        setQuery({...query, q: value});
         if (value) {
             setLoading(true);
             let appUrl = process.env.APP_URL;
@@ -70,6 +74,18 @@ const Search = (props) => {
         return getMangaList();
     }, [getMangaList]);
 
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        router.push({ 
+            pathname: '/manga', 
+            query: query
+        })
+    }
+
+    useEffect(() => {
+        setQuery({q: router.query.q});
+    }, [router.asPath, router.query]);
+
     useEffect(() => {
         if (!showForm) {
             renderMangas();
@@ -80,7 +96,7 @@ const Search = (props) => {
 
     return (
         <Fragment>
-            <form tabIndex={0} onBlur={hideResult} className="form-inline ml-3 d-none d-md-inline align-self-center position-relative">
+            <form onSubmit={handleSubmit} tabIndex={0} onBlur={hideResult} className="form-inline ml-3 d-none d-md-inline align-self-center position-relative">
                 <div className="input-group input-group-sm">
                     <DebounceInput
                         className="form-control form-control-navbar search-web inputSearch"
@@ -88,6 +104,9 @@ const Search = (props) => {
                         aria-label="Search" 
                         inputRef={setRef}
                         minLength={2}
+                        name="q"
+                        value={query.q}
+                        autoComplete="off"
                         debounceTimeout={300}
                         onChange={onSearching} 
                     />

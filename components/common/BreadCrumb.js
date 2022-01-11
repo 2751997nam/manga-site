@@ -6,7 +6,7 @@ const BreadCrumb = (props) => {
     const renderLinks = () => {
         return links.map((link, index) => {
             return (
-                <li className={'breadcrumb-item ' + (index == links.length - 1 ? 'active' : '')} key={index}>
+                <li className={'breadcrumb-item ' + (index == links.length - 1 ? 'active' : '')} key={link.url}>
                     <CustomLink className="text-light" href={link.url}>{link.text}</CustomLink>
                 </li>
             )

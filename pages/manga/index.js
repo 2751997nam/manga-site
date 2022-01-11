@@ -3,12 +3,13 @@ import mangaStyles from '../../styles/manga.module.css';
 import CustomLink from '../../components/common/CustomLink';
 import Image from 'next/image';
 import CardListPagination from '../../components/common/CardListPagination';
-import {buildFilters, getLastUpdateMangas} from '../../services/MangaListService';
+import {buildFilters, getLastUpdateMangas, getTopViews} from '../../services/MangaListService';
 import DB from '../../lib/db';
 import TopView from '../../components/manga-detail/TopView';
 import SortBox from '../../components/common/SortBox';
 import BreadCrumb from '../../components/common/BreadCrumb';
 import Head from 'next/head';
+import Redis from '../../lib/redis';
 
 function MangaList(props) {
     const mangas = props.mangas;
@@ -57,9 +58,8 @@ export async function getServerSideProps(context) {
     const filter = await buildFilters(db, context.query);
     const {mangas, meta} = await getLastUpdateMangas(db, filter);
 
-    const topViews = await getLastUpdateMangas(db, {mangaOrderBy: {field: 'view_day', sort: 'desc'}, pageSize: 5, getOnlyResult: true});
-    const topViewsMonth = await getLastUpdateMangas(db, {mangaOrderBy: {field: 'view_month', sort: 'desc'}, pageSize: 5, getOnlyResult: true});
-    const topViewsAll = await getLastUpdateMangas(db, {mangaOrderBy: {field: 'view', sort: 'desc'}, pageSize: 5, getOnlyResult: true});
+    const { topViews, topViewsMonth, topViewsAll } = await getTopViews(db, Redis);
+
     return {
         props: {
             mangas: JSON.parse(JSON.stringify(mangas)),

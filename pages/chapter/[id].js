@@ -11,8 +11,41 @@ import CustomLink from '../../components/common/CustomLink';
 import CustomImage from '../../components/common/CustomImage';
 import Head from 'next/head';
 
-function ImageList (props) {
+const ImageList = ({chapter}) => {
+    let images = chapter.images;
+    if (
+        // chapter.parse_status == 'ACTIVE' && 
+        chapter.parse_images && 
+        chapter.parse_images.length
+    ) {
+        images = chapter.parse_images;
+    }
+    const renderImages = useCallback(() => {
+        return images.map((image, index) => {
+            return (
+                <div className={chapterDetailStyles['page-item']} key={index}>
+                    <CustomImage 
+                        src={image.image_url} 
+                        error_src={getImageSrc(image.error_url)}
+                        alt={chapter.name} 
+                        layout='fill' 
+                        quality={100} 
+                        priority={index == 0} 
+                        loading="eager" 
+                        objectFit='contain' 
+                        placeholder='blur' 
+                        blurDataURL='/images/loading.gif' 
+                    />
+                </div>
+            )
+        })
+    }, [chapter, images]);
 
+    useEffect(() => {
+        renderImages();
+    }, [renderImages]);
+
+    return <>{renderImages}</>
 }
 
 function ChapterDetail(props) {
@@ -32,7 +65,6 @@ function ChapterDetail(props) {
     ];
 
     const renderChapterImages = useCallback(() => {
-        console.log('rendering chapter image');
         let images = chapter.images;
         if (
             // chapter.parse_status == 'ACTIVE' && 
@@ -43,10 +75,10 @@ function ChapterDetail(props) {
         }
         return images.map((image, index) => {
             return (
-                <div className={chapterDetailStyles['page-item']} key={index}>
+                <div className={chapterDetailStyles['page-item']} key={`${chapter.id}-${index}`}>
                     <CustomImage 
                         src={image.image_url} 
-                        error_src={getImageSrc(image.error_url, chapter.name)}
+                        error_src={getImageSrc(image.error_url)}
                         alt={chapter.name} 
                         layout='fill' 
                         quality={100} 
@@ -148,9 +180,7 @@ function ChapterDetail(props) {
 
     useEffect(() => {
         increaseView(chapter);
-        renderChapterImages();
-        console.log(chapter);
-    }, [router.asPath, chapter, renderChapterImages])
+    }, [router.asPath, chapter])
 
     return (
         <div className='row'>

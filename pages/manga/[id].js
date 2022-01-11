@@ -3,7 +3,6 @@ import DB from '../../lib/db';
 import mangaDetailStyles from '../../styles/manga-detail.module.css';
 import CustomLink from '../../components/common/CustomLink';
 import Image from 'next/image';
-import React from 'react';
 import BreadCrumb from '../../components/common/BreadCrumb';
 import ChapterList from '../../components/manga-detail/ChapterList';
 import SuggestManga from '../../components/manga-detail/SuggestManga';

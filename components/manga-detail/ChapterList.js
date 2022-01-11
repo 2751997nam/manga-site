@@ -1,10 +1,16 @@
 import { useState, useEffect, useCallback } from "react";
 import CustomLink from "../common/CustomLink";
 import { formatDate, getChapterName } from '../../lib/hepler';
+import { useRouter } from 'next/router';
 
 const ChapterList = (props) => {
     const [sortUp, setSortUp] = useState(true);
     const [chapters, setChapters] = useState(props.chapters);
+    const router = useRouter();
+
+    useEffect(() => {
+        setChapters(props.chapters);
+    }, [router.asPath, props.chapters])
     
     const reverseChapters = () => {
         chapters.reverse();
