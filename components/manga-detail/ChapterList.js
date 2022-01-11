@@ -1,11 +1,12 @@
 import { useState, useEffect, useCallback } from "react";
 import CustomLink from "../common/CustomLink";
-import { formatDate, getChapterName } from '../../lib/hepler';
+import { formatDate, getChapterName, getMangaRoute, getChapterRoute } from '../../lib/hepler';
 import { useRouter } from 'next/router';
 
 const ChapterList = (props) => {
     const [sortUp, setSortUp] = useState(true);
     const [chapters, setChapters] = useState(props.chapters);
+    const manga = props.manga;
     const router = useRouter();
 
     useEffect(() => {
@@ -21,7 +22,7 @@ const ChapterList = (props) => {
     const renderChapters = useCallback(() => {
         return chapters.map(chapter => {
             return (
-                <CustomLink href={'/chapter/' + chapter.id} title={chapter.name} key={chapter.id}>
+                <CustomLink href={getChapterRoute(manga, chapter)} title={chapter.name} key={chapter.id}>
                     <li>
                         <div className="chapter-name text-truncate">{getChapterName(chapter.name)}</div>
                         <div className="chapter-time">{formatDate(chapter.created_at)}</div>
@@ -29,7 +30,7 @@ const ChapterList = (props) => {
                 </CustomLink>
             )
         })
-    }, [chapters]);
+    }, [chapters, manga]);
 
     useEffect(() => {
         renderChapters();

@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState, useMemo } from 'react';
 import Image from 'next/image';
 import CustomLink from './CustomLink';
-import { formatDate, getChapterName, getImageSrc } from '../../lib/hepler';
+import { formatDate, getChapterName, getImageSrc, getMangaRoute, getChapterRoute } from '../../lib/hepler';
 
 const MangaItemMobile = (props) => {
     const manga = props.manga;
@@ -10,14 +10,14 @@ const MangaItemMobile = (props) => {
     return (
         <div className="thumb-item-flow col-6 col-md-3">
             <div className="thumb-wrapper">
-                <CustomLink href={'/manga/' + manga.id} title={manga.name}>
+                <CustomLink href={getMangaRoute(manga)} title={manga.name}>
                     <div className="a6-ratio">
                         <Image src={getImageSrc(manga.image)} alt={manga.name} width={165} height={240} />
                     </div>
                 </CustomLink>
                 <div className="thumb-detail">
                     <div className="chapter-title text-truncate" title="Chapter 45">
-                        <CustomLink href={'/chapter/' + manga.chapter.id} title={manga.name}>{manga.chapter ? getChapterName(manga.chapter.name) : ''}</CustomLink>
+                        <CustomLink href={getChapterRoute(manga, manga.chapter)} title={manga.name}>{manga.chapter ? getChapterName(manga.chapter.name) : ''}</CustomLink>
                     </div>
                 </div>
                 <div className="manga-badge">
@@ -27,7 +27,7 @@ const MangaItemMobile = (props) => {
                 </div>
             </div>
             <div className="thumb_attr series-title">
-                <CustomLink href={'/manga/' + manga.id} title={manga.name}>{manga.name}</CustomLink>
+                <CustomLink href={getMangaRoute(manga)} title={manga.name}>{manga.name}</CustomLink>
             </div>
         </div>
     )

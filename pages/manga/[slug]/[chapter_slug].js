@@ -1,14 +1,14 @@
 /* eslint-disable react/display-name */
-import DB from '../../lib/db';
-import { getChapterName, getImageSrc } from '../../lib/hepler';
-import chapterDetailStyles from '../../styles/chapter-detail.module.css';
+import DB from '../../../lib/db';
+import { getChapterName, getImageSrc, getMangaRoute, getChapterRoute } from '../../../lib/hepler';
+import chapterDetailStyles from '../../../styles/chapter-detail.module.css';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useCallback, useEffect, useState, useMemo } from 'react';
-import BreadCrumb from '../../components/common/BreadCrumb';
+import BreadCrumb from '../../../components/common/BreadCrumb';
 import { useRouter } from 'next/router';
-import CustomLink from '../../components/common/CustomLink';
-import CustomImage from '../../components/common/CustomImage';
+import CustomLink from '../../../components/common/CustomLink';
+import CustomImage from '../../../components/common/CustomImage';
 import Head from 'next/head';
 
 const ImageList = ({chapter}) => {
@@ -60,8 +60,8 @@ function ChapterDetail(props) {
 
     const links = [
         {url: '/manga', text: 'List Manga'},
-        {url: '/manga/' + manga.id, text: manga.name},
-        {url: '/chapter/' + chapter.id, text: getChapterName(chapter.name) }
+        {url: getMangaRoute(manga), text: manga.name},
+        {url: getChapterRoute(manga, chapter), text: getChapterName(chapter.name) }
     ];
 
     const renderChapterImages = useCallback(() => {
@@ -94,15 +94,15 @@ function ChapterDetail(props) {
     }, [chapter])
 
     const changeChapter = (event) => {
-        router.push('/chapter/' + event.target.value);
+        router.push(event.target.value);
     }
 
     const renderChapterSelection = () => {
         return (
-            <select className="form-control" value={chapter.id} onChange={changeChapter}>
+            <select className="form-control" value={getChapterRoute(manga, chapter)} onChange={changeChapter}>
                 {chapters.map(item => {
                     return (
-                        <option key={item.id} value={item.id}>{item.name}</option>
+                        <option key={item.id} value={getChapterRoute(manga, item)}>{item.name}</option>
                     )
                 })}
             </select>
@@ -150,7 +150,7 @@ function ChapterDetail(props) {
         return chapters.map(item => {
             return (
                 <li key={item.id} id={'chapter-item-' + item.id } className={item.id == chapter.id ? 'current' : ''} onClick={toggleSideBar}>
-                    <CustomLink href={`/chapter/${item.id}`} title={chapter.name}>{getChapterName(item.name)}</CustomLink>
+                    <CustomLink href={getChapterRoute(manga, chapter)} title={chapter.name}>{getChapterName(item.name)}</CustomLink>
                 </li>
             )
         })
@@ -197,7 +197,7 @@ function ChapterDetail(props) {
             <div className="col-md-12">
                 <div className="input-group justify-content-center">
                     <div className="py-1">
-                        <CustomLink className={'btn btn-info prev ' + (!prevChapter ? 'disabled' : '')} href={prevChapter ? `/chapter/${prevChapter.id}` : ''}>
+                        <CustomLink className={'btn btn-info prev ' + (!prevChapter ? 'disabled' : '')} href={prevChapter ? getChapterRoute(manga, prevChapter) : ''}>
                             <span className="fas fa-chevron-left"></span> Previous chapter
                         </CustomLink>
                     </div>
@@ -206,14 +206,14 @@ function ChapterDetail(props) {
                         {renderChapterSelection()}
                     </div>
                     <div className="py-1">
-                        <CustomLink className={'btn btn-info next ' + (!nextChapter ? 'disabled' : '')} href={nextChapter ? `/chapter/${nextChapter.id}` : ''}>
+                        <CustomLink className={'btn btn-info next ' + (!nextChapter ? 'disabled' : '')} href={nextChapter ? getChapterRoute(manga, nextChapter) : ''}>
                             Next chapter <span className="fas fa-chevron-right"></span>
                         </CustomLink>
                     </div>
                 </div>
             </div>
             <section id="rd-side_icon" className={!showControl ? 'd-none' : ''}>
-                <CustomLink className={'rd_sd-button_item rd_top-left prev ' + (!prevChapter ? 'disabled' : '')} href={prevChapter ? `/chapter/${prevChapter.id}` : ''}>
+                <CustomLink className={'rd_sd-button_item rd_top-left prev ' + (!prevChapter ? 'disabled' : '')} href={prevChapter ? getChapterRoute(manga, prevChapter) : ''}>
                     <i className="fa fa-fast-backward" aria-hidden="true"></i>
                 </CustomLink>
                 <CustomLink className="rd_sd-button_item" href="/">
@@ -222,7 +222,7 @@ function ChapterDetail(props) {
                 <a id="rd-info_icon" onClick={toggleSideBar} className="rd_sd-button_item">
                     <i className="fa fa-bars" aria-hidden="true"></i>
                 </a>
-                <CustomLink className={'rd_sd-button_item rd_top-left next ' + (!nextChapter ? 'disabled' : '')} href={nextChapter ? `/chapter/${nextChapter.id}` : ''}>
+                <CustomLink className={'rd_sd-button_item rd_top-left next ' + (!nextChapter ? 'disabled' : '')} href={nextChapter ? getChapterRoute(manga, nextChapter) : ''}>
                     <i className="fa fa-fast-forward" aria-hidden="true"></i>
                 </CustomLink>
             </section>
@@ -234,7 +234,7 @@ function ChapterDetail(props) {
                         </a>
                         <div className="rd_sidebar-name">
                             <h5>
-                                <a href={`/manga/${manga.id}`}>{manga.name}</a>
+                                <a href={getMangaRoute(manga)}>{manga.name}</a>
                             </h5>
                         </div>
                     </header>
@@ -250,8 +250,16 @@ function ChapterDetail(props) {
 
 export async function getServerSideProps(context) {
     const db = DB();
-    const id = context.params.id;
-    const chapter = await db.from('chapter').where('id', id).select(['*']).first();
+    const slug = context.params.chapter_slug;
+    const chapter = await db.from('chapter').where('slug', slug).select(['*']).first();
+
+    if (!chapter || !chapter.id) {
+        return {
+            notFound: true
+        }
+    }
+    const id = chapter.id;
+
     const manga = await db.from('manga').where('id', chapter.manga_id).select(['id', 'name', 'slug', 'image']).first();
     chapter.images = JSON.parse(chapter.images);
     if (chapter.parse_images) {

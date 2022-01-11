@@ -1,13 +1,13 @@
 /* eslint-disable react/display-name */
-import DB from '../../lib/db';
-import mangaDetailStyles from '../../styles/manga-detail.module.css';
-import CustomLink from '../../components/common/CustomLink';
+import DB from '../../../lib/db';
+import mangaDetailStyles from '../../../styles/manga-detail.module.css';
+import CustomLink from '../../../components/common/CustomLink';
 import Image from 'next/image';
-import BreadCrumb from '../../components/common/BreadCrumb';
-import ChapterList from '../../components/manga-detail/ChapterList';
-import SuggestManga from '../../components/manga-detail/SuggestManga';
+import BreadCrumb from '../../../components/common/BreadCrumb';
+import ChapterList from '../../../components/manga-detail/ChapterList';
+import SuggestManga from '../../../components/manga-detail/SuggestManga';
 import Head from 'next/head';
-import { getImageSrc } from '../../lib/hepler';
+import { getImageSrc, getMangaRoute, getChapterRoute } from '../../../lib/hepler';
 
 function MangaDetail(props) {
     const manga = props.manga;
@@ -21,7 +21,7 @@ function MangaDetail(props) {
 
     const links = [
         {url: '/manga', text: 'List Manga'},
-        {url: '/manga/' + manga.id, text: manga.name}
+        {url: getMangaRoute(manga), text: manga.name}
     ];
 
     const renderInfo = (items, baseUrl, className) => {
@@ -92,10 +92,10 @@ function MangaDetail(props) {
                                 </div>
 
                                 <div id="bt-reading" className="read-action">
-                                    <CustomLink className="btn btn-danger btn-md" href={'/chapter/' + lastChapter.id}>
+                                    {lastChapter && <CustomLink className="btn btn-danger btn-md" href={getChapterRoute(manga, lastChapter)}>
                                         <i className="fa fa-paper-plane" aria-hidden="true"></i> 
                                         Read the last chapter
-                                        </CustomLink>
+                                    </CustomLink>}
                                 </div>
                             </div>
                         </div>
@@ -111,7 +111,7 @@ function MangaDetail(props) {
                         </div>
                     </div>
                 </div>
-                <ChapterList chapters={chapters}></ChapterList>
+                <ChapterList chapters={chapters} manga={manga}></ChapterList>
             </div>
             <div className='col-md-4 mt-2'>
                 {sameGroupMangas.length ? <SuggestManga mangas={sameGroupMangas} title="Same Translation Group"></SuggestManga> : ''}
@@ -132,11 +132,18 @@ async function getRelations(mangaId, table, relationTable) {
 
 export async function getServerSideProps(context) {
     const db = DB();
-    const id = context.params.id;
+    const slug = context.params.slug;
+    
     const manga = await db.from('manga')
-        .where('id', id).
+        .where('slug', slug).
         select(['*'])
         .first();
+    if (!manga || !manga.id) {
+        return {
+            notFound: true
+        }
+    }
+    const id = manga.id;
     const authors = await getRelations(id, 'author', 'manga_n_author');
 
     const categories = await getRelations(id, 'category', 'manga_n_category');

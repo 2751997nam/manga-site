@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import CustomLink from '../common/CustomLink';
-import { getImageSrc } from '../../lib/hepler';
+import { getImageSrc, getMangaRoute, getChapterRoute } from '../../lib/hepler';
 
 function SuggestManga(props) {
     const mangas = props.mangas;
@@ -21,7 +21,7 @@ function SuggestManga(props) {
                     </div>
                     <div className="others-info">
                         <h5 className="others-name">
-                            <CustomLink href={'/manga/' + item.id}>{item.name}</CustomLink>
+                            <CustomLink href={getMangaRoute(item)}>{item.name}</CustomLink>
                         </h5>
                         <small className="series-summary">{stripTags(item.description).substr(0, 70)}...</small>
                     </div>

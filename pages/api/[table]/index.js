@@ -50,6 +50,9 @@ const buildResult = async (params) => {
     if (params.filters) {
         buildFilters(query, params.filters);
     }
+    if (params.page_size > 0 && params.page_id >= 0) {
+        query.limit(params.page_size).offset(params.page_size * params.page_id);
+    }
 
     let items = await query.select(fields);
 

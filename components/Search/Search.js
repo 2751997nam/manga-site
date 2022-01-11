@@ -2,7 +2,7 @@ import { Fragment, useState, useCallback, useEffect } from "react";
 import {DebounceInput} from 'react-debounce-input';
 import Image from 'next/image';
 import CustomLink from "../common/CustomLink";
-import { getImageSrc } from '../../lib/hepler';
+import { getImageSrc, getMangaRoute, getChapterRoute } from '../../lib/hepler';
 import { useRouter } from 'next/router';
 
 const Search = (props) => {
@@ -28,7 +28,7 @@ const Search = (props) => {
         if (value) {
             setLoading(true);
             let appUrl = process.env.APP_URL;
-            fetch('/api/manga?pageSize=5&fields=id,name,slug,image&filters=name~' + value)
+            fetch('/api/manga?page_size=5&fields=id,name,slug,image&filters=name~' + value)
                 .then(res => res.json())
                 .then(res => {
                     if (res.result) {
@@ -53,7 +53,7 @@ const Search = (props) => {
         }
         return mangas.map(item => {
             return (<div key={item.id}>
-                <CustomLink className="item" href={'/manga/' + item.id}>
+                <CustomLink className="item" href={getMangaRoute(item)}>
                     <div className="media">
                         <Image className="img-size-50 mx-2" src={getImageSrc(item.image)} alt={item.name} width={50} height={60}></Image>
                         <div className="media-body">
