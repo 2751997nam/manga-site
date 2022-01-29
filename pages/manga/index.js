@@ -8,10 +8,13 @@ import DB from '../../lib/db';
 import TopView from '../../components/manga-detail/TopView';
 import SortBox from '../../components/common/SortBox';
 import BreadCrumb from '../../components/common/BreadCrumb';
+import SearchAdvance from '../../components/Search/SearchAdvance';
 import Head from 'next/head';
 import Redis from '../../lib/redis';
+import { useState } from 'react';
 
 function MangaList(props) {
+    const [isAdvance, setIsAdvance] = useState(false);
     const mangas = props.mangas;
     const topViews = props.topViews;
     const topViewsMonth = props.topViewsMonth;
@@ -23,6 +26,10 @@ function MangaList(props) {
         text: 'Manga List'
     }];
 
+    const toogleSearchAdvance = () => {
+        setIsAdvance(!isAdvance);
+    }
+
     return (
         <div className="row">
             <Head>
@@ -31,7 +38,10 @@ function MangaList(props) {
                 <meta name="keywords" content="Read manhwa pornwa online free at Mahwa18, update fastest, most full, synthesized 24h free with high-quality images. We hope to bring you happy moments. "></meta>
             </Head>
             <BreadCrumb links={links}></BreadCrumb>
-            <SortBox></SortBox>
+            <SortBox toogleSearchAdvance={toogleSearchAdvance}></SortBox>
+            <div className="col-md-8">
+                {isAdvance && <SearchAdvance categories={props.categories}></SearchAdvance>}
+            </div>
             <div className="col-md-8">
                 <CardListPagination title="List Manga" mangas={mangas} meta={meta} query={query}></CardListPagination>
             </div>

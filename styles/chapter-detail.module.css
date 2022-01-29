@@ -3,6 +3,7 @@
     min-height: unset !important;
     height: unset !important;
     position: unset !important;
+    max-width: 100%;
 }
 
 .page-item div {

@@ -42,14 +42,18 @@ const SortBox = (props) => {
         let sort = url.get('sort_by');
         if (sort) {
             setSort(sort);
+        } else {
+            setSort('created_at');
         }
         let type = url.get('sort_type');
         if (type) {
             setType(type);
+        } else {
+            setType('DESC');
         }
         setUrl(router.asPath);
         setBaseUrl(baseUrl);
-    }, [router.asPath]);
+    }, [router.asPath, router.query]);
 
     return (
         <div className="col-md-8">
@@ -72,11 +76,14 @@ const SortBox = (props) => {
                 <CustomLink onClick={() => onNavigate('created_at', '')} href={buildUrl('created_at')} className={'btn btn-sm btn-info ' + (sort == 'created_at' ? 'active' : '')}>
                     <i className="fas fa-calendar-times"></i> Last updated
                 </CustomLink>
+                <CustomLink onClick={() => onNavigate('sorder', '')} href={buildUrl('sorder')} className={'btn btn-sm btn-info ' + (sort == 'sorder' ? 'active' : '')}>
+                    <i className="fas fa-calendar-times"></i> Chapter
+                </CustomLink>
             </div>
 
             <div className="btn-group float-md-right py-2">
                 <div className="button-group">
-                    <CustomLink href="/search" type="button" className="btn btn-sm btn-primary float-right"><i className="fas fa-filter"></i> Search Adcenced</CustomLink>
+                    <span onClick={props.toogleSearchAdvance} type="button" className="btn btn-sm btn-primary float-right"><i className="fas fa-filter"></i> Search Advanced</span>
                 </div>
             </div>
         </div>

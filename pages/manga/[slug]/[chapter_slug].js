@@ -10,43 +10,7 @@ import { useRouter } from 'next/router';
 import CustomLink from '../../../components/common/CustomLink';
 import CustomImage from '../../../components/common/CustomImage';
 import Head from 'next/head';
-
-const ImageList = ({chapter}) => {
-    let images = chapter.images;
-    if (
-        // chapter.parse_status == 'ACTIVE' && 
-        chapter.parse_images && 
-        chapter.parse_images.length
-    ) {
-        images = chapter.parse_images;
-    }
-    const renderImages = useCallback(() => {
-        return images.map((image, index) => {
-            return (
-                <div className={chapterDetailStyles['page-item']} key={index}>
-                    <CustomImage 
-                        src={image.image_url} 
-                        error_src={getImageSrc(image.error_url)}
-                        alt={chapter.name} 
-                        layout='fill' 
-                        quality={100} 
-                        priority={index == 0} 
-                        loading="eager" 
-                        objectFit='contain' 
-                        placeholder='blur' 
-                        blurDataURL='/images/loading.gif' 
-                    />
-                </div>
-            )
-        })
-    }, [chapter, images]);
-
-    useEffect(() => {
-        renderImages();
-    }, [renderImages]);
-
-    return <>{renderImages}</>
-}
+import Config from '../../../config';
 
 function ChapterDetail(props) {
     const router = useRouter();
@@ -67,6 +31,7 @@ function ChapterDetail(props) {
     const renderChapterImages = useCallback(() => {
         let images = chapter.images;
         if (
+            Config.use_local_image &&
             // chapter.parse_status == 'ACTIVE' && 
             chapter.parse_images && 
             chapter.parse_images.length

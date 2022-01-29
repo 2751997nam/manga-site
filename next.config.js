@@ -2,7 +2,10 @@ const webpack = require('webpack');
 module.exports = {
     reactStrictMode: true,
     images: {
-        domains: ["manhwa18.net", 'cdn.manhwa18.com', 'manhwa18.cc', 'manytoon.com', 'cdn4.manhwa18.com'],
+        domains: ["manhwa18.net", 'cdn.manhwa18.com', 'manhwa18.cc', 'manhwa18.com', 'manytoon.com', 'cdn4.manhwa18.com', 
+            'mangagenki.com', 'i0.wp.com', 'i1.wp.com', 'i2.wp.com', 'i3.wp.com', 'i4.wp.com', 'i5.wp.com',
+            'manga18.us', 'azmin.manga18.us', 'manhuascan.us'
+        ],
     },
     async rewrites() {
         return [

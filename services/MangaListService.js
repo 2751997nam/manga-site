@@ -1,43 +1,54 @@
 const buildFilters = async (db, params) => {
     let result = {};
     for (let key in params) {
-        if (key == 'sort_by' && params.sort_type) {
-            if (params[key] == 'created_at') {
-                result.orderBy = {
-                    field: params[key],
-                    sort: params.sort_type
-                }
-            } else {
-                result.mangaOrderBy = {
-                    field: params[key],
-                    sort: params.sort_type
+        if(params[key]) {
+            if (key == 'sort_by' && params.sort_type) {
+                if (params[key] == 'created_at' || params[key] == 'sorder') {
+                    result.orderBy = {
+                        field: params[key],
+                        sort: params.sort_type
+                    }
+                } else {
+                    result.mangaOrderBy = {
+                        field: params[key],
+                        sort: params.sort_type
+                    }
                 }
             }
-        }
-        else if (key != 'slug' && key != 'sort_type') {
-            result[key] = params[key];
-        } else {
-            let value = params[key];
-            if (value.indexOf('genre') == 0) {
-                let slug = value.replace('genre-', '');
-                let item = await db.from('category').where('slug', slug).select('id').first();
-                if (item) {
-                    result.categoryId = item.id;
+            else if (key == 'genre') {
+                let ids = params[key].split(',');
+                result.categoryIds = ids;
+            } else if (key == 'ungenre' && params[key]) {
+                let ids = params[key].split(',');
+                result.notCategoryIds = ids;
+            }
+            else if (key != 'slug' && key != 'sort_type') {
+                result[key] = params[key];
+            } else {
+                let value = params[key];
+                if (value.indexOf('genre-') == 0) {
+                    let slug = value.replace('genre-', '');
+                    if (slug) {
+                        let item = await db.from('category').where('slug', slug).select('id').first();
+                        if (item) {
+                            result.categoryIds = [item.id];
+                        }
+                    }
+                } if (value.indexOf('author') == 0) {
+                    let slug = value.replace('author-', '');
+                    let item = await db.from('author').where('slug', slug).select('id').first();
+                    if (item) {
+                        result.authorId = item.id;
+                    }
+                } if (value.indexOf('trans-group') == 0) {
+                    let slug = value.replace('trans-group-', '');
+                    let item = await db.from('translator').where('slug', slug).select('id').first();
+                    if (item) {
+                        result.translatorId = item.id;
+                    }
+                } else if (value == 'completed' || value == 'active') {
+                    result['status'] = value;
                 }
-            } if (value.indexOf('author') == 0) {
-                let slug = value.replace('author-', '');
-                let item = await db.from('author').where('slug', slug).select('id').first();
-                if (item) {
-                    result.authorId = item.id;
-                }
-            } if (value.indexOf('trans-group') == 0) {
-                let slug = value.replace('trans-group-', '');
-                let item = await db.from('translator').where('slug', slug).select('id').first();
-                if (item) {
-                    result.translatorId = item.id;
-                }
-            } else if (value == 'completed' || value == 'active') {
-                result['status'] = value;
             }
         }
     }
@@ -47,7 +58,7 @@ const buildFilters = async (db, params) => {
 
 const getLastUpdateChapters = async (db, mangaIds) => {
     const query = db.from('chapter');
-    const lastUpdateMangas = await query.select(db.raw('distinct chapter.manga_id, max(`chapter`.`created_at`) as created_at'))
+    const lastUpdateMangas = await query.select(db.raw('distinct chapter.manga_id, max(`chapter`.`created_at`) as created_at, max(`sorder`) as sorder'))
         .where('chapter.status', '=', 'ACTIVE')
         .whereIn('manga_id', mangaIds)
         .groupBy('chapter.manga_id');
@@ -100,13 +111,13 @@ const getPopularMangas = async function (db, filter = {}) {
 
 const getLastUpdateMangas = async (db, filter = {}) => {
     const query = db.from('chapter');
-    if (filter.categoryId) {
+    if (filter.categoryIds && filter.categoryIds.length) {
         query.join('manga_n_category', 'manga_n_category.manga_id', 'chapter.manga_id')
-            .where('category_id', '=', filter.categoryId);
+            .whereIn('category_id',filter.categoryIds);
     }
-    if (filter.notCategoryId) {
+    if (filter.notCategoryIds && filter.notCategoryIds.length) {
         query.join('manga_n_category', 'manga_n_category.manga_id', 'chapter.manga_id')
-            .where('category_id', '!=', filter.notCategoryId);
+            .whereNotIn('category_id', filter.notCategoryIds);
     }
     if (filter.authorId) {
         query.join('manga_n_author', 'manga_n_author.manga_id', 'chapter.manga_id')
@@ -150,7 +161,7 @@ const getLastUpdateMangas = async (db, filter = {}) => {
             pageId: pageId
         }
     }
-    query.select(db.raw('distinct chapter.manga_id, max(`chapter`.`created_at`) as created_at'))
+    query.select(db.raw('distinct chapter.manga_id, max(`chapter`.`created_at`) as created_at, max(`sorder`) as sorder'))
         .where('chapter.status', '=', 'ACTIVE')
         .groupBy('chapter.manga_id');
     if (filter.orderBy) {
@@ -167,6 +178,7 @@ const getLastUpdateMangas = async (db, filter = {}) => {
             .join('manga', 'manga.id', 'chapter.manga_id')
             .where('manga_id', item.manga_id)
             .where('chapter.created_at', item.created_at)
+            .where('chapter.status', 'ACTIVE')
             .orderBy('chapter.created_at', 'desc')
             .orderBy('sorder', 'desc')
             .select(['chapter.id as chapter_id', 'chapter.name', 'chapter.slug', 'chapter.manga_id', 'chapter.created_at', 'manga.name as manga_name', 'manga.slug as manga_slug', 'manga.image as manga_image'])

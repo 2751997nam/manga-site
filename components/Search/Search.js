@@ -14,13 +14,19 @@ const Search = (props) => {
     const router = useRouter();
     const [query, setQuery] = useState({});
 
-    const hideResult = () => {
-        setTimeout(() => {
-            setMangas([]);
-            setShowForm(false);
-            ref.value = '';
-        }, 300);
-    }
+    const hideResult = useCallback(() => {
+        setMangas([]);
+        setShowForm(false);
+        ref.value = '';
+    }, [ref]);
+
+    useEffect(() => {
+        router.events.on('routeChangeStart', hideResult)
+
+        return () => {
+            router.events.off('routeChangeStart', hideResult)
+        }
+    }, [router.events, router.asPath, hideResult]);
 
     const onSearching = (event) => {
         const value = event.target.value;
@@ -96,7 +102,7 @@ const Search = (props) => {
 
     return (
         <Fragment>
-            <form onSubmit={handleSubmit} tabIndex={0} onBlur={hideResult} className="form-inline ml-3 d-none d-md-inline align-self-center position-relative">
+            <form onSubmit={handleSubmit} tabIndex={0} className="form-inline ml-3 d-none d-md-inline align-self-center position-relative">
                 <div className="input-group input-group-sm">
                     <DebounceInput
                         className="form-control form-control-navbar search-web inputSearch"
@@ -131,7 +137,7 @@ const Search = (props) => {
                     <i className="fas fa-search"></i>
                 </a>
                 <div className={'navbar-search-block ' + (showForm ? 'navbar-search-open' : '')}>
-                    <form className="form-inline position-relative" tabIndex={0} onBlur={hideResult}>
+                    <form className="form-inline position-relative" tabIndex={0}>
                         <div className="input-group input-group-sm">
                             <DebounceInput
                                 className="form-control form-control-navbar inputSearch"
@@ -146,7 +152,7 @@ const Search = (props) => {
                                 <button className="btn btn-navbar" type="button" onClick={(event) => event.preventDefault()}>
                                     <i className="fas fa-search"></i>
                                 </button>
-                                <button className="btn btn-navbar" type="button" data-widget="navbar-search" onClick={hideResult}>
+                                <button className="btn btn-navbar" type="button" data-widget="navbar-search">
                                     <i className="fas fa-times"></i>
                                 </button>
                             </div>

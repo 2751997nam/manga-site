@@ -16,7 +16,7 @@ MyApp.getInitialProps = async (context) => {
         return {...appProps, categories: categoriesCache}
     }
     let appUrl = process.env.APP_URL;
-    const response = await fetch(`${appUrl}/api/category?page_size=-1&fields=id,name,slug`)
+    const response = await fetch(`${appUrl}/api/category?page_size=-1&fields=id,name,slug&sorts=name`)
         .then(res => res.json())
     categoriesCache = response.result;
     return {...appProps, categories: categoriesCache}

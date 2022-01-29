@@ -50,6 +50,9 @@ const buildResult = async (params) => {
     if (params.filters) {
         buildFilters(query, params.filters);
     }
+    if (params.sorts) {
+        buildSorts(query, params.sorts);
+    }
     if (params.page_size > 0 && params.page_id >= 0) {
         query.limit(params.page_size).offset(params.page_size * params.page_id);
     }
@@ -97,6 +100,17 @@ const buildFilters = async (query, param) => {
                         break;
                 }
             }
+        }
+    }
+}
+
+const buildSorts = async (query, param) => { 
+    let sorts = param.split(",");
+    for (let item of sorts) {
+        if (item.indexOf('-') == 0) {
+            query.orderBy(item, 'desc');
+        } else {
+            query.orderBy(item, 'asc');
         }
     }
 }
