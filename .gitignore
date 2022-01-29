@@ -35,3 +35,4 @@ yarn-error.log*
 .vercel
 public/manga
 config
+package-lock.json

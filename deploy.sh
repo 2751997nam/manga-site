@@ -1,0 +1,1 @@
+sshpass -p "2}kB4k4ef.eV3QB(" ssh root@manhwaplus.net -t "cd /home/manga-site && git pull && npm run build && pm2 restart manga-site"
