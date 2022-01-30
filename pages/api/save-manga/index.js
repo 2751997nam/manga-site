@@ -35,9 +35,9 @@ const post = async (request, response) => {
                 }
             }
             if (Object.keys(data).length && data.slug) {
-                let check = await db.table('manga').where('slug', data.slug).exists();
-                if (check) {
-                    let result = await db.table('manga').where('id', data.id).update(data);
+                let manga = await db.table('manga').where('slug', data.slug).first();
+                if (manga.id) {
+                    let result = await db.table('manga').where('id', manga.id).update(data);
                 } else {
                     let result = await db.table('manga').insert(data);
                     if (params.categories) {
