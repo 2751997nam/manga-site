@@ -60,6 +60,7 @@ const post = async (request, response) => {
                 retVal.result = result;
                 retVal.status = 'successful';
             }
+            retVal.result = data;
         } else {
             retVal.message = 'token mismatch';
         }
