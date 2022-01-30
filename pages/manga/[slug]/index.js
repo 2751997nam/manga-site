@@ -8,6 +8,7 @@ import ChapterList from '../../../components/manga-detail/ChapterList';
 import SuggestManga from '../../../components/manga-detail/SuggestManga';
 import Head from 'next/head';
 import { getImageSrc, getMangaRoute, getChapterRoute } from '../../../lib/hepler';
+import RatingBox from '../../../components/manga-detail/RatingBox';
 
 function MangaDetail(props) {
     const manga = props.manga;
@@ -51,15 +52,7 @@ function MangaDetail(props) {
                             <div className="col-md-4">
                                 <div className="info-cover">
                                     <Image className='thumbnail img-fluid' width="180" height="260" src={getImageSrc(manga.image)} alt={manga.name}></Image>
-                                    <div className="pt-2 pl-lg-2">
-                                        <h4><i className="fas fa-star-half-alt"></i> Rate.</h4>
-                                        <div className="h0rating" slug="theater-cociety-engsub">
-                                            <a className="h0_ratings_on h0_ratings_active" href={void(0)} rel="1"></a><a className="h0_ratings_on h0_ratings_active" href={void(0)} rel="2"></a>
-                                            <a className="h0_ratings_on h0_ratings_active" href={void(0)} rel="3"></a><a className="h0_ratings_on h0_ratings_active" href={void(0)} rel="4"></a>
-                                            <a className="h0_ratings_on h0_ratings_active" href={void(0)} rel="5"></a>
-                                        </div>
-                                        <p className="text-center">7 ratings</p>
-                                    </div>
+                                    <RatingBox mangaId={manga.id} ratingCount={manga.rating_count} ratingValue={manga.rating} />
                                 </div>
                             </div>
                             <div className="col-md-8">

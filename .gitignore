@@ -34,5 +34,6 @@ yarn-error.log*
 # vercel
 .vercel
 public/manga
+public/images/avatars
 config
 package-lock.json

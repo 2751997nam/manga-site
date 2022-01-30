@@ -65,7 +65,7 @@ const SortBox = (props) => {
                     <i className="fas fa-sort-amount-down"></i> DESC
                 </CustomLink>
             </div>
-            <div className="btn-group soft-by py-2">
+            <div className="btn-group sort-by py-2">
                 <button className="btn btn-sm btn-info" disabled="">Sorted by</button>
                 <CustomLink onClick={() => onNavigate('name', '')} href={buildUrl('name')} className={'btn btn-sm btn-info ' + (sort == 'name' ? 'active' : '')}>
                     <i className="fas fa-sort-alpha-down"></i> A-Z

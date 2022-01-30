@@ -3019,6 +3019,10 @@ pre code {
     .table-responsive-md>.table-bordered {
         border: 0
     }
+
+    .sort-by button.btn-info {
+        display: none;
+    }
 }
 
 @media (max-width:991.98px) {

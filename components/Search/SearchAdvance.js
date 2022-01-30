@@ -62,7 +62,7 @@ const SearchAdvance = (props) => {
     const renderCategories = useCallback(() => {
         return Object.values(categories).map(item => {
             return (
-                <li key={item.id} className="item col-sm-4 col-xs-6 pointer" title={item.name} data-genres={item.id} onClick={() => onClickCategory(item)}>
+                <li key={item.id} className="item col-sm-4 col-xs-6 col-6 pointer" title={item.name} data-genres={item.id} onClick={() => onClickCategory(item)}>
                     <span className={item.status == 'include' ? 'icon-tick' : (item.status == 'exclude' ? 'icon-cross' : 'icon-checkbox')}></span>
                     {item.name}
                 </li>
@@ -129,7 +129,7 @@ const SearchAdvance = (props) => {
                             </ul>
                         </div>
                         <div className="form-group row">
-                            <div className="col-md-3">
+                            <div className="col-md-3 mt-1">
                                 <label htmlFor="TinhTrang">Status:</label>
                                 <select id="TinhTrang" name="m_status" defaultValue={filter.status} className="form-control" onChange={() => onChangeValue(event.target.value, 'status')}>
                                     <option value="">Any</option>
@@ -137,15 +137,15 @@ const SearchAdvance = (props) => {
                                     <option value="ACTIVE">On going</option>
                                 </select>
                             </div>
+                            <div className="col-md-9 mt-1">
+                                <label htmlFor="q">Name</label>
+                                <input type="text" name="name" value={filter.q} onChange={() => onChangeValue(event.target.value, 'q')} placeholder="Name" className="form-control" />
+                            </div>
                         </div>
 
                         <div className="form-group row">
-                            <div className="col-md-9">
-                                <label htmlFor="q" className="sr-only">Name</label>
-                                <input type="text" name="name" value={filter.q} onChange={() => onChangeValue(event.target.value, 'q')} placeholder="Name" className="form-control" />
-                            </div>
-                            <div className="col-md-3">
-                                <button type="submit" className="btn btn-warning float-right">
+                            <div className="col-md-12 text-center">
+                                <button type="submit" className="btn btn-warning">
                                     <i className="fas fa-search" aria-hidden="true"></i> Search
                                 </button>
                             </div>

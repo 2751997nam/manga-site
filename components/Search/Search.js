@@ -137,7 +137,7 @@ const Search = (props) => {
                     <i className="fas fa-search"></i>
                 </a>
                 <div className={'navbar-search-block ' + (showForm ? 'navbar-search-open' : '')}>
-                    <form className="form-inline position-relative" tabIndex={0}>
+                    <form onSubmit={handleSubmit} className="form-inline position-relative" tabIndex={0}>
                         <div className="input-group input-group-sm">
                             <DebounceInput
                                 className="form-control form-control-navbar inputSearch"
@@ -149,7 +149,7 @@ const Search = (props) => {
                                 onChange={onSearching} 
                             />
                             <div className="input-group-append">
-                                <button className="btn btn-navbar" type="button" onClick={(event) => event.preventDefault()}>
+                                <button className="btn btn-navbar" type="submit">
                                     <i className="fas fa-search"></i>
                                 </button>
                                 <button className="btn btn-navbar" type="button" data-widget="navbar-search">
