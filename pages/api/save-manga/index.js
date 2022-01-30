@@ -40,14 +40,20 @@ const post = async (request, response) => {
                     let result = await db.table('manga').where('id', data.id).update(data);
                 } else {
                     let result = await db.table('manga').insert(data);
-                    for (let item of data.categories) {
-                        await this.saveRelation(result[0], item, 'category', 'manga_n_category', 'category_id');
+                    if (params.categories) {
+                        for (let item of params.categories) {
+                            await this.saveRelation(result[0], item, 'category', 'manga_n_category', 'category_id');
+                        }
                     }
-                    for (let item of data.authors) {
-                        await this.saveRelation(result[0], item, 'author', 'manga_n_author', 'author_id');
+                    if (params.authors) {
+                        for (let item of data.authors) {
+                            await this.saveRelation(result[0], item, 'author', 'manga_n_author', 'author_id');
+                        }
                     }
-                    for (let item of data.translators) {
-                        await this.saveRelation(result[0], item, 'translator', 'manga_n_translator', 'translator_id');
+                    if (params.translators) {
+                        for (let item of data.translators) {
+                            await this.saveRelation(result[0], item, 'translator', 'manga_n_translator', 'translator_id');
+                        }
                     }
                 }
                 retVal.result = result;
