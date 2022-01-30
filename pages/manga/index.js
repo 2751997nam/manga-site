@@ -10,7 +10,6 @@ import SortBox from '../../components/common/SortBox';
 import BreadCrumb from '../../components/common/BreadCrumb';
 import SearchAdvance from '../../components/Search/SearchAdvance';
 import Head from 'next/head';
-import Redis from '../../lib/redis';
 import { useState } from 'react';
 
 function MangaList(props) {
@@ -46,7 +45,7 @@ function MangaList(props) {
                 <CardListPagination title="List Manga" mangas={mangas} meta={meta} query={query}></CardListPagination>
             </div>
             <div className='col-md-4'>
-                <TopView topViewsDay={topViews} topViewsMonth={topViewsMonth} topViewsAll={topViewsAll}></TopView>
+                <TopView></TopView>
             </div>
         </div>
     )
@@ -68,16 +67,11 @@ export async function getServerSideProps(context) {
     const filter = await buildFilters(db, context.query);
     const {mangas, meta} = await getLastUpdateMangas(db, filter);
 
-    const { topViews, topViewsMonth, topViewsAll } = await getTopViews(db, Redis);
-
     return {
         props: {
             mangas: JSON.parse(JSON.stringify(mangas)),
             meta: meta,
             query: buildParams(context.query),
-            topViews: JSON.parse(JSON.stringify(topViews)),
-            topViewsMonth: JSON.parse(JSON.stringify(topViewsMonth)),
-            topViewsAll: JSON.parse(JSON.stringify(topViewsAll)),
         }
     };
 }

@@ -1,18 +1,34 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TopViewItem from "./TopViewItem";
 
 const TopView = (props)  => {
-    const topViewsDay = props.topViewsDay;
-    const topViewsMonth = props.topViewsMonth;
-    const topViewsAll = props.topViewsAll;
-
+    const [topViews, setTopViews] = useState([]);
+    const [topViewsMonth, setTopViewsMonth] = useState([]);
+    const [topViewsAll, setTopViewsAll] = useState([]);
     const [active, setActive] = useState(1);
+
+    const fetchTopViews = () => {
+        fetch('/api/top-view')
+        .then(res => res.json())
+        .then(res => {
+            if (res.status == 'successful') {
+                setTopViews(res.result.topViews);
+                setTopViewsMonth(res.result.topViewsMonth);
+                setTopViewsAll(res.result.topViewsAll);
+            }
+        })
+    }
+
 
     const renderItems = (mangas) => {
         return mangas.map(item => {
             return <TopViewItem key={item.id} manga={item}></TopViewItem>
         })
     }
+
+    useEffect(() => {
+        fetchTopViews();
+    }, [])
 
     return (
         <div className="card">
@@ -33,7 +49,7 @@ const TopView = (props)  => {
                 <div className="tab-content">
                     <div className={'tab-pane ' + (active == 1 ? 'active' : '')}>
                         <div className="post">
-                            {renderItems(topViewsDay)}
+                            {renderItems(topViews)}
                         </div>
                     </div>
                     <div className={'tab-pane ' + (active == 2 ? 'active' : '')}>

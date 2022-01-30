@@ -37,18 +37,18 @@ function HomePage(props) {
                 <CardList title="Last update Completed" mangas={lastUpdateCompleteds} seeMoreUrl="/manga-completed"></CardList>
             </div>
             <div className="col-md-4">
-                <TopView topViewsDay={topViews} topViewsMonth={topViewsMonth} topViewsAll={topViewsAll}></TopView>
+                <TopView></TopView>
             </div>
         </div>
     )
 }
 
-export async function getServerSideProps(contex) {
+export async function getServerSideProps(context) {
     const db = DB();
     let populars = await Redis.getJson('populars', []);
     if (!populars || !populars.length) {
         populars = await getPopularMangas(db);
-        Redis.setJson('populars', populars);
+        Redis.setJson('populars', populars, 'EX', 6 * 3600);
     }
     let lastUpdates = await Redis.getJson('lastUpdates', []);
     if (!lastUpdates || !lastUpdates.length) {
@@ -68,17 +68,12 @@ export async function getServerSideProps(contex) {
         Redis.setJson('lastUpdateCompleteds', lastUpdateCompleteds, 'EX', 86400);
     }
 
-    const { topViews, topViewsMonth, topViewsAll } = await getTopViews(db, Redis);
-
     return {
         props: {
             populars: JSON.parse(JSON.stringify(populars)),
             lastUpdates: JSON.parse(JSON.stringify(lastUpdates)),
             lastUpdateRaws: JSON.parse(JSON.stringify(lastUpdateRaws)),
             lastUpdateCompleteds: JSON.parse(JSON.stringify(lastUpdateCompleteds)),
-            topViews: JSON.parse(JSON.stringify(topViews)),
-            topViewsMonth: JSON.parse(JSON.stringify(topViewsMonth)),
-            topViewsAll: JSON.parse(JSON.stringify(topViewsAll)),
         }
     };
 }
