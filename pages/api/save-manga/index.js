@@ -36,10 +36,11 @@ const post = async (request, response) => {
             }
             if (Object.keys(data).length && data.slug) {
                 let manga = await db.table('manga').where('slug', data.slug).first();
+                let result = null;
                 if (manga.id) {
-                    let result = await db.table('manga').where('id', manga.id).update(data);
+                    result = await db.table('manga').where('id', manga.id).update(data);
                 } else {
-                    let result = await db.table('manga').insert(data);
+                    result = await db.table('manga').insert(data);
                     if (params.categories) {
                         for (let item of params.categories) {
                             await this.saveRelation(result[0], item, 'category', 'manga_n_category', 'category_id');
