@@ -108,7 +108,7 @@ const buildSorts = async (query, param) => {
     let sorts = param.split(",");
     for (let item of sorts) {
         if (item.indexOf('-') == 0) {
-            query.orderBy(item, 'desc');
+            query.orderBy(item.substr(1), 'desc');
         } else {
             query.orderBy(item, 'asc');
         }
