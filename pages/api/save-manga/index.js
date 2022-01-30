@@ -37,23 +37,23 @@ const post = async (request, response) => {
             if (Object.keys(data).length && data.slug) {
                 let manga = await db.table('manga').where('slug', data.slug).first();
                 let result = null;
-                if (manga.id) {
+                if (manga && manga.id) {
                     result = await db.table('manga').where('id', manga.id).update(data);
                 } else {
                     result = await db.table('manga').insert(data);
                     if (params.categories) {
                         for (let item of params.categories) {
-                            await this.saveRelation(result[0], item, 'category', 'manga_n_category', 'category_id');
+                            await saveRelation(result[0], item, 'category', 'manga_n_category', 'category_id');
                         }
                     }
                     if (params.authors) {
                         for (let item of params.authors) {
-                            await this.saveRelation(result[0], item, 'author', 'manga_n_author', 'author_id');
+                            await saveRelation(result[0], item, 'author', 'manga_n_author', 'author_id');
                         }
                     }
                     if (params.translators) {
                         for (let item of params.translators) {
-                            await this.saveRelation(result[0], item, 'translator', 'manga_n_translator', 'translator_id');
+                            await saveRelation(result[0], item, 'translator', 'manga_n_translator', 'translator_id');
                         }
                     }
                 }
