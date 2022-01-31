@@ -1,8 +1,8 @@
-import CustomLink from './CustomLink';
+import CustomLink from '@/components/common/CustomLink';
 import Image from 'next/image';
-import { formatDate, getChapterName, getImageSrc, getMangaRoute, getChapterRoute } from '../../lib/hepler';
+import { formatDate, getChapterName, getImageSrc, getMangaRoute, getChapterRoute } from '@/lib/hepler';
 import { useCallback, useEffect, useState, useMemo } from 'react';
-import PopUpManga from './PopUpManga';
+import PopUpManga from '@/components/common/PopUpManga';
 
 const MangaItem = (props) => {
     const [showPopup, setShowPopup] = useState(false);

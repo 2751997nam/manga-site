@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
-import CustomLink from "../common/CustomLink";
-import { formatDate, getChapterName, getMangaRoute, getChapterRoute } from '../../lib/hepler';
+import CustomLink from "@/components/common/CustomLink";
+import { formatDate, getChapterName, getMangaRoute, getChapterRoute } from '@/lib/hepler';
 import { useRouter } from 'next/router';
 
 const ChapterList = (props) => {

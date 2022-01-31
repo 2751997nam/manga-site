@@ -1,6 +1,6 @@
-import DB from '../../../lib/db';
-import { slugify } from '../../../lib/util';
-import Config from '../../../config';
+import DB from '@/lib/db';
+import { slugify } from '@/lib/util';
+import Config from '@/config';
 
 const post = async (request, response) => {
     let retVal = {

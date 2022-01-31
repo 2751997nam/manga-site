@@ -1,7 +1,7 @@
 import { Fragment, useState, useEffect, useCallback } from 'react';
-import Header from './header';
+import Header from '@/components/layout/header';
 import Head from 'next/head';
-import Footer from './footer';
+import Footer from '@/components/layout/footer';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 

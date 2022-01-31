@@ -1,17 +1,20 @@
 /* eslint-disable react/display-name */
-import DB from '../../../lib/db';
-import mangaDetailStyles from '../../../styles/manga-detail.module.css';
-import CustomLink from '../../../components/common/CustomLink';
+import DB from '@/lib/db';
+import mangaDetailStyles from '@/styles/manga-detail.module.css';
+import CustomLink from '@/components/common/CustomLink';
 import Image from 'next/image';
-import BreadCrumb from '../../../components/common/BreadCrumb';
-import ChapterList from '../../../components/manga-detail/ChapterList';
-import SuggestManga from '../../../components/manga-detail/SuggestManga';
+import BreadCrumb from '@/components/common/BreadCrumb';
+import ChapterList from '@/components/manga-detail/ChapterList';
+import SuggestManga from '@/components/manga-detail/SuggestManga';
 import Head from 'next/head';
-import { getImageSrc, getMangaRoute, getChapterRoute } from '../../../lib/hepler';
-import RatingBox from '../../../components/manga-detail/RatingBox';
+import { getImageSrc, getMangaRoute, getChapterRoute } from '@/lib/hepler';
+import RatingBox from '@/components/manga-detail/RatingBox';
+import { useCallback, useEffect, useState } from 'react';
 
 function MangaDetail(props) {
     const manga = props.manga;
+    const [bookmarkCount, setBookmarkCount] = useState(manga.bookmark_count);
+    const [isBookmarked, setIsBookmarked] = useState(false);
     const chapters = props.chapters;
     const categories = props.categories;
     const translators = props.translators;
@@ -36,6 +39,46 @@ function MangaDetail(props) {
         })
     }
 
+    const checkBookmarked = useCallback(() => {
+        let bookmarkedStr = localStorage.getItem('manhwa_bookmark');
+        let bookmarkeds = bookmarkedStr.split(',');
+        for (let item of bookmarkeds) {
+            if (bookmarkeds.includes(manga.id)) {
+                setIsBookmarked(true);
+                break;
+            }
+        }
+    }, [manga]);
+
+    const bookmark = () => {
+        setBookmarkCount(bookmarkCount + 1);
+        let bookmarkedStr = localStorage.getItem('manhwa_bookmark');
+        let bookmarkeds = bookmarkedStr.split(',');
+        bookmarkeds.unshift(manga.id);
+        bookmarkeds = [...new Set(bookmarkeds)];
+        localStorage.setItem('manhwa_bookmark', bookmarkeds.join(','));
+        setIsBookmarked(true);
+        fetch('/api/bookmark', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({manga_id: manga.id})
+        });
+    }
+
+    const removeBookmark = () => {
+        setBookmarkCount(bookmarkCount - 1);
+        let bookmarkedStr = localStorage.getItem('manhwa_bookmark');
+        let bookmarkeds = bookmarkedStr.split(',');
+        bookmarkeds = bookmarkeds.filter(item => item != manga.id);
+        bookmarkeds = [...new Set(bookmarkeds)];
+        localStorage.setItem('manhwa_bookmark', bookmarkeds.join(','));
+        setIsBookmarked(false);
+    }
+
+    useEffect(() => {
+        checkBookmarked();
+    }, [checkBookmarked])
+
     return (
         <div className="row">
             <Head>
@@ -59,6 +102,10 @@ function MangaDetail(props) {
                                 <ul className="manga-info list-unstyled m-0">
                                     <h3>{manga.name}</h3>
                                     <li>
+                                        <b><i className="fa fa-users fa-md text-white" aria-hidden="true"></i> Other Names</b>: 
+                                        {manga.alt_name}
+                                    </li>
+                                    <li>
                                         <b><i className="fa fa-users fa-md text-white" aria-hidden="true"></i> Author(s)</b>: 
                                         {renderInfo(authors, '/manga-author-', 'btn-info m-1')}
                                     </li>
@@ -77,11 +124,23 @@ function MangaDetail(props) {
                                     <li>
                                         <b><i className="fa fa-eye fa-md text-white" aria-hidden="true"></i> Views</b>: {manga.view}
                                     </li>
-                                    <li></li>
+                                    <li><span className="text-orange text-sm-left"><i className="fa fa-bookmark text-white" aria-hidden="true"></i> {bookmarkCount} bookmarked</span></li>
                                 </ul>
                                 <br />
                                 <div className="btn-group my-2">
-                                    <a href="account/login" className="btn btn-primary btn-md"><i className="fa fa-bookmark" aria-hidden="true"></i> Bookmark</a>
+                                    {
+                                        isBookmarked ? 
+                                        (
+                                            <a href="javascript:void(0)" type="button" onClick={removeBookmark} className="btn btn-primary" id="bookmark_btn" action="unbookmark">
+                                                <i className="fa fa-bell-slash" aria-hidden="true"></i> Delete this bookmark
+                                            </a>
+                                        ) : 
+                                        (
+                                            <a href="javascript:void(0)" onClick={bookmark} className="btn btn-primary btn-md">
+                                                <i className="fa fa-bookmark" aria-hidden="true"></i> Bookmark
+                                            </a>
+                                        )
+                                    }
                                 </div>
 
                                 <div id="bt-reading" className="read-action">

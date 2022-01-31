@@ -1,5 +1,5 @@
-import DB from '../../../lib/db';
-import Config from '../../../config';
+import DB from '@/lib/db';
+import Config from '@/config';
 
 const put = async (request, response) => {
     let retVal = {

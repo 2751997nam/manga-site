@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/router';
-import CustomLink from '../common/CustomLink';
+import CustomLink from '@/components/common/CustomLink';
 
 const SearchAdvance = (props) => {
     const [categories, setCategories] = useState({});

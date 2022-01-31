@@ -109,6 +109,16 @@ const getPopularMangas = async function (db, filter = {}) {
     return result;
 }
 
+const getBaseMeta = (pageId = 0, pageSize = 20) => {
+    return {
+        total: 0,
+        pageCount: 0,
+        hasNext: false,
+        pageSize: pageSize,
+        pageId: pageId
+    }
+}
+
 const getLastUpdateMangas = async (db, filter = {}) => {
     const query = db.from('chapter');
     if (filter.categoryIds && filter.categoryIds.length) {
@@ -142,7 +152,7 @@ const getLastUpdateMangas = async (db, filter = {}) => {
 
     const pageId = filter.page ? (filter.page - 1) : 0;
     const pageSize = filter.pageSize ? filter.pageSize : 20;
-    let meta = {};
+    let meta = getBaseMeta();
 
     if (typeof filter.getOnlyResult == 'undefined' || !filter.getOnlyResult) {
         const totalQuery = query.clone();
@@ -206,12 +216,12 @@ const getLastUpdateMangas = async (db, filter = {}) => {
     }
 
     if (filter.getOnlyResult) {
-        return Object.values(result);
+        return result;
     }
 
     return {
         meta: meta,
-        mangas: Object.values(result)
+        mangas: result
     };
 }
 
@@ -239,10 +249,64 @@ const getTopViews = async (db, Redis) => {
     }
 }
 
+const getMangaByChapters = async (db, filter = {}) => {
+    const query = db.from('chapter').whereIn('chapter.id', filter.chapterIds);
+    query.join('manga', 'manga.id', 'chapter.manga_id')
+    
+    const totalQuery = query.clone();
+    let total = await totalQuery.select(db.raw('count(*) as count')).first();
+    
+    if (total) {
+        total = total.count;
+    } else {
+        total = 0;
+    }
+    
+    query.select(['chapter.id as chapter_id', 'chapter.name', 'chapter.slug', 'chapter.manga_id', 'chapter.created_at', 'manga.name as manga_name', 'manga.slug as manga_slug', 'manga.image as manga_image']);
+    const pageId = filter.page ? (filter.page - 1) : 0;
+    const pageSize = filter.pageSize ? filter.pageSize : 20;
+    const pageCount = total > 0 ? Math.ceil(total / pageSize) : 0;
+
+    meta = {
+        total: total,
+        pageCount: pageCount,
+        hasNext: pageId < pageCount,
+        pageSize: pageSize,
+        pageId: pageId
+    }
+    const chapters = await query.limit(pageSize).offset(pageId * pageSize);
+
+    let result = [];
+    for (let item of chapters) {
+        let manga = {
+            id: item.manga_id,
+            name: item.manga_name,
+            slug: item.manga_slug,
+            image: item.manga_image,
+            chapter: {
+                id: item.chapter_id,
+                manga_id: item.manga_id,
+                name: item.name,
+                slug: item.slug,
+                created_at: item.created_at
+            }
+        }
+
+        result.push(manga);
+    }
+
+    return {
+        meta: meta,
+        mangas: result
+    };
+}
+
 module.exports = {
     buildFilters: buildFilters,
     getPopularMangas: getPopularMangas,
     getLastUpdateChapters: getLastUpdateChapters,
     getLastUpdateMangas: getLastUpdateMangas,
-    getTopViews: getTopViews
+    getTopViews: getTopViews,
+    getBaseMeta: getBaseMeta,
+    getMangaByChapters: getMangaByChapters
 }

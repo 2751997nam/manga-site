@@ -1,4 +1,4 @@
-import DB from '../../../lib/db';
+import DB from '@/lib/db';
 
 const get = async (request, response) => {
     let params = request.query;
@@ -67,37 +67,52 @@ const buildFilters = async (query, param) => {
     let parameters = [
         '~', //like
         '!=',
-        '=',
         '!{', //not in
-        '{',//in
+        '={',//in
+        '=',
     ];
     for (let filter of filters) {
         for (let para of parameters) {
             if (filter.indexOf(para) > 0) {
                 let values = filter.split(para);
                 values[1] = values[1].trim();
+                let hasFilter = false;
                 switch (para) {
                     case '~':
                         query.where(values[0], 'like', '%' + values[1] + '%');
+                        hasFilter = true;
                         break;
                     case '=':
                         query.where(values[0], values[1]);
+                        hasFilter = true;
                         break;
                     case '!=':
                         query.where(values[0], '!=', values[1]);
+                        hasFilter = true;
                         break;
                     case '!{': {
                         let arr = values[1].split(';');
                         query.whereNotIn(values[0], arr);
+                        hasFilter = true;
+                        break;             
+                    }
+                    case '={': {
+                        let arr = values[1].split(';');
+                        query.whereIn(values[0], arr);
+                        hasFilter = true;
                         break;             
                     }
                     case '!=': {
                         let arr = values[1].split(';');
                         query.whereIn(values[0], arr);
+                        hasFilter = true;
                         break;    
                     }
                     default:
                         break;
+                }
+                if (hasFilter) {
+                    break;
                 }
             }
         }

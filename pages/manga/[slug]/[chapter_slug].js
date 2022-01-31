@@ -1,16 +1,16 @@
 /* eslint-disable react/display-name */
-import DB from '../../../lib/db';
-import { getChapterName, getImageSrc, getMangaRoute, getChapterRoute } from '../../../lib/hepler';
-import chapterDetailStyles from '../../../styles/chapter-detail.module.css';
+import DB from '@/lib/db';
+import { getChapterName, getImageSrc, getMangaRoute, getChapterRoute } from '@/lib/hepler';
+import chapterDetailStyles from '@/styles/chapter-detail.module.css';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useCallback, useEffect, useState, useMemo } from 'react';
-import BreadCrumb from '../../../components/common/BreadCrumb';
+import BreadCrumb from '@/components/common/BreadCrumb';
 import { useRouter } from 'next/router';
-import CustomLink from '../../../components/common/CustomLink';
-import CustomImage from '../../../components/common/CustomImage';
+import CustomLink from '@/components/common/CustomLink';
+import CustomImage from '@/components/common/CustomImage';
 import Head from 'next/head';
-import Config from '../../../config';
+import Config from '@/config';
 
 function ChapterDetail(props) {
     const router = useRouter();
@@ -136,6 +136,21 @@ function ChapterDetail(props) {
         })
     }
 
+    const saveHistory = (chapter) => {
+        let historyStr = localStorage.getItem('manhwa_history');
+        let history = {};
+        try {
+            history = JSON.parse(historyStr);
+            if (!history) {
+                history = {};
+            }
+        } catch (error) {
+            
+        }
+        history[chapter.manga_id] = chapter.id;
+        localStorage.setItem('manhwa_history', JSON.stringify(history));
+    }
+
     useEffect(() => {
         window.addEventListener('scroll', handleOnScroll);
         return () => {
@@ -145,6 +160,7 @@ function ChapterDetail(props) {
 
     useEffect(() => {
         increaseView(chapter);
+        saveHistory(chapter);
     }, [router.asPath, chapter])
 
     return (

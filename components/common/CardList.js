@@ -1,8 +1,8 @@
 import { isMobile } from "mobile-device-detect";
-import MangaItem from "../common/MangaItem";
-import MangaItemMobile from "../common/MangaItemMobile";
-import Card from "../common/Card";
-import CustomLink from "./CustomLink";
+import MangaItem from "@/components/common/MangaItem";
+import MangaItemMobile from "@/components/common/MangaItemMobile";
+import Card from "@/components/common/Card";
+import CustomLink from "@/components/common/CustomLink";
 
 const CardList = (props) => {
     const title = props.title;

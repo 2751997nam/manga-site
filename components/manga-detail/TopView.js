@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import TopViewItem from "./TopViewItem";
+import TopViewItem from "@/components/manga-detail/TopViewItem";
 
 const TopView = (props)  => {
     const [topViews, setTopViews] = useState([]);

@@ -1,8 +1,8 @@
 import { isMobile } from "mobile-device-detect";
-import MangaItem from "../common/MangaItem";
-import MangaItemMobile from "../common/MangaItemMobile";
-import Card from "../common/Card";
-import Pagination from "./Pagination";
+import MangaItem from "@/components/common/MangaItem";
+import MangaItemMobile from "@/components/common/MangaItemMobile";
+import Card from "@/components/common/Card";
+import Pagination from "@/components/common/Pagination";
 
 const CardListPagination = (props) => {
     const title = props.title;

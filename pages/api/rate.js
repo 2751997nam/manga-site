@@ -1,4 +1,4 @@
-import DB from '../../lib/db';
+import DB from '@/lib/db';
 
 const post = async (request, response) => {
     if (request.method == "POST") {

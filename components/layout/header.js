@@ -1,6 +1,6 @@
 import {useState, useEffect} from "react";
-import CustomLink from "../common/CustomLink";
-import Search from "../Search/Search";
+import CustomLink from "@/components/common/CustomLink";
+import Search from "@/components/Search/Search";
 import Image from "next/image";
 
 function Header(props) {
@@ -48,10 +48,10 @@ function Header(props) {
                             </div>
                         </li>
                         <li className="nav-item ml-1">
-                            <CustomLink href="/manga-list.html?bookmark=1" className="nav-link"><i className="far fa-bookmark"></i> <span className="d-none d-lg-inline">Bookmark</span></CustomLink>
+                            <CustomLink href="/manga/bookmark" className="nav-link"><i className="far fa-bookmark"></i> <span className="d-none d-lg-inline">Bookmark</span></CustomLink>
                         </li>
                         <li className="nav-item ml-1">
-                            <CustomLink href="/manga-list.html?history=1" className="nav-link"><i className="fa fa-history" aria-hidden="true"></i> <span className="d-none d-lg-inline">History</span></CustomLink>
+                            <CustomLink href="/manga/history" className="nav-link"><i className="fa fa-history" aria-hidden="true"></i> <span className="d-none d-lg-inline">History</span></CustomLink>
                         </li>
                     </ul>
                 </div>

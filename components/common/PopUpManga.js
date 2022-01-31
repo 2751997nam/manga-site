@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { getImageSrc } from '../../lib/hepler';
+import { getImageSrc } from '@/lib/hepler';
 
 const PopUpManga = (props) => {
     const manga = props.manga;

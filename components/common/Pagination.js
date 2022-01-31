@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useState } from "react";
-import CustomLink from "./CustomLink";
+import CustomLink from "@/components/common/CustomLink";
 import { useRouter } from "next/router";
 
 const Pagination = (props) => {

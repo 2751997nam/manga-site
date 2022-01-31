@@ -2,8 +2,8 @@ import OwlCarousel from 'react-owl-carousel';
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
 import Image from 'next/image';
-import { formatDate, getChapterName, getImageSrc, getMangaRoute, getChapterRoute } from '../../lib/hepler';
-import CustomLink from '../common/CustomLink';
+import { formatDate, getChapterName, getImageSrc, getMangaRoute, getChapterRoute } from '@/lib/hepler';
+import CustomLink from '@/components/common/CustomLink';
 
 function Slider(props) {
     const mangas = props.mangas;

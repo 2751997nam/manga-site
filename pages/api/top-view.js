@@ -1,6 +1,6 @@
-import DB from '../../lib/db';
-import Redis from '../../lib/redis';
-import { getTopViews } from '../../services/MangaListService';
+import DB from '@/lib/db';
+import Redis from '@/lib/redis';
+import { getTopViews } from '@/services/MangaListService';
 
 const get = async (request, response) => {
     const db = DB();

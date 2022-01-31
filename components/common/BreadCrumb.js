@@ -1,4 +1,4 @@
-import CustomLink from "./CustomLink";
+import CustomLink from "@/components/common/CustomLink";
 
 const BreadCrumb = (props) => {
     let links = props.links;

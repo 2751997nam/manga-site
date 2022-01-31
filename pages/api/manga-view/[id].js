@@ -1,5 +1,5 @@
-import DB from '../../../lib/db';
-import { currentDate } from '../../../lib/hepler';
+import DB from '@/lib/db';
+import { currentDate } from '@/lib/hepler';
 
 const post = async (request, response) => {
     if (request.method == "POST") {

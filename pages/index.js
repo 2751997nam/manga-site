@@ -1,13 +1,13 @@
-import DB from '../lib/db';
-import Redis from '../lib/redis';
-import CardList from '../components/common/CardList';
-import {buildFilters, getLastUpdateMangas, getPopularMangas, getTopViews} from '../services/MangaListService';
+import DB from '@/lib/db';
+import Redis from '@/lib/redis';
+import CardList from '@/components/common/CardList';
+import {buildFilters, getLastUpdateMangas, getPopularMangas, getTopViews} from '@/services/MangaListService';
 import dynamic from 'next/dynamic'
-import TopView from '../components/manga-detail/TopView';
+import TopView from '@/components/manga-detail/TopView';
 import Head from 'next/head';
 
 const Slider = dynamic(
-    () => import('../components/home/Slider'),
+    () => import('@/components/home/Slider'),
     // No need for SSR, when the module includes a library that only works in the
     // browser.
     { ssr: false }

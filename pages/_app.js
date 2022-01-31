@@ -1,4 +1,4 @@
-import Layout from '../components/layout/master';
+import Layout from '@/components/layout/master';
 import App from 'next/app'
 let categoriesCache = [];
 function MyApp({ Component, pageProps, categories}) {

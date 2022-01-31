@@ -1,4 +1,4 @@
-import DB from '../../../lib/db';
+import DB from '@/lib/db';
 
 const get = async (request, response) => {
     let params = request.query;
