@@ -41,7 +41,7 @@ function MangaDetail(props) {
 
     const checkBookmarked = useCallback(() => {
         let bookmarkedStr = localStorage.getItem('manhwa_bookmark');
-        let bookmarkeds = bookmarkedStr.split(',');
+        let bookmarkeds = (bookmarkedStr + '').split(',');
         for (let item of bookmarkeds) {
             if (bookmarkeds.includes(manga.id)) {
                 setIsBookmarked(true);
@@ -53,7 +53,7 @@ function MangaDetail(props) {
     const bookmark = () => {
         setBookmarkCount(bookmarkCount + 1);
         let bookmarkedStr = localStorage.getItem('manhwa_bookmark');
-        let bookmarkeds = bookmarkedStr.split(',');
+        let bookmarkeds = (bookmarkedStr + '').split(',');
         bookmarkeds.unshift(manga.id);
         bookmarkeds = [...new Set(bookmarkeds)];
         localStorage.setItem('manhwa_bookmark', bookmarkeds.join(','));
@@ -68,7 +68,7 @@ function MangaDetail(props) {
     const removeBookmark = () => {
         setBookmarkCount(bookmarkCount - 1);
         let bookmarkedStr = localStorage.getItem('manhwa_bookmark');
-        let bookmarkeds = bookmarkedStr.split(',');
+        let bookmarkeds = (bookmarkedStr + '').split(',');
         bookmarkeds = bookmarkeds.filter(item => item != manga.id);
         bookmarkeds = [...new Set(bookmarkeds)];
         localStorage.setItem('manhwa_bookmark', bookmarkeds.join(','));
