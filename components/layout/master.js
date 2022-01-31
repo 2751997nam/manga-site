@@ -22,7 +22,7 @@ function Layout(props) {
 
         setTimeout(() => {
             setLoading(false);
-        }, 60000);
+        }, 15000);
 
         return () => {
             router.events.off('routeChangeStart', handleStart)
