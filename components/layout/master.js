@@ -14,11 +14,15 @@ function Layout(props) {
 
     useEffect(() => {
         const handleStart = (url) => setLoading(true);
-        const handleComplete = (url) => setLoading(false);
+        const handleComplete = (url) => setLoading(true);
 
         router.events.on('routeChangeStart', handleStart)
         router.events.on('routeChangeComplete', handleComplete)
         router.events.on('routeChangeError', handleComplete)
+
+        setTimeout(() => {
+            setLoading(false);
+        }, 60000);
 
         return () => {
             router.events.off('routeChangeStart', handleStart)
