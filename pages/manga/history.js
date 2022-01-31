@@ -1,6 +1,5 @@
 /* eslint-disable react/display-name */
 import mangaStyles from '@/styles/manga.module.css';
-import HistoryCardListPagination from '@/components/history/HistoryCardListPagination';
 import {buildFilters, getLastUpdateMangas, getTopViews} from '@/services/MangaListService';
 import TopView from '@/components/manga-detail/TopView';
 import BreadCrumb from '@/components/common/BreadCrumb';
@@ -9,8 +8,10 @@ import { useState, useCallback, useEffect } from 'react';
 import Card from '@/components/common/Card';
 import Pagination from '@/components/common/Pagination';
 import HistoryItem from '@/components/history/HistoryItem';
+import { useRouter } from 'next/router';
 
 function MangaList(props) {
+    const router = useRouter();
     const [mangas, setMangas] = useState([]);
     const [meta, setMeta] = useState({});
     const [query, setQuery] = useState({});
@@ -71,7 +72,7 @@ function MangaList(props) {
 
     useEffect(() => {
         getManga();
-    }, [getManga]);
+    }, [router.asPath, router.query, getManga]);
 
     return (
         <div className="row">

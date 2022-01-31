@@ -6,8 +6,10 @@ import TopView from '@/components/manga-detail/TopView';
 import BreadCrumb from '@/components/common/BreadCrumb';
 import Head from 'next/head';
 import { useState, useCallback, useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 function MangaList(props) {
+    const router = useRouter();
     const [mangas, setManagas] = useState([]);
     const [meta, setMeta] = useState({});
     const [query, setQuery] = useState({});
@@ -31,7 +33,7 @@ function MangaList(props) {
 
     useEffect(() => {
         getManga();
-    }, [getManga]);
+    }, [router.asPath, router.query, getManga]);
 
     return (
         <div className="row">
