@@ -20,10 +20,6 @@ function Layout(props) {
         router.events.on('routeChangeComplete', handleComplete)
         router.events.on('routeChangeError', handleComplete)
 
-        setTimeout(() => {
-            setLoading(false);
-        }, 15000);
-
         return () => {
             router.events.off('routeChangeStart', handleStart)
             router.events.off('routeChangeComplete', handleComplete)
