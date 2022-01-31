@@ -1,4 +1,5 @@
 import Layout from '@/components/layout/master';
+import Config from '@/config';
 import App from 'next/app'
 let categoriesCache = [];
 function MyApp({ Component, pageProps, categories}) {
@@ -15,8 +16,8 @@ MyApp.getInitialProps = async (context) => {
     if(categoriesCache.length) {
         return {...appProps, categories: categoriesCache}
     }
-    let appUrl = process.env.APP_URL;
-    const response = await fetch(`${appUrl}/api/category?page_size=-1&fields=id,name,slug&sorts=name`)
+    let apiUrl = Config.api_url;
+    const response = await fetch(`${apiUrl}/api/category?page_size=-1&fields=id,name,slug&sorts=name`)
         .then(res => res.json())
     categoriesCache = response.result;
     return {...appProps, categories: categoriesCache}
