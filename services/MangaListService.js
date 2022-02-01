@@ -193,7 +193,9 @@ const getLastUpdateMangas = async (db, filter = {}) => {
             .orderBy('sorder', 'desc')
             .select(['chapter.id as chapter_id', 'chapter.name', 'chapter.slug', 'chapter.manga_id', 'chapter.created_at', 'manga.name as manga_name', 'manga.slug as manga_slug', 'manga.image as manga_image'])
             .first();
-        chapters.push(chapter);
+        if (chapter) {
+            chapters.push(chapter);
+        }
     }
 
     let result = [];
