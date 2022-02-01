@@ -1,7 +1,6 @@
 /* eslint-disable react/display-name */
 import mangaStyles from '@/styles/manga.module.css';
 import {buildFilters, getLastUpdateMangas, getTopViews} from '@/services/MangaListService';
-import TopView from '@/components/manga-detail/TopView';
 import BreadCrumb from '@/components/common/BreadCrumb';
 import Head from 'next/head';
 import { useState, useCallback, useEffect } from 'react';
@@ -9,6 +8,16 @@ import Card from '@/components/common/Card';
 import Pagination from '@/components/common/Pagination';
 import HistoryItem from '@/components/history/HistoryItem';
 import { useRouter } from 'next/router';
+import dynamic from 'next/dynamic'
+const TopView = dynamic(
+    () => import('@/components/manga-detail/TopView'),
+    { ssr: false }
+);
+
+const Tracking = dynamic(
+    () => import('@/components/common/Tracking'),
+    { ssr: false }
+);
 
 function MangaList(props) {
     const router = useRouter();
@@ -94,6 +103,7 @@ function MangaList(props) {
             <div className='col-md-4'>
                 <TopView></TopView>
             </div>
+            <Tracking targetType="HISTORY"></Tracking>
         </div>
     )
 }

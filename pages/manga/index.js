@@ -5,12 +5,22 @@ import Image from 'next/image';
 import CardListPagination from '@/components/common/CardListPagination';
 import {buildFilters, getLastUpdateMangas, getTopViews} from '@/services/MangaListService';
 import DB from '@/lib/db';
-import TopView from '@/components/manga-detail/TopView';
 import SortBox from '@/components/common/SortBox';
 import BreadCrumb from '@/components/common/BreadCrumb';
 import SearchAdvance from '@/components/Search/SearchAdvance';
 import Head from 'next/head';
 import { useState } from 'react';
+import dynamic from 'next/dynamic'
+
+const TopView = dynamic(
+    () => import('@/components/manga-detail/TopView'),
+    { ssr: false }
+);
+
+const Tracking = dynamic(
+    () => import('@/components/common/Tracking'),
+    { ssr: false }
+);
 
 function MangaList(props) {
     const [isAdvance, setIsAdvance] = useState(false);
@@ -48,6 +58,7 @@ function MangaList(props) {
             <div className='col-md-4'>
                 <TopView></TopView>
             </div>
+            <Tracking targetType="MANGA_LIST"></Tracking>
         </div>
     )
 }

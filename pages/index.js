@@ -3,13 +3,22 @@ import Redis from '@/lib/redis';
 import CardList from '@/components/common/CardList';
 import {buildFilters, getLastUpdateMangas, getPopularMangas, getTopViews} from '@/services/MangaListService';
 import dynamic from 'next/dynamic'
-import TopView from '@/components/manga-detail/TopView';
 import Head from 'next/head';
 
 const Slider = dynamic(
     () => import('@/components/home/Slider'),
     // No need for SSR, when the module includes a library that only works in the
     // browser.
+    { ssr: false }
+);
+
+const TopView = dynamic(
+    () => import('@/components/manga-detail/TopView'),
+    { ssr: false }
+);
+
+const Tracking = dynamic(
+    () => import('@/components/common/Tracking'),
     { ssr: false }
 );
 
@@ -40,6 +49,7 @@ function HomePage(props) {
             <div className="col-md-4">
                 <TopView></TopView>
             </div>
+            <Tracking targetType="HOME"></Tracking>
         </div>
     )
 }

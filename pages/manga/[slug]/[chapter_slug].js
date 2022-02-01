@@ -11,6 +11,11 @@ import CustomLink from '@/components/common/CustomLink';
 import CustomImage from '@/components/common/CustomImage';
 import Head from 'next/head';
 import Config from '@/config';
+import dynamic from 'next/dynamic'
+const Tracking = dynamic(
+    () => import('@/components/common/Tracking'),
+    { ssr: false }
+);
 
 function ChapterDetail(props) {
     const router = useRouter();
@@ -227,6 +232,7 @@ function ChapterDetail(props) {
                 </main>
                 <div className="black-click" onClick={toggleSideBar}></div>
             </section>
+            <Tracking targetType="CHAPTER" targetId={chapter.id}></Tracking>
         </div>
     )
 }

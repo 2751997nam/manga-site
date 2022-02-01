@@ -1,4 +1,4 @@
-import { isMobile } from "mobile-device-detect";
+import { isMobile } from "react-device-detect";
 import MangaItem from "@/components/common/MangaItem";
 import MangaItemMobile from "@/components/common/MangaItemMobile";
 import Card from "@/components/common/Card";

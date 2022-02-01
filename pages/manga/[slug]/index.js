@@ -10,6 +10,11 @@ import Head from 'next/head';
 import { getImageSrc, getMangaRoute, getChapterRoute } from '@/lib/hepler';
 import RatingBox from '@/components/manga-detail/RatingBox';
 import { useCallback, useEffect, useState } from 'react';
+import dynamic from 'next/dynamic'
+const Tracking = dynamic(
+    () => import('@/components/common/Tracking'),
+    { ssr: false }
+);
 
 function MangaDetail(props) {
     const manga = props.manga;
@@ -170,6 +175,7 @@ function MangaDetail(props) {
                 {sameGroupMangas.length ? <SuggestManga mangas={sameGroupMangas} title="Same Translation Group"></SuggestManga> : ''}
                 {sameCategoryMangas.length ? <SuggestManga mangas={sameCategoryMangas} title="Suggested Manhwa"></SuggestManga> : ''}
             </div>
+            <Tracking targetType="MANGA" targetId={manga.id}></Tracking>
         </div>
     )
 }
