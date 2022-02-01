@@ -88,6 +88,11 @@ const Search = (props) => {
         })
     }
 
+    const showMobileForm = () => {
+        setShowForm(true);
+        refMobile.focus();
+    }
+
     useEffect(() => {
         setQuery({q: router.query.q});
     }, [router.asPath, router.query]);
@@ -133,7 +138,7 @@ const Search = (props) => {
                 </div>
             </form>
             <li className="nav-item">
-                <a onClick={() => setShowForm(true)} className="nav-link search-mobile" data-widget="navbar-search" role="button">
+                <a onClick={showMobileForm} className="nav-link search-mobile" data-widget="navbar-search" role="button">
                     <i className="fas fa-search"></i>
                 </a>
                 <div className={'navbar-search-block ' + (showForm ? 'navbar-search-open' : '')}>
@@ -143,16 +148,17 @@ const Search = (props) => {
                                 className="form-control form-control-navbar inputSearch"
                                 placeholder="Search" 
                                 aria-label="Search" 
-                                inputRef={setRefMobile}
+                                inputRef={ref => setRefMobile(ref)}
                                 minLength={2}
                                 debounceTimeout={300}
                                 onChange={onSearching} 
+                                autoFocus
                             />
                             <div className="input-group-append">
                                 <button className="btn btn-navbar" type="submit">
                                     <i className="fas fa-search"></i>
                                 </button>
-                                <button className="btn btn-navbar" type="button" data-widget="navbar-search">
+                                <button className="btn btn-navbar" type="button" data-widget="navbar-search" onClick={() => setShowForm(false)}>
                                     <i className="fas fa-times"></i>
                                 </button>
                             </div>

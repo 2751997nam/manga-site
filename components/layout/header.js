@@ -57,12 +57,6 @@ function Header(props) {
                 </div>
                 <ul className="navbar-nav ml-auto flex-row right-nav-wrapper">
                     <Search></Search>
-                    <li className="nav-item">
-                        <a className="nav-link" href="/account/login"><i className="fas fa-sign-in-alt"></i> <span className="d-none d-sm-inline">Sign in</span></a>
-                    </li>
-                    <li className="nav-item d-none d-sm-inline">
-                        <a className="nav-link" href="/account/register"><i className="fas fa-user-circle"></i> Register</a>
-                    </li>
                 </ul>
             </div>
         </nav>
