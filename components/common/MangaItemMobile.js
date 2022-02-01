@@ -22,7 +22,7 @@ const MangaItemMobile = (props) => {
                 </div>
                 <div className="manga-badge">
                     <span className="badge badge-info">
-                        <time className="timeago" title={updateTime}>{updateTime}</time>
+                        <time className="timeago" title={updateTime} data-nosnippet>{updateTime}</time>
                     </span>
                 </div>
             </div>

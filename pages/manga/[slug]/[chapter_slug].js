@@ -171,6 +171,7 @@ function ChapterDetail(props) {
                 <meta name="description" content={manga.description}></meta>
             </Head>
             <BreadCrumb links={links}></BreadCrumb>
+            <h1 className="hidden">{chapter.name}</h1>
             <div className='col-md-12 text-center'>
                 <div className='chapter-images'>
                     {renderChapterImages()}

@@ -25,7 +25,7 @@ function MangaDetail(props) {
 
     const links = [
         {url: '/manga', text: 'List Manga'},
-        {url: getMangaRoute(manga), text: manga.name}
+        {url: getMangaRoute(manga), text: `Read ${manga.name}`}
     ];
 
     const renderInfo = (items, baseUrl, className) => {
@@ -85,10 +85,10 @@ function MangaDetail(props) {
                 <title>{manga.name}</title>
                 <meta name="title" content={manga.name}></meta>
                 <meta name="description" content={manga.description}></meta>
-                <meta name="keywords" content="Read manhwa 18+, hentai, pornwa online free at ManhwaPlus, update fastest, most full, synthesized 24h free with high-quality images. We hope to bring you happy moments. "></meta>
+                <meta name="keywords" content="Read manhwa 18+, hentai, pornwa online free at ManhwaPlus, update fastest chap, chapters, most full, synthesized 24h free with high-quality images. We hope to bring you happy moments. "></meta>
             </Head>
             <BreadCrumb links={links}></BreadCrumb>
-
+            <h1 className="hidden">{manga.name}</h1>
             <div className="col-md-8 mt-2">
                 <div className="card">
                     <div className="card-body">
