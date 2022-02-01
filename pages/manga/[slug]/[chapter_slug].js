@@ -167,6 +167,7 @@ function ChapterDetail(props) {
         <div className='row'>
             <Head>
                 <title>{chapter.name}</title>
+                <meta name="title" content={chapter.name}></meta>
                 <meta name="description" content={manga.description}></meta>
             </Head>
             <BreadCrumb links={links}></BreadCrumb>

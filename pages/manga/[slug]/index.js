@@ -83,8 +83,9 @@ function MangaDetail(props) {
         <div className="row">
             <Head>
                 <title>{manga.name}</title>
+                <meta name="title" content={manga.name}></meta>
                 <meta name="description" content={manga.description}></meta>
-                <meta name="keywords" content="Read manhwa pornwa online free at Mahwa18, update fastest, most full, synthesized 24h free with high-quality images. We hope to bring you happy moments. "></meta>
+                <meta name="keywords" content="Read manhwa 18+, hentai, pornwa online free at ManhwaPlus, update fastest, most full, synthesized 24h free with high-quality images. We hope to bring you happy moments. "></meta>
             </Head>
             <BreadCrumb links={links}></BreadCrumb>
 
