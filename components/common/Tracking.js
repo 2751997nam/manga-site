@@ -28,7 +28,7 @@ const Tracking = (props) => {
     }, [router.asPath, router.query, tracking])
 
     return (
-        <tracking></tracking>
+        <span className="js-tracking"></span>
     )
 }
 

@@ -12,7 +12,6 @@ function MyApp({ Component, pageProps, categories}) {
 
 MyApp.getInitialProps = async (context) => {
     const appProps = await App.getInitialProps(context);
-    const { req, query, res, asPath, pathname } = context.ctx;
     if(categoriesCache.length) {
         return {...appProps, categories: categoriesCache}
     }
