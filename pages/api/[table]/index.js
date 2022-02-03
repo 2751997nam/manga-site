@@ -98,10 +98,10 @@ const buildFilters = (query, param) => {
                                 for (let field of matchFields) {
                                     q.orWhere(field, 'like', '%' + values[1].replace(/\'/g, "\'") + '%');
                                 }
-                                q.orWhereRaw(`MATCH(${fulTextMatch}) AGAINST ('${values[1].replace(/\'/g, "\'")}')`);
+                                q.orWhereRaw(`MATCH(${fulTextMatch}) AGAINST ('${values[1].replace(/\'/g, "\\'")}')`);
                             })
 
-                            extraFields.push(db.raw(`(MATCH(${fulTextMatch}) AGAINST ('${values[1].replace(/\'/g, "\'")}')) as lien_quan`));
+                            extraFields.push(db.raw(`(MATCH(${fulTextMatch}) AGAINST ('${values[1].replace(/\'/g, "\\'")}')) as lien_quan`));
                             query.orderBy('lien_quan', 'desc');
                         }
                         hasFilter = true;
