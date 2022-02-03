@@ -182,13 +182,13 @@ const getLastUpdateMangas = async (db, filter = {}) => {
     query.select(db.raw(selectField))
         .where('chapter.status', '=', 'ACTIVE')
         .groupBy('chapter.manga_id');
-    if (filter.q) {
-        query.orderBy('lien_quan', 'desc');
-    }
+
     if (filter.orderBy) {
         query.orderBy(filter.orderBy.field, filter.orderBy.sort);
     } else if (filter.mangaOrderBy) {
         query.orderBy('manga.' + filter.mangaOrderBy.field, filter.mangaOrderBy.sort);
+    } else if (filter.q) {
+        query.orderBy('lien_quan', 'desc');
     } else {
         query.orderBy('created_at', 'desc');
     }
