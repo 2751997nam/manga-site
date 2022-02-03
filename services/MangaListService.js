@@ -147,7 +147,7 @@ const getLastUpdateMangas = async (db, filter = {}) => {
         query.where('manga.status', '=', filter.status);
     }
     if (filter.q) {
-        query.where('manga.name', 'like', '%' + filter.q + '%');
+        query.whereRaw(`MATCH(manga.name, manga.alt_name) AGAINST ('${filter.q.replace(/\'/g, "\'")}')`);
     }
 
     const pageId = filter.page ? (filter.page - 1) : 0;

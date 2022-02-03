@@ -48,7 +48,8 @@ const buildResult = async (params) => {
     }
 
     if (params.filters) {
-        buildFilters(query, params.filters);
+        let extraFields = buildFilters(query, params.filters);
+        fields = fields.concat(extraFields);
     }
     if (params.sorts) {
         buildSorts(query, params.sorts);
@@ -62,9 +63,12 @@ const buildResult = async (params) => {
     return items;
 }
 
-const buildFilters = async (query, param) => {
+const buildFilters = (query, param) => {
+    let db = DB();
+    let extraFields = [];
     let filters = param.split(',');
     let parameters = [
+        '=~', //match
         '~', //like
         '!=',
         '!{', //not in
@@ -79,7 +83,16 @@ const buildFilters = async (query, param) => {
                 let hasFilter = false;
                 switch (para) {
                     case '~':
-                        query.where(values[0], 'like', '%' + values[1] + '%');
+                        if (values[1]) {
+                            query.where(values[0], 'like', '%' + values[1].replace(/\'/g, "\'") + '%');
+                        }
+                        hasFilter = true;
+                        break;
+                    case '=~':
+                        if (values[1]) {
+                            let matchFields = values[0].split(';');
+                            query.whereRaw(`MATCH(${matchFields.join(', ')}) AGAINST ('${values[1].replace(/\'/g, "\'")}')`);
+                        }
                         hasFilter = true;
                         break;
                     case '=':
@@ -117,6 +130,8 @@ const buildFilters = async (query, param) => {
             }
         }
     }
+
+    return extraFields;
 }
 
 const buildSorts = async (query, param) => { 

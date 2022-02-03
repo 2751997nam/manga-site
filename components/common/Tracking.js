@@ -16,7 +16,7 @@ const Tracking = (props) => {
         let device = isBrowser ? 'browser' : (isMobile ? 'mobile' : 'unknown');
         let browser = browserName;
         let userAgent = navigator.userAgent;
-        fetch('/api/tracking', {
+        fetch('/api/tracking-click', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json'},
             body: JSON.stringify({device: device, browser: browser, url: window.location.href, user_agent: userAgent})

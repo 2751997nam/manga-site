@@ -34,7 +34,7 @@ const Search = (props) => {
         if (value) {
             setLoading(true);
             let appUrl = process.env.APP_URL;
-            fetch('/api/manga?page_size=5&fields=id,name,slug,image&filters=name~' + value)
+            fetch('/api/manga?page_size=5&fields=id,name,alt_name,slug,image&filters=name;alt_name=~' + value)
                 .then(res => res.json())
                 .then(res => {
                     if (res.result) {
@@ -63,7 +63,10 @@ const Search = (props) => {
                     <div className="media">
                         <Image className="img-size-50 mx-2" src={getImageSrc(item.image)} alt={item.name} width={50} height={60}></Image>
                         <div className="media-body">
-                            <h6 className="my-0">{item.name}</h6>
+                            <h6 className="my-0">
+                                {item.name}
+                                <p className="lowercase"><small>{item.alt_name}</small></p>
+                            </h6>
                         </div>
                     </div>
                 </CustomLink>

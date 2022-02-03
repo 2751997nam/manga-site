@@ -1,0 +1,1 @@
+ssh root@manhwaplus.net -t "cd /home/manga-site && pm2 restart manga-site"
