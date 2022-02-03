@@ -91,7 +91,12 @@ const buildFilters = (query, param) => {
                     case '=~':
                         if (values[1]) {
                             let matchFields = values[0].split(';');
-                            query.whereRaw(`MATCH(${matchFields.join(', ')}) AGAINST ('${values[1].replace(/\'/g, "\'")}')`);
+                            query.where(function (q) {
+                                q.whereRaw(`MATCH(${matchFields.join(', ')}) AGAINST ('${values[1].replace(/\'/g, "\'")}')`);
+                                for (let field of matchFields) {
+                                    q.orWhere(field, 'like', '%' + values[1].replace(/\'/g, "\'") + '%');
+                                }
+                            })
                         }
                         hasFilter = true;
                         break;
