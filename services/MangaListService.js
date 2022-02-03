@@ -146,13 +146,16 @@ const getLastUpdateMangas = async (db, filter = {}) => {
     if (filter.status) {
         query.where('manga.status', '=', filter.status);
     }
+
+    let selectField = 'distinct chapter.manga_id, max(`chapter`.`created_at`) as created_at, max(`sorder`) as sorder';
     if (filter.q) {
         query.where(function (q) {
-            q.whereRaw(`MATCH(manga.name, manga.alt_name) AGAINST ('${filter.q.replace(/\'/g, "\'")}')`);
-            for (let field of ['manga.name', 'manga.alt_name']) {
-                q.orWhere(field, 'like', '%' + filter.q.replace(/\'/g, "\'") + '%');
-            }
+            q.where( 'manga.alt_name', 'like', '%' + filter.q.replace(/\'/g, "\'") + '%');
+            q.orWhere( 'manga.alt_name', 'like', '%' + filter.q.replace(/\'/g, "\'") + '%');
+            q.orWhereRaw(`MATCH(manga.name, manga.alt_name) AGAINST ('${filter.q.replace(/\'/g, "\'")}')`);
         })
+
+        selectField += `, MATCH(manga.name, manga.alt_name) AGAINST ('${filter.q.replace(/\'/g, "\'")}') as lien_quan`;
     }
 
     const pageId = filter.page ? (filter.page - 1) : 0;
@@ -176,9 +179,12 @@ const getLastUpdateMangas = async (db, filter = {}) => {
             pageId: pageId
         }
     }
-    query.select(db.raw('distinct chapter.manga_id, max(`chapter`.`created_at`) as created_at, max(`sorder`) as sorder'))
+    query.select(db.raw(selectField))
         .where('chapter.status', '=', 'ACTIVE')
         .groupBy('chapter.manga_id');
+    if (filter.q) {
+        query.orderBy('lien_quan', 'desc');
+    }
     if (filter.orderBy) {
         query.orderBy(filter.orderBy.field, filter.orderBy.sort);
     } else if (filter.mangaOrderBy) {

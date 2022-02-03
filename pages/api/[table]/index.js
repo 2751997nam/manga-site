@@ -91,12 +91,18 @@ const buildFilters = (query, param) => {
                     case '=~':
                         if (values[1]) {
                             let matchFields = values[0].split(';');
+                            let fulTextMatch = matchFields.join(', ');
+                            let firstField = matchFields.shift();
                             query.where(function (q) {
-                                q.whereRaw(`MATCH(${matchFields.join(', ')}) AGAINST ('${values[1].replace(/\'/g, "\'")}')`);
+                                q.where(firstField, 'like', '%' + values[1].replace(/\'/g, "\'") + '%');
                                 for (let field of matchFields) {
                                     q.orWhere(field, 'like', '%' + values[1].replace(/\'/g, "\'") + '%');
                                 }
+                                q.orWhereRaw(`MATCH(${fulTextMatch}) AGAINST ('${values[1].replace(/\'/g, "\'")}')`);
                             })
+
+                            extraFields.push(db.raw(`(MATCH(${fulTextMatch}) AGAINST ('${values[1].replace(/\'/g, "\'")}')) as lien_quan`));
+                            query.orderBy('lien_quan', 'desc');
                         }
                         hasFilter = true;
                         break;

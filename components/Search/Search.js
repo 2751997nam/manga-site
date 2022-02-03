@@ -65,7 +65,6 @@ const Search = (props) => {
                         <div className="media-body">
                             <h6 className="my-0">
                                 {item.name}
-                                <p className="lowercase"><small>{item.alt_name}</small></p>
                             </h6>
                         </div>
                     </div>
