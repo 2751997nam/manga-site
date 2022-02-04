@@ -16,7 +16,6 @@ MyApp.getInitialProps = async (context) => {
     const appProps = await App.getInitialProps(context);
     if (context && context.ctx && context.ctx.req) {
         siteNameCache = getSiteName(context.ctx.req);
-        console.log('siteName', siteNameCache);
     }
     if(categoriesCache.length) {
         return {...appProps, categories: categoriesCache}
