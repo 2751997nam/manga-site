@@ -18,7 +18,7 @@ MyApp.getInitialProps = async (context) => {
         siteNameCache = getSiteName(context.ctx.req);
     }
     if(categoriesCache.length) {
-        return {...appProps, categories: categoriesCache}
+        return {...appProps, categories: categoriesCache, siteName: siteNameCache}
     }
     let apiUrl = process.env.APP_URL;
     if (!apiUrl) {

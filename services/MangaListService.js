@@ -159,7 +159,8 @@ const getLastUpdateMangas = async (db, filter = {}) => {
         selectField += `, MATCH(manga.name, manga.alt_name) AGAINST ('${filter.q.replace(/\'/g, "\\'")}') as lien_quan`;
     }
 
-    const pageId = filter.page ? (filter.page - 1) : 0;
+    let pageId = filter.page ? (filter.page - 1) : 0;
+    pageId = pageId < 0 ? 0 : pageId;
     const pageSize = filter.pageSize ? filter.pageSize : 20;
     let meta = getBaseMeta();
 
@@ -277,7 +278,8 @@ const getMangaByChapters = async (db, filter = {}) => {
     }
     
     query.select(['chapter.id as chapter_id', 'chapter.name', 'chapter.slug', 'chapter.manga_id', 'chapter.created_at', 'manga.name as manga_name', 'manga.slug as manga_slug', 'manga.image as manga_image']);
-    const pageId = filter.page ? (filter.page - 1) : 0;
+    let pageId = filter.page ? (filter.page - 1) : 0;
+    pageId = pageId < 0 ? 0 : pageId;
     const pageSize = filter.pageSize ? filter.pageSize : 20;
     const pageCount = total > 0 ? Math.ceil(total / pageSize) : 0;
 
