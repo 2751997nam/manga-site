@@ -5,7 +5,7 @@ import {browserName, isBrowser, isMobile} from 'react-device-detect';
 const Tracking = (props) => {
     const router = useRouter();
     const targetType = props.targetType;
-    const targetId = props.targetId;
+    const targetId = props.targetId ? props.targetId : 0;
 
     const tracking = useCallback(() => {
         fetch('/api/tracking-view', {

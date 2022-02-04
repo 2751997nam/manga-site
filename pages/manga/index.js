@@ -10,6 +10,7 @@ import BreadCrumb from '@/components/common/BreadCrumb';
 import SearchAdvance from '@/components/Search/SearchAdvance';
 import Head from 'next/head';
 import { useState } from 'react';
+import { getSiteName } from '@/lib/helper';
 import dynamic from 'next/dynamic'
 
 const TopView = dynamic(
@@ -30,10 +31,7 @@ function MangaList(props) {
     const topViewsAll = props.topViewsAll;
     const meta = props.meta;
     const query = props.query;
-    const links = [{
-        url: '/manga',
-        text: 'Manga List'
-    }];
+    const links = props.breadcrumbs;
 
     const toogleSearchAdvance = () => {
         setIsAdvance(!isAdvance);
@@ -42,23 +40,23 @@ function MangaList(props) {
     return (
         <div className="row">
             <Head>
-                <title>Manga List</title>
-                <meta name="description" content="Read manhwa 18+, hentai, pornwa, manhwaonline, manga online free, free manga, manga reader, manga scans, manga raw, manga, manhwa, manhua"></meta>
-                <meta name="keywords" content="Read manhwa 18+, hentai, pornwa online free at ManhwaPlus, update fastest chap, chapters, most full, synthesized 24h free with high-quality images. We hope to bring you happy moments. "></meta>
+                <title>{props.title}</title>
+                <meta name="description" content="Read manhwa 18+, hentai, pornwa, webtoon, manhwa online, manga online free, free manga, manga reader, manga scans, manga raw, manga, manhwa, manhua"></meta>
+                <meta name="keywords" content={props.keywords}></meta>
             </Head>
             <BreadCrumb links={links}></BreadCrumb>
-            <h1 className="hidden">Manga List</h1>
+            <h1 className="hidden">{props.title}</h1>
             <SortBox toogleSearchAdvance={toogleSearchAdvance}></SortBox>
             <div className="col-md-8">
                 {isAdvance && <SearchAdvance categories={props.categories}></SearchAdvance>}
             </div>
             <div className="col-md-8">
-                <CardListPagination title="List Manga" mangas={mangas} meta={meta} query={query}></CardListPagination>
+                <CardListPagination title="Manga List" mangas={mangas} meta={meta} query={query}></CardListPagination>
             </div>
             <div className='col-md-4'>
                 <TopView></TopView>
             </div>
-            <Tracking targetType="MANGA_LIST"></Tracking>
+            <Tracking targetType="MANGA_LIST" targetId={props.genreId}></Tracking>
         </div>
     )
 }
@@ -77,14 +75,38 @@ const buildParams = (params) => {
 export async function getServerSideProps(context) {
     const db = DB();
     const filter = await buildFilters(db, context.query);
+    const {req} = context;
+    const siteName = getSiteName(req);
+    let title = 'Manga List';
+    let keywords = `Read manhwa 18+, hentai, pornwa, webtoon 18+ online free at ${siteName}, update fastest chap, chapters, most full, synthesized 24h free with high-quality images. We hope to bring you happy moments. `;
+    let props = {
+        breadcrumbs: [{
+            url: '/manga',
+            text: 'Manga List'
+        }]
+    };
+    if (filter.genreId) {
+        const category = await db.from('category').where('id', filter.genreId).first(['id', 'name', 'slug']);
+        if (category) {
+            props.genreId = filter.genreId;
+            title = 'Genre ' + category.name;
+            keywords = `Read manhwa ${category.name}, hentai, pornwa, webtoon 18+ online free at ${siteName}, update fastest chap, chapters, most full, synthesized 24h free with high-quality images. We hope to bring you happy moments. `
+            props.breadcrumbs.push({
+                url: '/manga-genre-' + category.slug,
+                text: category.name
+            })
+        }
+    }
     const {mangas, meta} = await getLastUpdateMangas(db, filter);
 
+    props.title = title;
+    props.keywords = keywords;
+    props.mangas = JSON.parse(JSON.stringify(mangas));
+    props.meta = meta;
+    props.query = buildParams(context.query);
+
     return {
-        props: {
-            mangas: JSON.parse(JSON.stringify(mangas)),
-            meta: meta,
-            query: buildParams(context.query),
-        }
+        props: props
     };
 }
 

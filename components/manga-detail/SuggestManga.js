@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import CustomLink from '@/components/common/CustomLink';
-import { getImageSrc, getMangaRoute, getChapterRoute } from '@/lib/hepler';
+import { getImageSrc, getMangaRoute, getChapterRoute } from '@/lib/helper';
 
 function SuggestManga(props) {
     const mangas = props.mangas;

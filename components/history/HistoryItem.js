@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { getChapterName, getImageSrc, getMangaRoute, getChapterRoute } from '@/lib/hepler';
+import { getChapterName, getImageSrc, getMangaRoute, getChapterRoute } from '@/lib/helper';
 import CustomLink from '@/components/common/CustomLink';
 
 const HistoryItem = (props) => {

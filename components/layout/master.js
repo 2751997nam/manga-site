@@ -8,6 +8,8 @@ import Image from 'next/image';
 function Layout(props) {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
+    const siteName = props.siteName;
+    const logo = siteName == 'TopToon69' ? 'logo69' : 'logo';
     const scrollToTop = () => {
         window.scrollTo({ top: 0, behavior: "smooth" });
     }
@@ -48,17 +50,19 @@ function Layout(props) {
             <Head>
                 <meta name='viewport' content='width=device-width, initial-scale=1' />
                 <meta charSet="UTF-8"></meta>
+                <link rel="icon" type="image/x-icon" href={`/${logo}.ico`}></link>
+                <link rel="apple-touch-icon" href={`/${logo}.ico`}></link>
                 <link rel="stylesheet" href="/css/main.min.css" />
                 <link rel="stylesheet" href="/css/all.min.css" />
             </Head>
             <div className="wrapper">
-                <Header categories={props.categories} />
+                <Header categories={props.categories} siteName={props.siteName} />
                 <div className='content-wrapper'>
                     <div className='container mt-2rem'>
                         {props.children}
                         {renderLoading()}
                     </div>
-                    <Footer categories={props.categories} />
+                    <Footer categories={props.categories} siteName={props.siteName} />
                 </div>
                 <div className="btn-back-to-top d-block margin-navi" onClick={scrollToTop}>
                     <i className="fa fa-angle-double-up"></i>

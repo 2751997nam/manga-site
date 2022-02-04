@@ -32,6 +32,7 @@ const buildFilters = async (db, params) => {
                         let item = await db.from('category').where('slug', slug).select('id').first();
                         if (item) {
                             result.categoryIds = [item.id];
+                            result.genreId = item.id;
                         }
                     }
                 } if (value.indexOf('author') == 0) {

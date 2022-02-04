@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
 import DB from '@/lib/db';
-import { getChapterName, getImageSrc, getMangaRoute, getChapterRoute } from '@/lib/hepler';
+import { getChapterName, getImageSrc, getMangaRoute, getChapterRoute } from '@/lib/helper';
 import chapterDetailStyles from '@/styles/chapter-detail.module.css';
 import Link from 'next/link';
 import Image from 'next/image';

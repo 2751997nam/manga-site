@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState, useMemo } from 'react';
 import Image from 'next/image';
 import CustomLink from '@/components/common/CustomLink';
-import { formatDate, getChapterName, getImageSrc, getMangaRoute, getChapterRoute } from '@/lib/hepler';
+import { formatDate, getChapterName, getImageSrc, getMangaRoute, getChapterRoute } from '@/lib/helper';
 
 const MangaItemMobile = (props) => {
     const manga = props.manga;

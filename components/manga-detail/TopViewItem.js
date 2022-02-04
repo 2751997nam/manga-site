@@ -1,6 +1,6 @@
 import CustomLink from '@/components/common/CustomLink';
 import Image from 'next/image';
-import { formatDate, getChapterName, getImageSrc, getMangaRoute, getChapterRoute } from '@/lib/hepler';
+import { formatDate, getChapterName, getImageSrc, getMangaRoute, getChapterRoute } from '@/lib/helper';
 
 const TopViewItem = (props) => {
     const manga = props.manga;

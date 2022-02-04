@@ -4,6 +4,7 @@ import CardList from '@/components/common/CardList';
 import {buildFilters, getLastUpdateMangas, getPopularMangas, getTopViews} from '@/services/MangaListService';
 import dynamic from 'next/dynamic'
 import Head from 'next/head';
+import  { getSiteName } from '@/lib/helper';
 
 const Slider = dynamic(
     () => import('@/components/home/Slider'),
@@ -33,11 +34,11 @@ function HomePage(props) {
     return (
         <div className="row">
             <Head>
-                <title>ManhwaPlus</title>
-                <meta name="description" content="Read manhwa 18+, hentai, pornwa, manhwaonline, manga online free, free manga, manga reader, manga scans, manga raw, manga, manhwa, manhua"></meta>
-                <meta name="keywords" content="Read manhwa 18+, hentai, pornwa online free at ManhwaPlus, update fastest chap, chapters, most full, synthesized 24h free with high-quality images. We hope to bring you happy moments. "></meta>
+                <title>{props.siteName}</title>
+                <meta name="description" content="Read manhwa 18+, hentai, pornwa, webtoon, manhwa online, manga online free, free manga, manga reader, manga scans, manga raw, manga, manhwa, manhua"></meta>
+                <meta name="keywords" content={`Read manhwa 18+, hentai, pornwa, webtoon 18+ online free at ${props.siteName}, update fastest chap, chapters, most full, synthesized 24h free with high-quality images. We hope to bring you happy moments. `}></meta>
             </Head>
-            <h1 className="hidden">ManhwaPlus</h1>
+            <h1 className="hidden">{props.siteName}</h1>
             <div className="col-md-12">
                 <Slider mangas={populars}></Slider>
             </div>
@@ -55,6 +56,9 @@ function HomePage(props) {
 }
 
 export async function getServerSideProps(context) {
+    const {req} = context;
+    const siteName = getSiteName(req);
+
     const db = DB();
     let populars = await Redis.getJson('populars', []);
     if (!populars || !populars.length) {
@@ -81,6 +85,7 @@ export async function getServerSideProps(context) {
 
     return {
         props: {
+            siteName: siteName,
             populars: JSON.parse(JSON.stringify(populars)),
             lastUpdates: JSON.parse(JSON.stringify(lastUpdates)),
             lastUpdateRaws: JSON.parse(JSON.stringify(lastUpdateRaws)),

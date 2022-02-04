@@ -1,10 +1,12 @@
 import Layout from '@/components/layout/master';
 import Config from '@/config';
-import App from 'next/app'
+import App from 'next/app';
+import { getSiteName } from '@/lib/helper';
 let categoriesCache = [];
-function MyApp({ Component, pageProps, categories}) {
+let siteNameCache = 'ManhwaPlus';
+function MyApp({ Component, pageProps, categories, siteName}) {
     return (
-        <Layout categories={categories}>
+        <Layout categories={categories} siteName={siteName}>
             <Component {...pageProps} />
         </Layout>
     )
@@ -12,6 +14,10 @@ function MyApp({ Component, pageProps, categories}) {
 
 MyApp.getInitialProps = async (context) => {
     const appProps = await App.getInitialProps(context);
+    if (context && context.ctx && context.ctx.req) {
+        siteNameCache = getSiteName(context.ctx.req);
+        console.log('siteName', siteNameCache);
+    }
     if(categoriesCache.length) {
         return {...appProps, categories: categoriesCache}
     }
@@ -22,7 +28,7 @@ MyApp.getInitialProps = async (context) => {
     const response = await fetch(`${apiUrl}/api/category?page_size=-1&fields=id,name,slug&sorts=name`)
         .then(res => res.json())
     categoriesCache = response.result;
-    return {...appProps, categories: categoriesCache}
+    return {...appProps, categories: categoriesCache, siteName: siteNameCache}
 }
 
 export default MyApp

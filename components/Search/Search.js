@@ -2,7 +2,7 @@ import { Fragment, useState, useCallback, useEffect } from "react";
 import {DebounceInput} from 'react-debounce-input';
 import Image from 'next/image';
 import CustomLink from "@/components/common/CustomLink";
-import { getImageSrc, getMangaRoute, getChapterRoute } from '@/lib/hepler';
+import { getImageSrc, getMangaRoute, getChapterRoute } from '@/lib/helper';
 import { useRouter } from 'next/router';
 
 const Search = (props) => {

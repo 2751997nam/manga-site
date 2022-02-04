@@ -5,6 +5,8 @@ import Image from "next/image";
 
 function Header(props) {
     const categories = props.categories;
+    const siteName = props.siteName;
+    const logo = siteName == 'TopToon69' ? 'logo69' : 'logo';
     const [expand, setExpand] = useState(false);
 
     const showDropdown = () => {
@@ -27,12 +29,12 @@ function Header(props) {
         <nav id="sticky-navbar" className="main-header navbar navbar-expand navbar-dark navbar-primary">
             <div className="container">
                 <CustomLink href="/" className="navbar-brand">
-                    <Image src="/images/logo.png" alt="Logo" className="brand-image" width={160} height="35"  />
+                    <Image src={`/images/${logo}.png`} alt="Logo" className="brand-image" width={160} height="45"  />
                 </CustomLink>
                 <div className="navbar-collapse collapse">
                     <ul className="navbar-nav mr-auto">
                         <li className={'nav-item ' + (expand ? 'show' : '')}>
-                            <a href="#" data-toggle="dropdown" tabIndex={0} onFocus={showDropdown} onBlur={hideDropdown} aria-expanded="true" className="nav-link dropdown-toggle">
+                            <a href="javascript:void(0)" data-toggle="dropdown" tabIndex={0} onFocus={showDropdown} onBlur={hideDropdown} aria-expanded="true" className="nav-link dropdown-toggle">
                                 <i className="fas fa-book-open"></i><span className="d-none d-lg-inline ml-1">Genre(s)</span>
                             </a>
                             <div className={'dropdown-menu manga-mega-menu genres-menu w-100 justify-content-center ' + (expand ? 'show' : '')}>

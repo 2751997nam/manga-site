@@ -7,7 +7,7 @@ import BreadCrumb from '@/components/common/BreadCrumb';
 import ChapterList from '@/components/manga-detail/ChapterList';
 import SuggestManga from '@/components/manga-detail/SuggestManga';
 import Head from 'next/head';
-import { getImageSrc, getMangaRoute, getChapterRoute } from '@/lib/hepler';
+import { getImageSrc, getMangaRoute, getChapterRoute } from '@/lib/helper';
 import RatingBox from '@/components/manga-detail/RatingBox';
 import { useCallback, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic'
@@ -90,7 +90,7 @@ function MangaDetail(props) {
                 <title>{manga.name}</title>
                 <meta name="title" content={manga.name}></meta>
                 <meta name="description" content={manga.description}></meta>
-                <meta name="keywords" content="Read manhwa 18+, hentai, pornwa online free at ManhwaPlus, update fastest chap, chapters, most full, synthesized 24h free with high-quality images. We hope to bring you happy moments. "></meta>
+                <meta name="keywords" content={manga.name + ' ' + manga.alt_name}></meta>
             </Head>
             <BreadCrumb links={links}></BreadCrumb>
             <h1 className="hidden">{manga.name}</h1>
@@ -233,7 +233,7 @@ export async function getServerSideProps(context) {
         .where('manga_id', '!=', id)
         .limit(5)
         .distinct()
-        .select(['manga.id', 'manga.name', 'manga.image', 'manga.slug', 'manga.description', 'manga.view']);
+        .select(['manga.id', 'manga.name', 'manga.alt_name', 'manga.image', 'manga.slug', 'manga.description', 'manga.view']);
     return {
         props: {
             manga: JSON.parse(JSON.stringify(manga)),
