@@ -93,6 +93,7 @@ const buildFilters = (query, param) => {
                             let matchFields = values[0].split(';');
                             let fulTextMatch = matchFields.join(', ');
                             let firstField = matchFields.shift();
+                            values[1] = values[1].replace('?', '').replace('-', ' ');
                             query.where(function (q) {
                                 q.where(firstField, 'like', '%' + values[1].replace(/\'/g, "\'") + '%');
                                 for (let field of matchFields) {

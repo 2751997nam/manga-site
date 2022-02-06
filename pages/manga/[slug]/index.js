@@ -10,6 +10,7 @@ import Head from 'next/head';
 import { getImageSrc, getMangaRoute, getChapterRoute } from '@/lib/helper';
 import RatingBox from '@/components/manga-detail/RatingBox';
 import { useCallback, useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic'
 const Tracking = dynamic(
     () => import('@/components/common/Tracking'),
@@ -17,6 +18,7 @@ const Tracking = dynamic(
 );
 
 function MangaDetail(props) {
+    const router = useRouter();
     const manga = props.manga;
     const [bookmarkCount, setBookmarkCount] = useState(manga.bookmark_count);
     const [isBookmarked, setIsBookmarked] = useState(false);
@@ -79,6 +81,16 @@ function MangaDetail(props) {
         localStorage.setItem('manhwa_bookmark', bookmarkeds.join(','));
         setIsBookmarked(false);
     }
+
+    const increaseView = (manga) => {
+        fetch('/api/manga-view/' + manga.id, {
+            method: 'POST'
+        })
+    }
+
+    useEffect(() => {
+        increaseView(manga);
+    }, [router.asPath, manga])
 
     useEffect(() => {
         checkBookmarked();

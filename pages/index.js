@@ -58,6 +58,9 @@ function HomePage(props) {
 export async function getServerSideProps(context) {
     const {req} = context;
     const siteName = getSiteName(req);
+    if (context && context.query && context.query.clearCache) {
+        await Redis.delete([context.query.clearCache]);
+    }
 
     const db = DB();
     let populars = await Redis.getJson('populars', []);
@@ -67,13 +70,13 @@ export async function getServerSideProps(context) {
     }
     let lastUpdates = await Redis.getJson('lastUpdates', []);
     if (!lastUpdates || !lastUpdates.length) {
-        lastUpdates = await getLastUpdateMangas(db, {notCategoryId: 8, getOnlyResult: true, pageSize: 19});
+        lastUpdates = await getLastUpdateMangas(db, {getOnlyResult: true, pageSize: 19});
         Redis.setJson('lastUpdates', lastUpdates);
     }
 
     let lastUpdateRaws = await Redis.getJson('lastUpdateRaws', []);
     if (!lastUpdateRaws || !lastUpdateRaws.length) {
-        lastUpdateRaws = await getLastUpdateMangas(db, {categoryId: 8, getOnlyResult: true, pageSize: 11});
+        lastUpdateRaws = await getLastUpdateMangas(db, {categoryIds: [8], getOnlyResult: true, pageSize: 11});
         Redis.setJson('lastUpdateRaws', lastUpdateRaws, 'EX', 86400);
     }
 

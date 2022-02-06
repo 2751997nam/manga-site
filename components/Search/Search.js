@@ -31,6 +31,7 @@ const Search = (props) => {
     const onSearching = (event) => {
         const value = event.target.value;
         setQuery({...query, q: value});
+        setMangas([]);
         if (value) {
             setLoading(true);
             let appUrl = process.env.APP_URL;
@@ -44,8 +45,6 @@ const Search = (props) => {
                 }).catch(error => {
                     setLoading(false);
                 });
-        } else {
-            setMangas([]);
         }
     }
 
