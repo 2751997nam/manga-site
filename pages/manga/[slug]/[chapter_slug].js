@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
 import DB from '@/lib/db';
-import { getChapterName, getImageSrc, getMangaRoute, getChapterRoute } from '@/lib/helper';
+import { getChapterName, getImageSrc, getMangaRoute, getChapterRoute, getSiteName } from '@/lib/helper';
 import chapterDetailStyles from '@/styles/chapter-detail.module.css';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -174,6 +174,7 @@ function ChapterDetail(props) {
                 <title>{chapter.name}</title>
                 <meta name="title" content={chapter.name}></meta>
                 <meta name="description" content={manga.description}></meta>
+                <meta name="keywords" content={props.keywords}></meta>
             </Head>
             <BreadCrumb links={links}></BreadCrumb>
             <h1 className="hidden">{chapter.name}</h1>
@@ -259,8 +260,12 @@ export async function getServerSideProps(context) {
         .where('status', 'ACTIVE')
         .orderBy('id', 'desc')
         .select(['id', 'name', 'slug']);
+    const {req} = context;
+    const siteName = getSiteName(req);
+    let keywords = `Read manhwa 18+, hentai, pornwa, webtoon 18+ online free at ${siteName}, update fastest chap, chapters, most full, synthesized 24h free with high-quality images. We hope to bring you happy moments. `;
     return {
         props: {
+            keywords: keywords,
             chapter: JSON.parse(JSON.stringify(chapter)),
             chapters: JSON.parse(JSON.stringify(chapters)),
             manga: JSON.parse(JSON.stringify(manga)),
