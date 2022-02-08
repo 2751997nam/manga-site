@@ -25,11 +25,15 @@ const post = async (request, response) => {
             viewDay = 1;
         } else {
             view.view++;
-            await db.from('view').where('manga_id', id).update({
-                date: date,
-                month: month,
-                view: view.view
-            });
+            await db.from('view')
+                .where('manga_id', id)
+                .where('date', date)
+                .where('month', month)
+                .update({
+                    date: date,
+                    month: month,
+                    view: view.view
+                });
             viewDay = view.view;
         }
         if (!sumViewMonth.sum) {
