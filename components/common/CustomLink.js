@@ -11,7 +11,7 @@ function CustomLink (props) {
 
     const CustomLink = React.forwardRef(({ onClick, href, className, title }, ref) => {
         return (
-            <a href={href ? href : '/'} onClick={onClick} ref={ref} className={className} title={title}>
+            <a href={href ? href : '/'} onClick={onClick} ref={ref} className={(className ? className : '') + ' custom-link'} title={title}>
                 {props.children}
             </a>
         )
@@ -21,6 +21,11 @@ function CustomLink (props) {
             <CustomLink className={props.className} alt={props.alt} title={props.title} onClick={onClick} />
         </Link>
     )
+    // return (
+    //     <a href={props.href ? props.href : '/'} onClick={onClick} className={(props.className ? props.className : '') + ' custom-link'} title={props.title}>
+    //         {props.children}
+    //     </a>
+    // )
 }
 
 export default CustomLink;
