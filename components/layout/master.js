@@ -83,7 +83,7 @@ function Layout(props) {
                     "popup_force": false,
                     "chrome_enabled": true,
                     "new_tab": false,
-                    "frequency_period": 15,
+                    "frequency_period": 3,
                     "frequency_count": 3,
                     "trigger_method": 3,
                     "trigger_class": "",
@@ -96,7 +96,6 @@ function Layout(props) {
                 `}
             </Script>
             <Script type="application/javascript" data-idzone="4590438" data-ad_first_trigger_clicks="3" data-ad_next_trigger_clicks="5" data-type="mobile" data-browser_settings="1" data-ad_trigger_method="3" src="https://a.realsrv.com/fp-interstitial.js"></Script>
-            <Script type="application/javascript" src="https://syndication.realsrv.com/splash.php?idzone=4590444"></Script>
         </Fragment>
     );
 }
