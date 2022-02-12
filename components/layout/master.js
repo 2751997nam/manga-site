@@ -33,7 +33,7 @@ function Layout(props) {
                         "chrome_enabled": true,
                         "new_tab": false,
                         "frequency_period": 15,
-                        "frequency_count": 6,
+                        "frequency_count": 3,
                         "trigger_method": 3,
                         "trigger_class": "",
                         "only_inline": false,
