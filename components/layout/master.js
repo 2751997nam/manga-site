@@ -32,7 +32,7 @@ function Layout(props) {
                         "popup_force": false,
                         "chrome_enabled": true,
                         "new_tab": false,
-                        "frequency_period": 3,
+                        "frequency_period": 15,
                         "frequency_count": 6,
                         "trigger_method": 3,
                         "trigger_class": "",
