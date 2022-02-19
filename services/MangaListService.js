@@ -122,13 +122,14 @@ const getBaseMeta = (pageId = 0, pageSize = 20) => {
 
 const getLastUpdateMangas = async (db, filter = {}) => {
     const query = db.from('chapter');
-    if (filter.categoryIds && filter.categoryIds.length) {
-        query.join('manga_n_category', 'manga_n_category.manga_id', 'chapter.manga_id')
-            .whereIn('category_id',filter.categoryIds);
-    }
-    if (filter.notCategoryIds && filter.notCategoryIds.length) {
-        query.join('manga_n_category', 'manga_n_category.manga_id', 'chapter.manga_id')
-            .whereNotIn('category_id', filter.notCategoryIds);
+    if ((filter.categoryIds && filter.categoryIds.length) || (filter.notCategoryIds && filter.notCategoryIds.length)) {
+        query.join('manga_n_category', 'manga_n_category.manga_id', 'chapter.manga_id');
+        if (filter.categoryIds && filter.categoryIds.length) {
+            query.whereIn('category_id',filter.categoryIds);
+        }
+        if (filter.notCategoryIds && filter.notCategoryIds.length) {
+            query.whereNotIn('category_id', filter.notCategoryIds);
+        }
     }
     if (filter.authorId) {
         query.join('manga_n_author', 'manga_n_author.manga_id', 'chapter.manga_id')
@@ -150,14 +151,15 @@ const getLastUpdateMangas = async (db, filter = {}) => {
 
     let selectField = 'distinct chapter.manga_id, max(`chapter`.`created_at`) as created_at, max(`sorder`) as sorder';
     if (filter.q) {
-        filter.q = filter.q.replace('?', '').replace('-', ' ');
+        filter.q = filter.q.trim();
+        filter.q = filter.q.replace('?', '').replace('-', ' ').replace(/\'/g, "");
         query.where(function (q) {
-            q.where( 'manga.alt_name', 'like', '%' + filter.q.replace(/\'/g, "\'") + '%');
-            q.orWhere( 'manga.alt_name', 'like', '%' + filter.q.replace(/\'/g, "\'") + '%');
-            q.orWhereRaw(`MATCH(manga.name, manga.alt_name) AGAINST ('${filter.q.replace(/\'/g, "\\'")}')`);
+            q.where( 'manga.alt_name', 'like', '%' + filter.q + '%');
+            q.orWhere( 'manga.alt_name', 'like', '%' + filter.q + '%');
+            q.orWhereRaw(`MATCH(manga.name, manga.alt_name) AGAINST ('${filter.q}')`);
         })
 
-        selectField += `, MATCH(manga.name, manga.alt_name) AGAINST ('${filter.q.replace(/\'/g, "\\'")}') as lien_quan`;
+        selectField += `, MATCH(manga.name, manga.alt_name) AGAINST ('${filter.q}') as lien_quan`;
     }
 
     let pageId = filter.page ? (filter.page - 1) : 0;
