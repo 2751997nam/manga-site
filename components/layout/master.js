@@ -106,6 +106,7 @@ function Layout(props) {
                     <i className="fa fa-angle-double-up"></i>
                 </div>
             </div>
+            <>{renderAdsScript}</>
         </Fragment>
     );
 }
