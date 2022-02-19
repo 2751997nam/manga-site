@@ -84,8 +84,7 @@ const buildFilters = (query, param) => {
                 switch (para) {
                     case '~':
                         if (values[1]) {
-                            values[1] = values[1].replace('?', '').replace('-', ' ').replace(/\'/g, "");
-                            query.where(values[0], 'like', '%' + values[1] + '%');
+                            query.where(values[0], 'like', '%' + values[1].replace(/\'/g, "\'") + '%');
                         }
                         hasFilter = true;
                         break;
@@ -94,16 +93,16 @@ const buildFilters = (query, param) => {
                             let matchFields = values[0].split(';');
                             let fulTextMatch = matchFields.join(', ');
                             let firstField = matchFields.shift();
-                            values[1] = values[1].replace('?', '').replace('-', ' ').replace(/\'/g, "");
+                            values[1] = values[1].replace('?', '').replace('-', ' ');
                             query.where(function (q) {
-                                q.where(firstField, 'like', '%' + values[1] + '%');
+                                q.where(firstField, 'like', '%' + values[1].replace(/\'/g, "\'") + '%');
                                 for (let field of matchFields) {
-                                    q.orWhere(field, 'like', '%' + values[1] + '%');
+                                    q.orWhere(field, 'like', '%' + values[1].replace(/\'/g, "\'") + '%');
                                 }
-                                q.orWhereRaw(`MATCH(${fulTextMatch}) AGAINST ('${values[1]}')`);
+                                q.orWhereRaw(`MATCH(${fulTextMatch}) AGAINST ('${values[1].replace(/\'/g, "\\'")}')`);
                             })
 
-                            extraFields.push(db.raw(`(MATCH(${fulTextMatch}) AGAINST ('${values[1]}')) as lien_quan`));
+                            extraFields.push(db.raw(`(MATCH(${fulTextMatch}) AGAINST ('${values[1].replace(/\'/g, "\\'")}')) as lien_quan`));
                             query.orderBy('lien_quan', 'desc');
                         }
                         hasFilter = true;
