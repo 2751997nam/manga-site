@@ -16,7 +16,7 @@ const Tracking = (props) => {
         let device = isBrowser ? 'browser' : (isMobile ? 'mobile' : 'unknown');
         let browser = browserName;
         let userAgent = navigator.userAgent;
-        let referer =  document.referrer;
+        let referrer =  document.referrer;
         fetch('/api/tracking-click', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json'},
@@ -25,7 +25,7 @@ const Tracking = (props) => {
                 browser: browser, 
                 url: window.location.href, 
                 user_agent: userAgent,
-                referer: referer
+                referrer: referrer
             })
         });
     }, [targetType, targetId])
