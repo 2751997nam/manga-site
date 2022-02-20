@@ -262,7 +262,7 @@ export async function getServerSideProps(context) {
         .select(['id', 'name', 'slug']);
     const {req} = context;
     const siteName = getSiteName(req);
-    let keywords = `Read manhwa 18+, hentai, pornwa, webtoon 18+ online free at ${siteName}, update fastest chap, chapters, most full, synthesized 24h free with high-quality images. We hope to bring you happy moments. `;
+    let keywords = `Read manhwa 18+, hentai, pornwa, pornhwa, webtoon 18+ online free at ${siteName}, update fastest chap, chapters, most full, synthesized 24h free with high-quality images. We hope to bring you happy moments. `;
     return {
         props: {
             keywords: keywords,
