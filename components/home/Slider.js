@@ -16,7 +16,13 @@ function Slider(props) {
             items: 3
         },
         1024:{
-            items:5,
+            items: 5,
+        },
+        1366: {
+            items: 5
+        },
+        1080: {
+            items: 5
         }
     }
 
