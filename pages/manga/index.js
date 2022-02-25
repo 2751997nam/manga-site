@@ -41,7 +41,7 @@ function MangaList(props) {
         <div className="row">
             <Head>
                 <title>{props.title}</title>
-                <meta name="description" content="Read manhwa 18+, hentai, pornwa, pornhwa, webtoon, manhwa online, manga online free, free manga, manga reader, manga scans, manga raw, manga, manhwa, manhua"></meta>
+                <meta name="description" content="Read manhwa 18+, toptoon 69, hentai, pornwa, pornhwa, webtoon, manhwa online, manga online free, free manga, manga reader, manga scans, manga raw, manga, manhwa, manhua"></meta>
                 <meta name="keywords" content={props.keywords}></meta>
             </Head>
             <BreadCrumb links={links}></BreadCrumb>
@@ -78,7 +78,7 @@ export async function getServerSideProps(context) {
     const {req} = context;
     const siteName = getSiteName(req);
     let title = 'Manga List';
-    let keywords = `Read manhwa 18+, hentai, pornwa, pornhwa, webtoon 18+ online free at ${siteName}, update fastest chap, chapters, most full, synthesized 24h free with high-quality images. We hope to bring you happy moments. `;
+    let keywords = `Read manhwa 18+, toptoon 69, hentai, pornwa, pornhwa, webtoon 18+ online free at ${siteName}, update fastest chap, chapters, most full, synthesized 24h free with high-quality images. We hope to bring you happy moments. `;
     let props = {
         breadcrumbs: [{
             url: '/manga',
