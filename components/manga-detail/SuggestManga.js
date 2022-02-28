@@ -43,6 +43,9 @@ function SuggestManga(props) {
                 <ul className="others-list">
                     {renderItems()}
                 </ul>
+                <div>
+                    <ins className="adsbyexoclick" data-zoneid="4615918"></ins>
+                </div>
             </div>
         </div>
 
