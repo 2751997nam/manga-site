@@ -47,7 +47,6 @@ function Layout(props) {
                 <Script type="application/javascript" data-idzone="4590438" data-ad_first_trigger_clicks="3" data-ad_next_trigger_clicks="5" data-type="mobile" data-browser_settings="1" data-ad_trigger_method="3" src="https://a.realsrv.com/fp-interstitial.js"></Script>
                 <Script async type="application/javascript" src="https://a.realsrv.com/ad-provider.js"></Script> 
                 <ins className="adsbyexoclick" data-zoneid="4593282"></ins> 
-                <ins className="adsbyexoclick" data-zoneid="4615918"></ins> 
  
                 <Script>{`(AdProvider = window.AdProvider || []).push({"serve": {}});`}</Script>
             </>
@@ -109,9 +108,15 @@ function Layout(props) {
             <div className="wrapper">
                 <Header categories={props.categories} siteName={props.siteName} />
                 <div className='content-wrapper'>
+                    <div className='container mt-2rem text-center'>
+                        <ins className="adsbyexoclick" data-zoneid="4615928"></ins> 
+                    </div>
                     <div className='container mt-2rem'>
                         {props.children}
                         {renderLoading()}
+                    </div>
+                    <div className='container text-center'>
+                        <ins className="adsbyexoclick" data-zoneid="4615918"></ins> 
                     </div>
                     <Footer categories={props.categories} siteName={props.siteName} />
                 </div>
