@@ -47,7 +47,8 @@ function Layout(props) {
                 <Script type="application/javascript" data-idzone="4590438" data-ad_first_trigger_clicks="3" data-ad_next_trigger_clicks="5" data-type="mobile" data-browser_settings="1" data-ad_trigger_method="3" src="https://a.realsrv.com/fp-interstitial.js"></Script>
                 <Script async type="application/javascript" src="https://a.realsrv.com/ad-provider.js"></Script> 
                 <ins className="adsbyexoclick" data-zoneid="4593282"></ins> 
-                <ins className="adsbyexoclick" data-zoneid="4615928"></ins> 
+                <ins className="adsbyexoclick" data-zoneid="4615918"></ins> 
+ 
                 <Script>{`(AdProvider = window.AdProvider || []).push({"serve": {}});`}</Script>
             </>
         )
