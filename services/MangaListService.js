@@ -152,7 +152,7 @@ const getLastUpdateMangas = async (db, filter = {}) => {
     let selectField = 'distinct chapter.manga_id, max(`chapter`.`created_at`) as created_at, max(`sorder`) as sorder';
     if (filter.q) {
         filter.q = filter.q.trim();
-        filter.q = filter.q.replace('?', '').replace('-', ' ').replace(/\'/g, "");
+        filter.q = filter.q.replace('?', '').replace('-', ' ').replace(/\'/g, "").replace(/\\/g, "");
         query.where(function (q) {
             q.where( 'manga.alt_name', 'like', '%' + filter.q + '%');
             q.orWhere( 'manga.alt_name', 'like', '%' + filter.q + '%');

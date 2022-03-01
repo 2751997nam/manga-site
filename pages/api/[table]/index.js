@@ -84,7 +84,7 @@ const buildFilters = (query, param) => {
                 switch (para) {
                     case '~':
                         if (values[1]) {
-                            values[1] = values[1].replace('?', '').replace('-', ' ').replace(/\'/g, "");
+                            values[1] = values[1].replace('?', '').replace('-', ' ').replace(/\'/g, "").replace(/\\/g, "");
                             query.where(values[0], 'like', '%' + values[1] + '%');
                         }
                         hasFilter = true;
@@ -94,7 +94,7 @@ const buildFilters = (query, param) => {
                             let matchFields = values[0].split(';');
                             let fulTextMatch = matchFields.join(', ');
                             let firstField = matchFields.shift();
-                            values[1] = values[1].replace('?', '').replace('-', ' ').replace(/\'/g, "");
+                            values[1] = values[1].replace('?', '').replace('-', ' ').replace(/\'/g, "").replace(/\\/g, "");
                             query.where(function (q) {
                                 q.where(firstField, 'like', '%' + values[1] + '%');
                                 for (let field of matchFields) {
