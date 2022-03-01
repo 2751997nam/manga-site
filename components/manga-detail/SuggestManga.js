@@ -44,7 +44,7 @@ function SuggestManga(props) {
                     {renderItems()}
                 </ul>
                 <div>
-                    <ins className="adsbyexoclick" data-zoneid="4615918"></ins>
+                    <ins Name="adsbyexoclick" data-zoneid="4616566"></ins> 
                 </div>
             </div>
         </div>
