@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import TopViewItem from "@/components/manga-detail/TopViewItem";
+import Script from 'next/script';
 
 const TopView = (props)  => {
     const [topViews, setTopViews] = useState([]);
@@ -64,7 +65,9 @@ const TopView = (props)  => {
                     </div>
                 </div>
                 <div>
-                    <ins className="adsbyexoclick" data-zoneid="4615918"></ins>
+                    <ins className="adsbyexoclick" data-zoneid="4616566"></ins>
+                    <Script>{`(AdProvider = window.AdProvider || []).push({"serve": {}});`}</Script>
+
                 </div>
             </div>
         </div>

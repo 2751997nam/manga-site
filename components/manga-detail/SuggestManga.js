@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import CustomLink from '@/components/common/CustomLink';
 import { getImageSrc, getMangaRoute, getChapterRoute } from '@/lib/helper';
+import Script from 'next/script';
 
 function SuggestManga(props) {
     const mangas = props.mangas;
@@ -44,7 +45,8 @@ function SuggestManga(props) {
                     {renderItems()}
                 </ul>
                 <div>
-                    <ins className="adsbyexoclick" data-zoneid="4615918"></ins> 
+                    <ins className="adsbyexoclick" data-zoneid="4616566"></ins>
+                    <Script>{`(AdProvider = window.AdProvider || []).push({"serve": {}});`}</Script> 
                 </div>
             </div>
         </div>
