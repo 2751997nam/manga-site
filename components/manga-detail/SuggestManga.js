@@ -2,10 +2,29 @@ import Image from 'next/image';
 import CustomLink from '@/components/common/CustomLink';
 import { getImageSrc, getMangaRoute, getChapterRoute } from '@/lib/helper';
 import Script from 'next/script';
+import { useMemo } from 'react';
 
 function SuggestManga(props) {
     const mangas = props.mangas;
     const title = props.title;
+
+    const renderAdsScript = useMemo(() => {
+        if (props.siteName == 'ManhwaPlus') {
+            return (
+                <>
+                    <ins className="adsbyexoclick" data-zoneid="4620562"></ins> 
+                    <Script>{`(AdProvider = window.AdProvider || []).push({"serve": {}});`}</Script>
+                </>
+            )
+        }
+
+        return (
+            <>
+                <ins className="adsbyexoclick" data-zoneid="4615918"></ins>
+                <Script>{`(AdProvider = window.AdProvider || []).push({"serve": {}});`}</Script>
+            </>
+        )
+    }, [props])
 
     const stripTags = (html) => {
         return html.replace(/<[^>]+>/g, '');
@@ -45,8 +64,7 @@ function SuggestManga(props) {
                     {renderItems()}
                 </ul>
                 <div className="text-center">
-                    <ins className="adsbyexoclick" data-zoneid="4615918"></ins>
-                    <Script>{`(AdProvider = window.AdProvider || []).push({"serve": {}});`}</Script> 
+                    <>{renderAdsScript}</>
                 </div>
             </div>
         </div>

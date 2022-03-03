@@ -7,7 +7,7 @@ import BreadCrumb from '@/components/common/BreadCrumb';
 import ChapterList from '@/components/manga-detail/ChapterList';
 import SuggestManga from '@/components/manga-detail/SuggestManga';
 import Head from 'next/head';
-import { getImageSrc, getMangaRoute, getChapterRoute } from '@/lib/helper';
+import { getImageSrc, getMangaRoute, getChapterRoute, getSiteName } from '@/lib/helper';
 import RatingBox from '@/components/manga-detail/RatingBox';
 import { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
@@ -184,8 +184,8 @@ function MangaDetail(props) {
                 <ChapterList chapters={chapters} manga={manga}></ChapterList>
             </div>
             <div className='col-md-4 mt-2'>
-                {sameGroupMangas.length ? <SuggestManga mangas={sameGroupMangas} title="Same Translation Group"></SuggestManga> : ''}
-                {sameCategoryMangas.length ? <SuggestManga mangas={sameCategoryMangas} title="Suggested Manhwa"></SuggestManga> : ''}
+                {sameGroupMangas.length ? <SuggestManga siteName={props.siteName} mangas={sameGroupMangas} title="Same Translation Group"></SuggestManga> : ''}
+                {sameCategoryMangas.length ? <SuggestManga siteName={props.siteName} mangas={sameCategoryMangas} title="Suggested Manhwa"></SuggestManga> : ''}
             </div>
             <Tracking targetType="MANGA" targetId={manga.id}></Tracking>
         </div>
@@ -246,8 +246,11 @@ export async function getServerSideProps(context) {
         .limit(5)
         .distinct()
         .select(['manga.id', 'manga.name', 'manga.alt_name', 'manga.image', 'manga.slug', 'manga.description', 'manga.view']);
+    const siteName = getSiteName(context.req);
+
     return {
         props: {
+            siteName: siteName,
             manga: JSON.parse(JSON.stringify(manga)),
             chapters: JSON.parse(JSON.stringify(chapters)),
             categories: JSON.parse(JSON.stringify(categories)),

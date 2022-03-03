@@ -48,7 +48,7 @@ function HomePage(props) {
                 <CardList title="Last update Completed" mangas={lastUpdateCompleteds} seeMoreUrl="/manga-completed"></CardList>
             </div>
             <div className="col-md-4">
-                <TopView></TopView>
+                <TopView siteName={props.siteName}></TopView>
             </div>
             <Tracking targetType="HOME"></Tracking>
         </div>

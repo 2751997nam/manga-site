@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import TopViewItem from "@/components/manga-detail/TopViewItem";
 import Script from 'next/script';
 
@@ -7,6 +7,24 @@ const TopView = (props)  => {
     const [topViewsMonth, setTopViewsMonth] = useState([]);
     const [topViewsAll, setTopViewsAll] = useState([]);
     const [active, setActive] = useState(1);
+    
+    const renderAdsScript = useMemo(() => {
+        if (props.siteName == 'ManhwaPlus') {
+            return (
+                <>
+                    <ins className="adsbyexoclick" data-zoneid="4620562"></ins> 
+                    <Script>{`(AdProvider = window.AdProvider || []).push({"serve": {}});`}</Script>
+                </>
+            )
+        }
+
+        return (
+            <>
+                <ins className="adsbyexoclick" data-zoneid="4615918"></ins>
+                <Script>{`(AdProvider = window.AdProvider || []).push({"serve": {}});`}</Script>
+            </>
+        )
+    }, [props])
 
     const fetchTopViews = () => {
         fetch('/api/top-view')
@@ -65,9 +83,7 @@ const TopView = (props)  => {
                     </div>
                 </div>
                 <div className="text-center">
-                    <ins className="adsbyexoclick" data-zoneid="4615918"></ins>
-                    <Script>{`(AdProvider = window.AdProvider || []).push({"serve": {}});`}</Script>
-
+                    <>{renderAdsScript}</>
                 </div>
             </div>
         </div>
