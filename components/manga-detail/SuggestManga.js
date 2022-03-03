@@ -44,8 +44,8 @@ function SuggestManga(props) {
                 <ul className="others-list">
                     {renderItems()}
                 </ul>
-                <div>
-                    <ins className="adsbyexoclick" data-zoneid="4616566"></ins>
+                <div className="text-center">
+                    <ins className="adsbyexoclick" data-zoneid="4615918"></ins>
                     <Script>{`(AdProvider = window.AdProvider || []).push({"serve": {}});`}</Script> 
                 </div>
             </div>
