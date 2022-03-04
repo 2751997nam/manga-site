@@ -45,19 +45,7 @@ function Layout(props) {
                     `}
                 </Script>
                 <Script type="application/javascript" data-idzone="4590438" data-ad_first_trigger_clicks="3" data-ad_next_trigger_clicks="5" data-type="mobile" data-browser_settings="1" data-ad_trigger_method="3" src="https://a.realsrv.com/fp-interstitial.js"></Script>
-                {/* <ins className="adsbyexoclick" data-zoneid="4593282"></ins>  */}
-
-                <Script type="application/javascript">
-                    {`var adConfig = {
-                        "idzone": 4620712,
-                        "frequency_period": 0,
-                        "close_after": 0,
-                        "on_complete": "repeat",
-                        "branding_enabled": 1,
-                        "screen_density": 20
-                    };
-                    ExoVideoSlider.init(adConfig);`}
-                </Script>
+                <ins className="adsbyexoclick" data-zoneid="4593282"></ins> 
                 <Script>{`(AdProvider = window.AdProvider || []).push({"serve": {}});`}</Script>
             </>
         )
@@ -91,19 +79,7 @@ function Layout(props) {
                         })();`}
                 </Script>
                 <Script type="application/javascript" data-idzone="4620488" data-ad_first_trigger_clicks="3" data-ad_next_trigger_clicks="5" data-type="mobile" data-browser_settings="1" data-ad_trigger_method="3" src="https://a.realsrv.com/fp-interstitial.js"></Script>
-                {/* <ins className="adsbyexoclick" data-zoneid="4620530"></ins>  */}
-
-                <Script type="application/javascript">
-                    {`var adConfig = {
-                        "idzone": 4620556,
-                        "frequency_period": 0,
-                        "close_after": 0,
-                        "on_complete": "repeat",
-                        "branding_enabled": 1,
-                        "screen_density": 25
-                    };
-                    ExoVideoSlider.init(adConfig);`}
-                </Script>
+                <ins className="adsbyexoclick" data-zoneid="4620530"></ins> 
                 <Script>{`(AdProvider = window.AdProvider || []).push({"serve": {}});`}</Script>
             </>
         )
@@ -161,7 +137,6 @@ function Layout(props) {
                 <link rel="stylesheet" href="/css/main.min.css" />
                 <link rel="stylesheet" href="/css/all.min.css" />
                 <script async type="application/javascript" src="https://a.realsrv.com/ad-provider.js"></script>
-                <script async type="application/javascript" src="https://a.realsrv.com/video-slider.js"></script>
             </Head>
             <div className="wrapper">
                 <Header categories={props.categories} siteName={props.siteName} />
