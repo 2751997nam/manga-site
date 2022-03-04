@@ -101,8 +101,8 @@ function MangaDetail(props) {
             <Head>
                 <title>{manga.name}</title>
                 <meta name="title" content={manga.name}></meta>
-                <meta name="description" content={manga.description}></meta>
-                <meta name="keywords" content={manga.name + ' ' + manga.alt_name}></meta>
+                <meta name="description" content={`Read ${manga.name} manhwa online, read ${manga.alt_name} manhwa online, read ${manga.name} webtoon free, read ${manga.alt_name} webtoon free`}></meta>
+                <meta name="keywords" content={`${manga.name}, ${manga.alt_name}, read ${manga.name}, read ${manga.alt_name}`}></meta>
             </Head>
             <BreadCrumb links={links}></BreadCrumb>
             <h1 className="hidden">{manga.name}</h1>
