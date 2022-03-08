@@ -62,10 +62,10 @@ function Slider(props) {
     return (
         <div className='card'>
             <div className='card-header'>
-                <h3 className="card-title font-title">
+                <h2 className="card-title font-title">
                     <i className="fa fa-fire" aria-hidden="true"></i>  &nbsp; 
                     Popular manga			
-                </h3>
+                </h2>
             </div>
             <div className='card-body'>
                 <OwlCarousel 

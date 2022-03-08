@@ -34,8 +34,8 @@ function HomePage(props) {
     return (
         <div className="row">
             <Head>
-                <title>{props.siteName}</title>
-                <meta name="description" content="Read manhwa 18+, toptoon 69, hentai, pornwa, pornhwa, webtoon, manhwa online, manga online free, free manga, manga reader, manga scans, manga raw, manga, manhwa, manhua"></meta>
+                <title>{props.siteName + ' read manhwa, manga, manhua, webtoon online'}</title>
+                <meta name="description" content="Read manhwa 18+, toptoon 69, hentai, pornwa, pornhwa, webtoon, manhwa, manhua, manga online free,  manga scans, manga raw"></meta>
                 <meta name="keywords" content={`Read manhwa 18+, toptoon 69, hentai, pornwa, pornhwa, webtoon 18+ online free at ${props.siteName}, update fastest chap, chapters, most full, synthesized 24h free with high-quality images. We hope to bring you happy moments. `}></meta>
                 <meta property="og:type" content="website"></meta>
                 <meta property="og:title" content={'Read Webtoons and Korean Manhwa in English Online Free at ' + props.siteName}></meta>
@@ -50,7 +50,7 @@ function HomePage(props) {
                 <meta property="twitter:description" content="Read your favorite premium Korean Manhwa and Webtoons translated to English for free. Read high-quality Manhwa, Webtoon, and Adult Comics Online. Updated Daily!"></meta>
                 <meta property="twitter:image" content={props.siteName == 'ManhwaPlus' ? 'https://manhwaplus.net/images/logo.png' : 'https://toptoon69.com/images/logo69.png'}></meta>
             </Head>
-            <h1 className="hidden">{props.siteName}</h1>
+            <h1 className="hidden">{props.siteName + ' read manhwa, manga, manhua, webtoon online'}</h1>
             <div className="col-md-12">
                 <Slider mangas={populars}></Slider>
             </div>

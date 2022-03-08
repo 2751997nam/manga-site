@@ -131,7 +131,7 @@ const Search = (props) => {
                 </div>
                 <div className={'ssSearch card ' + (mangas.length ? 'd-block' : 'd-none')}>
                     <div className="card-header pl-3 py-2 header-search">
-                        <h5 className="card-title">Result</h5>
+                        <h4 className="card-title">Result</h4>
                     </div>
                     <div className="card-body search-result px-1 py-2">
                         {renderMangas()}
@@ -166,7 +166,7 @@ const Search = (props) => {
                         </div>
                         <div className={'ssSearch card ' + (mangas.length ? 'd-block' : 'd-none')}>
                             <div className="card-header pl-3 py-2 header-search">
-                                <h5 className="card-title">Result</h5>
+                                <h4 className="card-title">Result</h4>
                             </div>
                             <div className="card-body search-result px-1 py-2">
                                 {renderMangasMobile()}
