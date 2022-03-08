@@ -1,9 +1,13 @@
-import OwlCarousel from 'react-owl-carousel';
+import dynamic from 'next/dynamic';
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
 import Image from 'next/image';
 import { formatDate, getChapterName, getImageSrc, getMangaRoute, getChapterRoute } from '@/lib/helper';
 import CustomLink from '@/components/common/CustomLink';
+const OwlCarousel = dynamic(
+    () => import('react-owl-carousel'),
+    { ssr: false }
+);
 
 function Slider(props) {
     const mangas = props.mangas;
