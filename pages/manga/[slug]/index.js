@@ -153,14 +153,14 @@ function MangaDetail(props) {
                                         {
                                             isBookmarked ? 
                                             (
-                                                <a href="javascript:void(0)" type="button" onClick={removeBookmark} className="btn btn-primary" id="bookmark_btn" action="unbookmark">
+                                                <span type="button" onClick={removeBookmark} className="btn btn-primary" id="bookmark_btn" action="unbookmark">
                                                     <i className="fa fa-bell-slash" aria-hidden="true"></i> Delete this bookmark
-                                                </a>
+                                                </span>
                                             ) : 
                                             (
-                                                <a href="javascript:void(0)" onClick={bookmark} className="btn btn-primary btn-md">
+                                                <span onClick={bookmark} className="btn btn-primary btn-md">
                                                     <i className="fa fa-bookmark" aria-hidden="true"></i> Bookmark
-                                                </a>
+                                                </span>
                                             )
                                         }
                                     </div>

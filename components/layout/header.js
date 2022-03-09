@@ -34,9 +34,9 @@ function Header(props) {
                 <div className="navbar-collapse collapse">
                     <ul className="navbar-nav mr-auto">
                         <li className={'nav-item ' + (expand ? 'show' : '')}>
-                            <a href="javascript:void(0)" rel="nofollow" data-toggle="dropdown" tabIndex={0} onFocus={showDropdown} onBlur={hideDropdown} aria-expanded="true" className="nav-link dropdown-toggle">
+                            <span data-toggle="dropdown" tabIndex={0} onFocus={showDropdown} onBlur={hideDropdown} aria-expanded="true" className="nav-link dropdown-toggle pointer">
                                 <i className="fas fa-book-open"></i><span className="d-none d-lg-inline ml-1">Genre(s)</span>
-                            </a>
+                            </span>
                             <div className={'dropdown-menu manga-mega-menu genres-menu w-100 justify-content-center ' + (expand ? 'show' : '')}>
                                 <div className="row no-gutters">
                                     {categories.map(item => {
