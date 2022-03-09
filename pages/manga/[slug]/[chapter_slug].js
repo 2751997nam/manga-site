@@ -120,7 +120,7 @@ function ChapterDetail(props) {
         return chapters.map(item => {
             return (
                 <li key={item.id} id={'chapter-item-' + item.id } className={item.id == chapter.id ? 'current' : ''} onClick={toggleSideBar}>
-                    <CustomLink href={getChapterRoute(manga, chapter)} title={chapter.name}>{getChapterName(item.name)}</CustomLink>
+                    <CustomLink href={getChapterRoute(manga, item)} title={chapter.name}>{getChapterName(item.name)}</CustomLink>
                 </li>
             )
         })
@@ -208,9 +208,9 @@ function ChapterDetail(props) {
                 <CustomLink className="rd_sd-button_item" href="/">
                     <i className="fa fa-home" aria-hidden="true"></i>
                 </CustomLink>
-                <a id="rd-info_icon" onClick={toggleSideBar} className="rd_sd-button_item">
+                <span id="rd-info_icon" onClick={toggleSideBar} className="rd_sd-button_item">
                     <i className="fa fa-bars" aria-hidden="true"></i>
-                </a>
+                </span>
                 <CustomLink className={'rd_sd-button_item rd_top-left next ' + (!nextChapter ? 'disabled' : '')} href={nextChapter ? getChapterRoute(manga, nextChapter) : ''}>
                     <i className="fa fa-fast-forward" aria-hidden="true"></i>
                 </CustomLink>
