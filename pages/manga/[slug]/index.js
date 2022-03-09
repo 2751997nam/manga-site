@@ -12,6 +12,7 @@ import RatingBox from '@/components/manga-detail/RatingBox';
 import { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic'
+import Script from 'next/script';
 const Tracking = dynamic(
     () => import('@/components/common/Tracking'),
     { ssr: false }
@@ -101,9 +102,11 @@ function MangaDetail(props) {
             <Head>
                 <title>{manga.name}</title>
                 <meta name="title" content={manga.name}></meta>
-                <meta name="description" content={`Read ${manga.name} manhwa online, read ${manga.alt_name} manhwa online, read ${manga.name} webtoon free, read ${manga.alt_name} webtoon free`}></meta>
+                <meta name="description" content={`Read ${manga.name} manhwa online, read ${manga.alt_name} manhwa online, read ${manga.name} webtoon free, read ${manga.alt_name} webtoon free lastest chap, chapter`}></meta>
                 <meta name="keywords" content={`${manga.name}, ${manga.alt_name}, read ${manga.name}, read ${manga.alt_name}`}></meta>
             </Head>
+            <div id="fb-root"></div>
+            <Script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v13.0" nonce="0RNU9HA4"></Script>
             <BreadCrumb links={links}></BreadCrumb>
             <h1 className="hidden">{manga.name}</h1>
             <div className="col-md-8 mt-2">
@@ -145,27 +148,50 @@ function MangaDetail(props) {
                                     <li><span className="text-orange text-sm-left"><i className="fa fa-bookmark text-white" aria-hidden="true"></i> {bookmarkCount} bookmarked</span></li>
                                 </ul>
                                 <br />
-                                <div className="btn-group my-2">
-                                    {
-                                        isBookmarked ? 
-                                        (
-                                            <a href="javascript:void(0)" type="button" onClick={removeBookmark} className="btn btn-primary" id="bookmark_btn" action="unbookmark">
-                                                <i className="fa fa-bell-slash" aria-hidden="true"></i> Delete this bookmark
-                                            </a>
-                                        ) : 
-                                        (
-                                            <a href="javascript:void(0)" onClick={bookmark} className="btn btn-primary btn-md">
-                                                <i className="fa fa-bookmark" aria-hidden="true"></i> Bookmark
-                                            </a>
-                                        )
-                                    }
-                                </div>
+                                <div className="d-flex-align-cener">
+                                    <div className="btn-group my-2">
+                                        {
+                                            isBookmarked ? 
+                                            (
+                                                <a href="javascript:void(0)" type="button" onClick={removeBookmark} className="btn btn-primary" id="bookmark_btn" action="unbookmark">
+                                                    <i className="fa fa-bell-slash" aria-hidden="true"></i> Delete this bookmark
+                                                </a>
+                                            ) : 
+                                            (
+                                                <a href="javascript:void(0)" onClick={bookmark} className="btn btn-primary btn-md">
+                                                    <i className="fa fa-bookmark" aria-hidden="true"></i> Bookmark
+                                                </a>
+                                            )
+                                        }
+                                    </div>
 
-                                <div id="bt-reading" className="read-action">
-                                    {lastChapter && <CustomLink className="btn btn-danger btn-md" href={getChapterRoute(manga, lastChapter)}>
-                                        <i className="fa fa-paper-plane" aria-hidden="true"></i> 
-                                        Read the last chapter
-                                    </CustomLink>}
+                                    <div id="bt-reading" className="read-action mx-2">
+                                        {lastChapter && <CustomLink className="btn btn-danger btn-md" href={getChapterRoute(manga, lastChapter)}>
+                                            <i className="fa fa-paper-plane" aria-hidden="true"></i> 
+                                            Read the last chapter
+                                        </CustomLink>}
+                                    </div>
+                                </div>
+                                <div className="d-flex-align-cener">
+                                    <div className="fb-share-button" 
+                                        data-href="https://developers.facebook.com/docs/plugins/" 
+                                        data-layout="button_count" data-size="large">
+                                        <a 
+                                            target="_blank" 
+                                            rel="noreferrer"
+                                            href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" 
+                                            className="fb-xfbml-parse-ignore"
+                                        >
+                                            Share
+                                        </a>
+                                    </div>
+
+                                    <a className="twitter-share-button"
+                                        href="https://twitter.com/intent/tweet?text=Hello%20world"
+                                        data-size="large"
+                                    >
+                                        Tweet
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -188,6 +214,22 @@ function MangaDetail(props) {
                 {sameCategoryMangas.length ? <SuggestManga siteName={props.siteName} mangas={sameCategoryMangas} title="Suggested Manhwa"></SuggestManga> : ''}
             </div>
             <Tracking targetType="MANGA" targetId={manga.id}></Tracking>
+            <Script>{`window.twttr = (function(d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0],
+                    t = window.twttr || {};
+                if (d.getElementById(id)) return t;
+                js = d.createElement(s);
+                js.id = id;
+                js.src = "https://platform.twitter.com/widgets.js";
+                fjs.parentNode.insertBefore(js, fjs);
+
+                t._e = [];
+                t.ready = function(f) {
+                    t._e.push(f);
+                };
+
+                return t;
+                }(document, "script", "twitter-wjs"));`}</Script>
         </div>
     )
 }

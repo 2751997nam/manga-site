@@ -29,7 +29,7 @@ function HomePage(props) {
         <div className="row">
             <Head>
                 <title>{props.siteName + ' read manhwa, manga, manhua, webtoon online'}</title>
-                <meta name="description" content="Read manhwa 18+, toptoon 69, hentai, pornwa, pornhwa, webtoon, manhwa, manhua, manga online free,  manga scans, manga raw"></meta>
+                <meta name="description" content="Read manhwa 18+, toptoon 69, hentai, pornwa, pornhwa, webtoon, manhwa, manhua, manga online free,  manga scans, manga raw lastest chap, chapter"></meta>
                 <meta name="keywords" content={`Read manhwa 18+, toptoon 69, hentai, pornwa, pornhwa, webtoon 18+ online free at ${props.siteName}, update fastest chap, chapters, most full, synthesized 24h free with high-quality images. We hope to bring you happy moments. `}></meta>
                 <meta property="og:type" content="website"></meta>
                 <meta property="og:title" content={'Read Webtoons and Korean Manhwa in English Online Free at ' + props.siteName}></meta>
