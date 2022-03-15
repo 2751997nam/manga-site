@@ -141,14 +141,14 @@ function Layout(props) {
             <div className="wrapper">
                 <Header categories={props.categories} siteName={props.siteName} />
                 <div className='content-wrapper'>
-                    <div className='container mt-2rem text-center'>
+                    <div className='container mt-2rem text-center banner'>
                         <ins className="adsbyexoclick" data-zoneid="4615928"></ins> 
                     </div>
                     <div className='container mt-2rem'>
                         {props.children}
                         {renderLoading()}
                     </div>
-                    <div className='container text-center'>
+                    <div className='container text-center banner'>
                         <ins className="adsbyexoclick" data-zoneid="4615918"></ins> 
                     </div>
                     <Footer categories={props.categories} siteName={props.siteName} />

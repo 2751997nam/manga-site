@@ -1,6 +1,7 @@
 import dynamic from 'next/dynamic';
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
+import sliderStyle from '@/styles/slider.module.css';
 import Image from 'next/image';
 import { formatDate, getChapterName, getImageSrc, getMangaRoute, getChapterRoute } from '@/lib/helper';
 import CustomLink from '@/components/common/CustomLink';
@@ -64,7 +65,7 @@ function Slider(props) {
 
     }
     return (
-        <div className='card'>
+        <div className={'card ' + sliderStyle['slider']}>
             <div className='card-header'>
                 <h2 className="card-title font-title">
                     <i className="fa fa-fire" aria-hidden="true"></i>  &nbsp; 
