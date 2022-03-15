@@ -63,7 +63,7 @@ function SuggestManga(props) {
                 <ul className="others-list">
                     {renderItems()}
                 </ul>
-                <div className="text-center">
+                <div className="text-center mw-100-hidden">
                     <>{renderAdsScript}</>
                 </div>
             </div>

@@ -82,7 +82,7 @@ const TopView = (props)  => {
                         </div>
                     </div>
                 </div>
-                <div className="text-center">
+                <div className="text-center mw-100-hidden">
                     <>{renderAdsScript}</>
                 </div>
             </div>
