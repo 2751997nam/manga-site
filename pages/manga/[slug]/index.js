@@ -267,7 +267,8 @@ export async function getServerSideProps(context) {
         .where('manga_id', id)
         .where('status', 'ACTIVE')
         .orderBy('sorder', 'desc')
-        .select(['id', 'name', 'slug', 'created_at']);
+        .groupBy('name', 'slug', 'sorder')
+        .select(['name', 'slug', 'sorder', db.raw('max(created_at) as created_at')]);
 
     const translatorIds = translators.map(item => item.id);
     const categoryIds = categories.map(item => item.id);
