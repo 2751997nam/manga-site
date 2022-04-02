@@ -82,8 +82,9 @@ function ChapterDetail(props) {
     const getSideChapters = () => {
         let prevChapter = null;
         let nextChapter = null;
+
         for (let i = 0; i < chapters.length; i++) {
-            if (chapters[i].slug == chapter.slug) {
+            if (chapters[i].id == chapter.id) {
                 if (i > 0) {
                     nextChapter = chapters[i - 1];
                 }

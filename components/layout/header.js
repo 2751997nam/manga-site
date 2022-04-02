@@ -16,7 +16,7 @@ function Header(props) {
     const hideDropdown = () => {
         setTimeout(() => {
             setExpand(false);
-        }, 300);
+        }, 100);
     }
 
     useEffect(() => {
