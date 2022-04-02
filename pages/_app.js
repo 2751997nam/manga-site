@@ -2,9 +2,6 @@ import Layout from '@/components/layout/master';
 import Config from '@/config';
 import App from 'next/app';
 import { getSiteName } from '@/lib/helper';
-import '../styles/globals.css';
-import '../styles/font-awesome.css';
-
 let categoriesCache = [];
 let siteNameCache = 'ManhwaPlus';
 function MyApp({ Component, pageProps, categories, siteName}) {

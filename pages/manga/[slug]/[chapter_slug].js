@@ -258,9 +258,8 @@ export async function getServerSideProps(context) {
     const chapters = await db.from('chapter')
         .where('manga_id', chapter.manga_id)
         .where('status', 'ACTIVE')
-        .orderBy('sorder', 'desc')
-        .groupBy('name', 'slug', 'sorder')
-        .select(['name', 'slug', 'sorder', db.raw('max(created_at) as created_at')]);
+        .orderBy('id', 'desc')
+        .select(['id', 'name', 'slug']);
     const {req} = context;
     const siteName = getSiteName(req);
     let keywords = `Read manhwa 18+, toptoon 69, hentai, pornwa, pornhwa, webtoon 18+ online free at ${siteName}, update fastest chap, chapters, most full, synthesized 24h free with high-quality images. We hope to bring you happy moments. `;
