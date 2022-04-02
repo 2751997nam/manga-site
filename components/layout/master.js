@@ -131,6 +131,7 @@ function Layout(props) {
             <Head>
                 <meta name='viewport' content='width=device-width, initial-scale=1' />
                 <meta charSet="UTF-8"></meta>
+                <meta name="clckd" content="ff6f6c22eca82e2a21208ec283a42edc" />
                 <link rel="icon" type="image/x-icon" href={`/${logo}.ico`}></link>
                 <link rel="apple-touch-icon" href={`/${logo}.ico`}></link>
                 <script async type="application/javascript" src="https://a.realsrv.com/ad-provider.js"></script>
