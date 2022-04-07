@@ -104,6 +104,7 @@ function MangaDetail(props) {
                 <meta name="title" content={manga.name}></meta>
                 <meta name="description" content={`Read ${manga.name} manhwa online, read ${manga.alt_name} manhwa online, read ${manga.name} webtoon free, read ${manga.alt_name} webtoon free lastest chap, chapter`}></meta>
                 <meta name="keywords" content={`${manga.name}, ${manga.alt_name}, read ${manga.name}, read ${manga.alt_name}`}></meta>
+                <link rel="canonical" href={(props.siteName == 'ManhwaPlus' ? 'https://manhwaplus.net/' : 'https://toptoon69.com/') + `manga/${manga.slug}`} />
             </Head>
             <div id="fb-root"></div>
             <Script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v13.0" nonce="0RNU9HA4"></Script>

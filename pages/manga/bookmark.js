@@ -51,6 +51,7 @@ function MangaList(props) {
                 <title>Bookmark</title>
                 <meta name="description" content="Read manhwa 18+, toptoon 69, hentai, pornwa, pornhwa, webtoon, manhwa, manhua, manga online free,  manga scans, manga raw lastest chap, chapter"></meta>
                 <meta name="keywords" content={`Read manhwa 18+, toptoon 69, hentai, pornwa, pornhwa, webtoon 18+ online free at ${props.siteName}, update fastest chap, chapters, most full, synthesized 24h free with high-quality images. We hope to bring you happy moments. `}></meta>
+                <link rel="canonical" href={props.siteName == 'ManhwaPlus' ? 'https://manhwaplus.net/bookmark' : 'https://toptoon69.com/bookmark'} />
             </Head>
             <BreadCrumb links={links}></BreadCrumb>
             <h1 className="hidden">Bookmark</h1>

@@ -43,6 +43,7 @@ function HomePage(props) {
                 <meta property="twitter:title" content={'Read Webtoons and Korean Manhwa in English Online Free at ' + props.siteName}></meta>
                 <meta property="twitter:description" content="Read your favorite premium Korean Manhwa and Webtoons translated to English for free. Read high-quality Manhwa, Webtoon, and Adult Comics Online. Updated Daily!"></meta>
                 <meta property="twitter:image" content={props.siteName == 'ManhwaPlus' ? 'https://manhwaplus.net/images/logo.png' : 'https://toptoon69.com/images/logo69.png'}></meta>
+                <link rel="canonical" href={props.siteName == 'ManhwaPlus' ? 'https://manhwaplus.net' : 'https://toptoon69.com'} />
             </Head>
             <h1 className="hidden">{props.siteName + ' read manhwa, manga, manhua, webtoon online'}</h1>
             <div className="col-md-12">

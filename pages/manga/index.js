@@ -43,6 +43,7 @@ function MangaList(props) {
                 <title>{props.title}</title>
                 <meta name="description" content="Read manhwa 18+, toptoon 69, hentai, pornwa, pornhwa, webtoon, manhwa, manhua, manga online free,  manga scans, manga raw lastest chap, chapter"></meta>
                 <meta name="keywords" content={props.keywords}></meta>
+                <link rel="canonical" href={props.siteName == 'ManhwaPlus' ? 'https://manhwaplus.net/manga' : 'https://toptoon69.com/manga'} />
             </Head>
             <BreadCrumb links={links}></BreadCrumb>
             <h1 className="hidden">{props.title}</h1>

@@ -175,6 +175,7 @@ function ChapterDetail(props) {
                 <meta name="title" content={chapter.name}></meta>
                 <meta name="description" content={manga.description}></meta>
                 <meta name="keywords" content={props.keywords}></meta>
+                <link rel="canonical" href={(props.siteName == 'ManhwaPlus' ? 'https://manhwaplus.net/' : 'https://toptoon69.com/') + `manga/${manga.slug}/${chapter.slug}`} />
             </Head>
             <BreadCrumb links={links}></BreadCrumb>
             <h1 className="hidden">{chapter.name}</h1>
