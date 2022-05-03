@@ -5,7 +5,7 @@ import Slider from '@/components/home/Slider';
 import {buildFilters, getLastUpdateMangas, getPopularMangas, getTopViews} from '@/services/MangaListService';
 import dynamic from 'next/dynamic'
 import Head from 'next/head';
-import  { getSiteName, getUserAgent } from '@/lib/helper';
+import  { getSiteName } from '@/lib/helper';
 
 const TopView = dynamic(
     () => import('@/components/manga-detail/TopView'),
@@ -65,7 +65,6 @@ function HomePage(props) {
 export async function getServerSideProps(context) {
     const {req} = context;
     const siteName = getSiteName(req);
-    const userAgent = getUserAgent(req);
     if (context && context.query && context.query.clearCache) {
         await Redis.delete([context.query.clearCache]);
     }
@@ -97,7 +96,6 @@ export async function getServerSideProps(context) {
     return {
         props: {
             siteName: siteName,
-            userAgent: userAgent,
             populars: JSON.parse(JSON.stringify(populars)),
             lastUpdates: JSON.parse(JSON.stringify(lastUpdates)),
             lastUpdateRaws: JSON.parse(JSON.stringify(lastUpdateRaws)),

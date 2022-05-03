@@ -7,7 +7,7 @@ import BreadCrumb from '@/components/common/BreadCrumb';
 import ChapterList from '@/components/manga-detail/ChapterList';
 import SuggestManga from '@/components/manga-detail/SuggestManga';
 import Head from 'next/head';
-import { getImageSrc, getMangaRoute, getChapterRoute, getSiteName, getUserAgent } from '@/lib/helper';
+import { getImageSrc, getMangaRoute, getChapterRoute, getSiteName } from '@/lib/helper';
 import RatingBox from '@/components/manga-detail/RatingBox';
 import { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
@@ -340,11 +340,10 @@ export async function getServerSideProps(context) {
         .distinct()
         .select(['manga.id', 'manga.name', 'manga.alt_name', 'manga.image', 'manga.slug', 'manga.description', 'manga.view']);
     const siteName = getSiteName(context.req);
-    const userAgent = getUserAgent(req);
+
     return {
         props: {
             siteName: siteName,
-            userAgent: userAgent,
             manga: JSON.parse(JSON.stringify(manga)),
             chapters: JSON.parse(JSON.stringify(chapters)),
             categories: JSON.parse(JSON.stringify(categories)),
