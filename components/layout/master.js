@@ -134,8 +134,7 @@ function Layout(props) {
                 <meta name="clckd" content="ff6f6c22eca82e2a21208ec283a42edc" />
                 <link rel="icon" type="image/x-icon" href={`/${logo}.ico`}></link>
                 <link rel="apple-touch-icon" href={`/${logo}.ico`}></link>
-                <link rel="stylesheet" href="/css/main.min.css" />
-                <link rel="stylesheet" href="/css/all.min.css" />
+                <link defer rel="stylesheet" href="/css/all.min.css" />
                 <script async type="application/javascript" src="https://a.realsrv.com/ad-provider.js"></script>
             </Head>
             <div className="wrapper">
