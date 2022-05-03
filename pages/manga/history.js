@@ -8,7 +8,7 @@ import Card from '@/components/common/Card';
 import Pagination from '@/components/common/Pagination';
 import HistoryItem from '@/components/history/HistoryItem';
 import { useRouter } from 'next/router';
-import { getSiteName } from '@/lib/helper';
+import { getSiteName, getUserAgent } from '@/lib/helper';
 import dynamic from 'next/dynamic'
 
 const TopView = dynamic(
@@ -114,10 +114,12 @@ function MangaList(props) {
 export async function getServerSideProps(context) {
     const {req} = context;
     const siteName = getSiteName(req);
+    const userAgent = getUserAgent(req);
 
     return {
         props: {
             siteName: siteName,
+            userAgent: userAgent,
         }
     };
 }

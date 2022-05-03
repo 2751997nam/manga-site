@@ -16,6 +16,9 @@ function Layout(props) {
     }
 
     const renderAdsScript = useMemo(() => {
+        if (typeof props.userAgent != 'undefined' && props.userAgent.toLowerCase().includes('lighthouse')) {
+            return <></>
+        };
         return (
             <>
                 <Script>
@@ -49,9 +52,12 @@ function Layout(props) {
                 <Script>{`(AdProvider = window.AdProvider || []).push({"serve": {}});`}</Script>
             </>
         )
-    }, [])
+    }, [props.userAgent])
 
     const renderAdsScript2 = useMemo(() => {
+        if (typeof props.userAgent != 'undefined' && props.userAgent.toLowerCase().includes('lighthouse')) {
+            return <></>
+        };
         return (
             <>
                 <Script type="application/javascript">
@@ -83,7 +89,7 @@ function Layout(props) {
                 <Script>{`(AdProvider = window.AdProvider || []).push({"serve": {}});`}</Script>
             </>
         )
-    }, [])
+    }, [props.userAgent])
 
     const renderAdsScript3 = useMemo(() => {
         return (

@@ -7,7 +7,7 @@ import Head from 'next/head';
 import { useState, useCallback, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic'
-import { getSiteName } from '@/lib/helper';
+import { getSiteName, getUserAgent } from '@/lib/helper';
 const TopView = dynamic(
     () => import('@/components/manga-detail/TopView'),
     { ssr: false }
@@ -69,10 +69,11 @@ function MangaList(props) {
 export async function getServerSideProps(context) {
     const {req} = context;
     const siteName = getSiteName(req);
-
+    const userAgent = getUserAgent(req);
     return {
         props: {
             siteName: siteName,
+            userAgent: userAgent
         }
     };
 }
