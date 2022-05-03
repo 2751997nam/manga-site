@@ -25,16 +25,16 @@ const Footer = ({ categories, siteName }) => {
                             </div>
                             <ul className="list-unstyled mt-2 mb-0 d-flex">
                                 <li>
-                                    <a href="#" className="d-inline-block pr-3 py-2"><i className="fas fa-registered"></i> <span className="d-none d-sm-inline-block">Term</span></a>
+                                    <a href="#" className="d-inline-block pr-3 py-2"> <span className="d-none d-sm-inline-block">Term</span></a>
                                 </li>
                                 <li>
-                                    <a href="#" className="d-inline-block pr-3 py-2"><i className="far fa-copyright"></i> <span className="d-none d-sm-inline-block">Lecense</span></a>
+                                    <a href="#" className="d-inline-block pr-3 py-2"><span className="d-none d-sm-inline-block">Lecense</span></a>
                                 </li>
                                 <li>
-                                    <a href="#" className="d-inline-block pr-3 py-2"><i className="fas fa-user-lock"></i> <span className="d-none d-sm-inline-block">Privacy</span></a>
+                                    <a href="#" className="d-inline-block pr-3 py-2"><span className="d-none d-sm-inline-block">Privacy</span></a>
                                 </li>
                                 <li>
-                                    <a href="#" className="d-inline-block pr-3 py-2"><i className="fas fa-envelope"></i> <span className="d-none d-sm-inline-block">Advertising contact</span></a>
+                                    <a href="#" className="d-inline-block pr-3 py-2"><span className="d-none d-sm-inline-block">Advertising contact</span></a>
                                 </li>
                             </ul>
                         </div>

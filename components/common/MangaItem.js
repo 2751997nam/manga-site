@@ -64,7 +64,7 @@ const Manga = ({manga}) => {
                 <div className="thumb-wrapper">
                     <CustomLink href={getMangaRoute(manga)} title={manga.name}>
                         <div className="a6-ratio">
-                            <Image src={getImageSrc(manga.image)} alt={manga.name} width={165} height={240} />
+                            <Image src={getImageSrc(manga.image)} alt={manga.name} width={149} height={224} />
                         </div>
                     </CustomLink>
                     <div className="thumb-detail">

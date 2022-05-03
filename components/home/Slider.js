@@ -41,7 +41,7 @@ function Slider(props) {
                         <div className="thumb-wrapper">
                             <CustomLink href={getMangaRoute(item)}>
                                 <div className="a6-ratio">
-                                    <Image className="content img-in-ratio" src={getImageSrc(item.image)} alt={item.name} width={200} height={300} loading="eager" ></Image>
+                                    <Image className="content img-in-ratio" src={getImageSrc(item.image)} alt={item.name} width={149} height={224} loading="eager" ></Image>
                                 </div>
                             </CustomLink>
                             <div className="thumb-detail">
@@ -68,7 +68,6 @@ function Slider(props) {
         <div className={'card ' + sliderStyle['slider']}>
             <div className='card-header'>
                 <h2 className="card-title font-title">
-                    <i className="fa fa-fire" aria-hidden="true"></i>  &nbsp; 
                     Popular manga			
                 </h2>
             </div>

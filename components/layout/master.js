@@ -134,7 +134,9 @@ function Layout(props) {
                 <meta name="clckd" content="ff6f6c22eca82e2a21208ec283a42edc" />
                 <link rel="icon" type="image/x-icon" href={`/${logo}.ico`}></link>
                 <link rel="apple-touch-icon" href={`/${logo}.ico`}></link>
-                <link defer rel="stylesheet" href="/css/all.min.css" />
+                <link rel="preconnect" href='http://syndication.realsrv.com'></link> 
+                <link rel="preconnect" href='https://syndication.realsrv.com'></link> 
+                <link rel="preconnect" href='http://a.realsrv.com'></link> 
                 <script async type="application/javascript" src="https://a.realsrv.com/ad-provider.js"></script>
             </Head>
             <div className="wrapper">
@@ -153,7 +155,10 @@ function Layout(props) {
                     <Footer categories={props.categories} siteName={props.siteName} />
                 </div>
                 <div className="btn-back-to-top d-block margin-navi" onClick={scrollToTop}>
-                    <i className="fa fa-angle-double-up"></i>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-chevron-double-up" viewBox="0 0 16 16">
+                    <path fillRule="evenodd" d="M7.646 2.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 3.707 2.354 9.354a.5.5 0 1 1-.708-.708l6-6z"/>
+                    <path fillRule="evenodd" d="M7.646 6.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 7.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"/>
+                </svg>
                 </div>
             </div>
             <>{siteName == 'ManhwaPlus' ? renderAdsScript2 : renderAdsScript}</>

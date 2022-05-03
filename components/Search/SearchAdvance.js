@@ -113,7 +113,13 @@ const SearchAdvance = (props) => {
             <div className="card">
                 <div className="card-header">
                     <h3 className="text-center bold h2title">Search Advanced</h3>
-                    <CustomLink className="btn btn-primary btn-sm float-right" href="/manga"><i className="fas fa-sync"></i> Reset</CustomLink>
+                    <CustomLink className="btn btn-primary btn-sm float-right d-flex-align-cener" href="/manga">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-repeat mr-1" viewBox="0 0 16 16">
+                            <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
+                            <path fillRule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
+                        </svg>
+                        Reset
+                    </CustomLink>
                 </div>
                 <div className="card-body">
                     <fieldset>
@@ -145,8 +151,11 @@ const SearchAdvance = (props) => {
 
                         <div className="form-group row">
                             <div className="col-md-12 text-center">
-                                <button type="submit" className="btn btn-warning">
-                                    <i className="fas fa-search" aria-hidden="true"></i> Search
+                                <button type="submit" className="btn btn-warning d-flex-align-cener">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-search mr-1" viewBox="0 0 16 16">
+                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                                    </svg>
+                                    Search
                                 </button>
                             </div>
                         </div>

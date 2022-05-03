@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useCallback, useEffect, useState } from "react";
 import CustomLink from "@/components/common/CustomLink";
 import { useRouter } from "next/router";
 
@@ -32,19 +32,24 @@ const Pagination = (props) => {
         )
     }
 
-    useEffect(() => {
+    const changeUrl = () => {
         let url = window.location.href;
         let index = url.indexOf('?');
         if (index > 0) {
             url = url.substr(0, index);
         }
         setUrl(url);
-    }, [setUrl]);
+    }
+
+    useEffect(() => {
+        changeUrl(); 
+    }, []);
 
     useEffect(() => {
         setPageCount(props.meta.pageCount);
         setPageId(props.meta.pageId);
         setPageSize(props.meta.pageSize);
+        changeUrl();
     }, [router.asPath, props])
 
     const renderPages = (from, to) => {
@@ -66,14 +71,14 @@ const Pagination = (props) => {
         )
     }
 
-    const getUrl = (page) => {
+    const getUrl = useCallback((page) => {
         let params = Object.assign({}, query);
         params.page = page;
 
         let str = Object.keys(params).map(key => key + '=' + params[key]).join('&');
 
         return url + '?' + str;
-    }
+    }, [query, url])
 
     const render = () => {
         if (pageCount <= 6) {

@@ -82,9 +82,8 @@ function ChapterDetail(props) {
     const getSideChapters = () => {
         let prevChapter = null;
         let nextChapter = null;
-
         for (let i = 0; i < chapters.length; i++) {
-            if (chapters[i].id == chapter.id) {
+            if (chapters[i].slug == chapter.slug) {
                 if (i > 0) {
                     nextChapter = chapters[i - 1];
                 }
@@ -204,16 +203,25 @@ function ChapterDetail(props) {
             </div>
             <section id="rd-side_icon" className={!showControl ? 'd-none' : ''}>
                 <CustomLink className={'rd_sd-button_item rd_top-left prev ' + (!prevChapter ? 'disabled' : '')} href={prevChapter ? getChapterRoute(manga, prevChapter) : ''}>
-                    <i className="fa fa-fast-backward" aria-hidden="true"></i>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-skip-backward-fill" viewBox="0 0 16 16">
+                        <path d="M.5 3.5A.5.5 0 0 0 0 4v8a.5.5 0 0 0 1 0V8.753l6.267 3.636c.54.313 1.233-.066 1.233-.697v-2.94l6.267 3.636c.54.314 1.233-.065 1.233-.696V4.308c0-.63-.693-1.01-1.233-.696L8.5 7.248v-2.94c0-.63-.692-1.01-1.233-.696L1 7.248V4a.5.5 0 0 0-.5-.5z"/>
+                    </svg>
                 </CustomLink>
                 <CustomLink className="rd_sd-button_item" href="/">
-                    <i className="fa fa-home" aria-hidden="true"></i>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-house-fill" viewBox="0 0 16 16">
+                        <path fillRule="evenodd" d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6zm5-.793V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
+                        <path fillRule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
+                    </svg>
                 </CustomLink>
                 <span id="rd-info_icon" onClick={toggleSideBar} className="rd_sd-button_item">
-                    <i className="fa fa-bars" aria-hidden="true"></i>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-list" viewBox="0 0 16 16">
+                        <path fillRule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+                    </svg>
                 </span>
                 <CustomLink className={'rd_sd-button_item rd_top-left next ' + (!nextChapter ? 'disabled' : '')} href={nextChapter ? getChapterRoute(manga, nextChapter) : ''}>
-                    <i className="fa fa-fast-forward" aria-hidden="true"></i>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-skip-forward-fill" viewBox="0 0 16 16">
+                        <path d="M15.5 3.5a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V8.753l-6.267 3.636c-.54.313-1.233-.066-1.233-.697v-2.94l-6.267 3.636C.693 12.703 0 12.324 0 11.693V4.308c0-.63.693-1.01 1.233-.696L7.5 7.248v-2.94c0-.63.693-1.01 1.233-.696L15 7.248V4a.5.5 0 0 1 .5-.5z"/>
+                    </svg>
                 </CustomLink>
             </section>
             <section id="chapters" className={'rd_sidebar ' + (!showSideBar ? 'd-none' : '')}>

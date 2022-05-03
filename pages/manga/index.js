@@ -41,7 +41,7 @@ function MangaList(props) {
         <div className="row">
             <Head>
                 <title>{props.title}</title>
-                <meta name="description" content="Read manhwa 18+, toptoon 69, hentai, pornwa, pornhwa, webtoon, manhwa, manhua, manga online free,  manga scans, manga raw lastest chap, chapter"></meta>
+                <meta name="description" content={props.description}></meta>
                 <meta name="keywords" content={props.keywords}></meta>
                 <link rel="canonical" href={props.siteName == 'ManhwaPlus' ? 'https://manhwaplus.net/manga' : 'https://toptoon69.com/manga'} />
             </Head>
@@ -80,6 +80,7 @@ export async function getServerSideProps(context) {
     const siteName = getSiteName(req);
     let title = 'Manga List';
     let keywords = `Read manhwa 18+, toptoon 69, hentai, pornwa, pornhwa, webtoon 18+ online free at ${siteName}, update fastest chap, chapters, most full, synthesized 24h free with high-quality images. We hope to bring you happy moments. `;
+    let description = 'Read manhwa 18+, toptoon 69, hentai, pornwa, pornhwa, webtoon, manhwa, manhua, manga online free,  manga scans, manga raw lastest chap, chapter';
     let props = {
         breadcrumbs: [{
             url: '/manga',
@@ -92,6 +93,7 @@ export async function getServerSideProps(context) {
             props.genreId = filter.genreId;
             title = 'Genre ' + category.name;
             keywords = `Read manhwa ${category.name}, hentai, pornwa, pornhwa, webtoon 18+ online free at ${siteName}, update fastest chap, chapters, most full, synthesized 24h free with high-quality images. We hope to bring you happy moments. `
+            description = `Read genre ${category.name} manhwa, toptoon 69, hentai, pornwa, pornhwa, webtoon, manhwa, manhua, manga online free,  manga scans, manga raw lastest chap, chapter`;
             props.breadcrumbs.push({
                 url: '/manga-genre-' + category.slug,
                 text: category.name
@@ -102,6 +104,7 @@ export async function getServerSideProps(context) {
 
     props.title = title;
     props.keywords = keywords;
+    props.description = description;
     props.mangas = JSON.parse(JSON.stringify(mangas));
     props.meta = meta;
     props.query = buildParams(context.query);

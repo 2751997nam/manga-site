@@ -17,7 +17,7 @@ const TopViewItem = (props) => {
             <div>
                 <CustomLink href={getChapterRoute(manga, manga.chapter)}>{chapterName}</CustomLink>
             </div>
-            <i>{formatDate(manga.chapter.created_at)}</i>
+            <span>{formatDate(manga.chapter.created_at)}</span>
         </div>
     )
 }
