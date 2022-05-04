@@ -340,7 +340,7 @@ export async function getServerSideProps(context) {
         .distinct()
         .select(['manga.id', 'manga.name', 'manga.alt_name', 'manga.image', 'manga.slug', 'manga.description', 'manga.view']);
     const siteName = getSiteName(context.req);
-    const userAgent = getUserAgent(req);
+    const userAgent = getUserAgent(context.req);
     return {
         props: {
             siteName: siteName,
