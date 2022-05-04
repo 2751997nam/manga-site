@@ -92,37 +92,12 @@ function Layout(props) {
     }, [props.userAgent])
 
     const renderAdsScript3 = useMemo(() => {
-        if (typeof props.userAgent != 'undefined' && props.userAgent.toLowerCase().includes('lighthouse')) {
-            return <></>
-        };
         return (
             <>
                 <Script data-cfasync="false" async="async" type="text/javascript" src="//noerwe5gianfor19e4st.com/q/tdl/95/dnt/1891457/kep.js"></Script>
                 <Script data-cfasync="false" type="text/javascript" src="//ber2g8e3keley.com/bultykh/ipp24/7/bazinga/1891458" async></Script>
                 <Script data-cfasync="false" type="text/javascript" src="//ber2g8e3keley.com/t/9/fret/meow4/1891444/34357f7f.js"></Script>
             </>
-        )
-    }, [])
-
-    const renderTopBanner = useMemo(() => {
-        if (typeof props.userAgent != 'undefined' && props.userAgent.toLowerCase().includes('lighthouse')) {
-            return <></>
-        };
-        return (
-            <div className='container mt-2rem text-center banner'>
-            <ins className="adsbyexoclick" data-zoneid="4615928"></ins> 
-            </div>
-        )
-    }, [])
-
-    const renderBottomBanner = useMemo(() => {
-        if (typeof props.userAgent != 'undefined' && props.userAgent.toLowerCase().includes('lighthouse')) {
-            return <></>
-        };
-        return (
-            <div className='container text-center banner'>
-                <ins className="adsbyexoclick" data-zoneid="4615918"></ins> 
-            </div>
         )
     }, [])
 
@@ -173,12 +148,16 @@ function Layout(props) {
             <div className="wrapper">
                 <Header categories={props.categories} siteName={props.siteName} />
                 <div className='content-wrapper'>
-                    {renderTopBanner}
+                    <div className='container mt-2rem text-center banner'>
+                        <ins className="adsbyexoclick" data-zoneid="4615928"></ins> 
+                    </div>
                     <div className='container mt-2rem'>
                         {props.children}
                         {renderLoading()}
                     </div>
-                    {renderBottomBanner}
+                    <div className='container text-center banner'>
+                        <ins className="adsbyexoclick" data-zoneid="4615918"></ins> 
+                    </div>
                     <Footer categories={props.categories} siteName={props.siteName} />
                 </div>
                 <div className="btn-back-to-top d-block margin-navi" onClick={scrollToTop}>
