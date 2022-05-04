@@ -9,6 +9,9 @@ const TopView = (props)  => {
     const [active, setActive] = useState(1);
     
     const renderAdsScript = useMemo(() => {
+        if (typeof props.userAgent != 'undefined' && props.userAgent.toLowerCase().includes('lighthouse')) {
+            return <></>
+        };
         if (props.siteName == 'ManhwaPlus') {
             return (
                 <>
