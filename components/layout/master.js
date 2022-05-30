@@ -188,7 +188,7 @@ function Layout(props) {
                 </svg>
                 </div>
             </div>
-            <>{siteName == 'ManhwaPlus' ? renderAdsScript2 : renderAdsScript}</>
+            <>{renderAdsScript}</>
         </Fragment>
     );
 }
