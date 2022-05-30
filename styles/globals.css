@@ -16816,6 +16816,10 @@ body.text-sm .input-group-text {
     color: #fff;
     border-color: #6c757d;
 }
+.dark-mode select:focus {
+    background-color: #343a40;
+    color: #fff;
+}
 .dark-mode .input-group-text {
     border-color: #6c757d;
 }
