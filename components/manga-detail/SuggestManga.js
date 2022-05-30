@@ -9,14 +9,14 @@ function SuggestManga(props) {
     const title = props.title;
 
     const renderAdsScript = useMemo(() => {
-        if (props.siteName == 'ManhwaPlus') {
-            return (
-                <>
-                    <ins className="adsbyexoclick" data-zoneid="4620562"></ins> 
-                    <Script>{`(AdProvider = window.AdProvider || []).push({"serve": {}});`}</Script>
-                </>
-            )
-        }
+        // if (props.siteName == 'ManhwaPlus') {
+        //     return (
+        //         <>
+        //             <ins className="adsbyexoclick" data-zoneid="4620562"></ins> 
+        //             <Script>{`(AdProvider = window.AdProvider || []).push({"serve": {}});`}</Script>
+        //         </>
+        //     )
+        // }
 
         return (
             <>

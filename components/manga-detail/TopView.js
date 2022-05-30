@@ -12,14 +12,14 @@ const TopView = (props)  => {
         if (typeof props.userAgent != 'undefined' && props.userAgent.toLowerCase().includes('lighthouse')) {
             return <></>
         };
-        if (props.siteName == 'ManhwaPlus') {
-            return (
-                <>
-                    <ins className="adsbyexoclick" data-zoneid="4620562"></ins> 
-                    <Script>{`(AdProvider = window.AdProvider || []).push({"serve": {}});`}</Script>
-                </>
-            )
-        }
+        // if (props.siteName == 'ManhwaPlus') {
+        //     return (
+        //         <>
+        //             <ins className="adsbyexoclick" data-zoneid="4620562"></ins> 
+        //             <Script>{`(AdProvider = window.AdProvider || []).push({"serve": {}});`}</Script>
+        //         </>
+        //     )
+        // }
 
         return (
             <>
