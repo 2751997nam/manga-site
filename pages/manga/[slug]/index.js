@@ -298,8 +298,9 @@ export async function getServerSideProps(context) {
     const slug = context.params.slug;
     
     const manga = await db.from('manga')
-        .where('slug', slug).
-        select(['*'])
+        .where('slug', slug)
+        .where('is_hidden', '0')
+        .select(['*'])
         .first();
     if (!manga || !manga.id) {
         return {

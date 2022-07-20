@@ -138,9 +138,8 @@ const getLastUpdateMangas = async (db, filter = {}) => {
     if (filter.mangaIds) {
         query.whereIn('lastest_chapter.manga_id', filter.mangaIds);
     }
-    if (filter.status || filter.mangaOrderBy || filter.q) {
-        query.join('manga', 'manga.id', 'lastest_chapter.manga_id');
-    }
+    query.join('manga', 'manga.id', 'lastest_chapter.manga_id');
+    query.where('manga.is_hidden', '0');
     if (filter.status) {
         query.where('manga.status', '=', filter.status);
     }

@@ -251,7 +251,7 @@ export async function getServerSideProps(context) {
     const db = DB();
     const slug = context.params.chapter_slug;
     const chapter = await db.from('chapter').where('slug', slug).select(['*']).first();
-
+    
     if (!chapter || !chapter.id) {
         return {
             notFound: true
@@ -259,7 +259,17 @@ export async function getServerSideProps(context) {
     }
     const id = chapter.id;
 
-    const manga = await db.from('manga').where('id', chapter.manga_id).select(['id', 'name', 'slug', 'image']).first();
+    const manga = await db.from('manga')
+        .where('id', chapter.manga_id)
+        .where('is_hidden', '0')
+        .select(['id', 'name', 'slug', 'image'])
+        .first();
+
+    if (!manga || !manga.id) {
+        return {
+            notFound: true
+        }
+    }
     chapter.images = JSON.parse(chapter.images);
     if (chapter.parse_images) {
         chapter.parse_images = JSON.parse(chapter.parse_images);
